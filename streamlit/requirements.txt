@@ -1,3 +1,19 @@
-streamlit>=1.30.0
-pandas>=2.1.0
-numpy>=1.26.0
+# --- Core app framework ---
+streamlit==1.40.0
+
+# --- Finance data API ---
+yfinance==0.2.48
+
+# --- Data handling ---
+pandas==2.2.3
+numpy==1.26.4
+
+# --- Visualization ---
+matplotlib==3.9.2
+
+# --- Optional: for performance, parallel downloads ---
+requests==2.32.3
+lxml==5.3.0
+
+# --- Portfolio optimization (for ERC extension) ---
+scipy==1.13.1
