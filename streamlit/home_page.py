@@ -14,15 +14,21 @@ for multiple tickers from Yahoo Finance.
 # --- User Inputs ---
 default_tickers = "AAPL, MSFT, NVDA, AMZN, META, GOOGL, SPY"
 tickers_input = st.text_input("Enter tickers (comma-separated):", default_tickers)
-start_date = st.date_input("Start Date", value=date(2000, 1, 1))
+start_date = st.date_input("Start Date", value=date(2020, 1, 1))
 end_date = st.date_input("End Date", value=date.today())
 
 # --- Cache Yahoo Finance Data ---
-@st.cache_data(ttl=86400, show_spinner=True)  # cache for 1 day
-def load_long_data(tickers, start, end):
-    """Download large historical data efficiently."""
-    data = yf.download(tickers, start=start, end=end, group_by='ticker', progress=False, threads=True)
-    return data
+@st.cache_data(ttl=10, show_spinner=True)  # cache for 1 day
+def load_long_data(tickers, start_date, end_date):
+    st.write(f'the tickers are {tickers}, with start date {start_date} and end date {end_date}')
+    start_date = '2020-01-01'
+    end_date = '2025-10-31'
+
+    sp500_tickers = ["AAPL", "MSFT", "NVDA", "AMZN", "META", "GOOGL", "SPY"]
+
+    data = yf.download(sp500_tickers, start=start_date, end=end_date)['Close']
+    st.write(f"Data downloaded successfully, shape: {data.shape}")
+    return data 
 
 # --- Button to trigger download ---
 if st.button("🚀 Download Data"):
@@ -53,3 +59,6 @@ if st.button("🚀 Download Data"):
             # --- Show summary info ---
             st.write("### ℹ️ Dataset Summary")
             st.write(df.describe())
+    
+if st.button("🚀 Refresh Data"):
+    st.cache_data.clear()
