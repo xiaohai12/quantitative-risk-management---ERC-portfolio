@@ -7,6 +7,7 @@ class ERC_Portfolio:
         self.use_crypto = use_crypto
         self.use_stock = use_stock
         self.use_commodity = use_commodity
+        self.risk_score = sess.st....
     
     @st.cache_data(ttl=6000)  # auto-expire after 100 minutes
     def load_data(self):
@@ -21,7 +22,7 @@ class ERC_Portfolio:
 
     def compute_covariance_matrix(self, asset_class):
         # Placeholder for actual implementation
-        pass
+
 
 
     def compute_crypto_erc_weights(self):
