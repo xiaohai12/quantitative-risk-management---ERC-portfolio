@@ -103,6 +103,6 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
         agg_close.to_csv('bonds_data.csv')
 
     import_equity(start_date= start, end_date=end)
-    import_cryptos(start_date='2020-01-01', end_date=end)
+    import_cryptos(start_date=start, end_date=end)
     import_commodities(start_date=start, end_date=end)
     import_bonds(start_date=start, end_date=end)
