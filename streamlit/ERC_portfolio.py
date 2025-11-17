@@ -258,8 +258,11 @@ if launch_button:
             # Combine returns
             combined_returns = ut.combine_returns(equity_flat, equity_esg_flat, commodity_flat, commodity_esg_flat, crypto_flat, bonds_flat,selected_assets_list)
 
+            #Transform risk score into risk aversion coefficient
+            risk_aversion = ut.riskscore_to_aversion(st.session_state.risk_score)
+            
             #Final portfolio
-            all_monthly_portfolio_returns = ut.meanvar_portfolio(combined_returns, st.session_state.risk_score)
+            all_monthly_portfolio_returns = ut.meanvar_portfolio(combined_returns, risk_aversion)
             MeanVar_flat, MeanVar_mean, MeanVar_vol, MeanVar_sharpe, MeanVar_cumu = ut.erc_performance(all_monthly_portfolio_returns, combined_returns, 2018)
             cumu_graph_final = ut.cumu_graph(MeanVar_flat)
             
