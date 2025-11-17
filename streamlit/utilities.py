@@ -369,6 +369,25 @@ def commodity_to_esg(commodity_data) :
     return commodity_data_esg
 
 
+def riskscore_to_aversion(risk_score):
+
+    # Define the mapping
+    aversion_map = {
+        0: 200,
+        1: 130,
+        2: 80,
+        3: 50,
+        4: 30,
+        5: 20,
+        6: 10,
+        7: 5,
+        8: 1,
+        9: 0.5,
+        10: 0
+    }
+    
+    return aversion_map[risk_score]
+
 
 
 
