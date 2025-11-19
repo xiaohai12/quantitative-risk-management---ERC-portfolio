@@ -17,11 +17,11 @@ st.markdown("---")
 # Team Members Data
 team_members = [
     {
-        "name": "Alexandra Chen",
-        "role": "Portfolio Strategy Lead",
-        "bio": "Specializes in asset allocation and strategic portfolio construction. Focuses on long-term investment strategies and risk-adjusted return optimization.",
-        "expertise": ["Asset Allocation", "Strategic Planning", "Risk Management"],
-        "email": "alexandra.chen@university.edu"
+    "name": "Yann Suttor",
+    "role": "Asset Management Specialist",
+    "bio": "Expert in optimizing investment portfolios and managing financial assets to maximize returns and mitigate risk. Provides strategic analysis for diverse asset classes.",
+    "expertise": ["Asset Management", "Portfolio Optimization", "Strategic Financial Analysis"],
+    "email": "yann.suttor@university.edu"
     },
     {
         "name": "Marcus Rodriguez",
