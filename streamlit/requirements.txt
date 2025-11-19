@@ -10,6 +10,7 @@ numpy==1.26.4
 
 # --- Visualization ---
 matplotlib==3.9.2
+plotly==5.16.0
 
 # --- Optimization & math (for ERC portfolio) ---
 scipy==1.13.1
@@ -19,7 +20,7 @@ requests==2.32.3
 lxml==5.3.0
 
 # --- NLP / Machine Learning ---
-transformers==4.46.0
+transformers==4.46.1
 torch>=2.2.0
 sentencepiece>=0.2.0
 accelerate>=0.30.0

@@ -31,11 +31,11 @@ team_members = [
         "email": "marcus.rodriguez@university.edu"
     },
     {
-        "name": "Sophie Dubois",
-        "role": "Risk Management Specialist",
-        "bio": "Focused on risk assessment and mitigation strategies. Analyzes portfolio volatility, downside risk, and stress testing scenarios.",
-        "expertise": ["Risk Assessment", "VaR Analysis", "Stress Testing"],
-        "email": "sophie.dubois@university.edu"
+        "name": "Shengzhao Lei",
+        "role": "Quantitative strategist",
+        "bio": "Focuses on developing and implementing quantitative strategies for portfolio optimization. Skilled in data analysis and financial modeling.",
+        "expertise": ["Quantitative Strategies", "Data Analysis", "Financial Modeling"],
+        "email": "shengzhao.lei@unil.ch"
     },
     {
         "name": "James Thompson",
