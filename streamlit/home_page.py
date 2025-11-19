@@ -28,9 +28,9 @@ st.markdown("""
     }
 
     /* Hide Streamlit Header and Footer for cleaner look */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    #MainMenu {visibility: visible;}
+    footer {visibility: visible;}
+    header {visibility: visible;}
 
     /* Custom Top Navbar Style */
     div.block-container {
