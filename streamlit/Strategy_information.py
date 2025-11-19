@@ -1,8 +1,8 @@
 import streamlit as st
 
-st.set_page_config(page_title="ERC Strategy Overview", page_icon="📊")
+# st.set_page_config(page_title="Strategy overview", page_icon="📊")
 
-st.title("📊 ERC Strategy Overview")
+st.title("📊 Strategy overview")
 st.markdown("---")
 
 st.header("🔹 What Is Equal Risk Contribution (ERC)?")

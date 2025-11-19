@@ -21,7 +21,7 @@ team_members = [
     "role": "Asset Management Specialist",
     "bio": "Expert in optimizing investment portfolios and managing financial assets to maximize returns and mitigate risk. Provides strategic analysis for diverse asset classes.",
     "expertise": ["Asset Management", "Portfolio Optimization", "Strategic Financial Analysis"],
-    "email": "yann.suttor@university.edu"
+    "email": "yann.suttor@unil.ch"
     },
     {
         "name": "Marcus Rodriguez",
