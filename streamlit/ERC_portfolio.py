@@ -28,10 +28,10 @@ if load_button:
         # Load data
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         
-        equity_data = pd.read_csv(BASE_DIR + "\dataImporter\equity_data.csv")
-        commodity_data = pd.read_csv(BASE_DIR +"\dataImporter\commodities_data.csv")
-        crypto_data = pd.read_csv(BASE_DIR +"\dataImporter\cryptos_data.csv")
-        bonds_data = pd.read_csv(BASE_DIR +"\\dataImporter\\bonds_data.csv")
+        equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv")
+        commodity_data = pd.read_csv(BASE_DIR +"/dataImporter/commodities_data.csv")
+        crypto_data = pd.read_csv(BASE_DIR +"/dataImporter/cryptos_data.csv")
+        bonds_data = pd.read_csv(BASE_DIR +"/dataImporter/bonds_data.csv")
 
         # Create ESG data
         equity_data_esg = ut.equity_to_esg(equity_data)
