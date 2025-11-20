@@ -101,7 +101,14 @@ def render_navbar():
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
     
     with col1:
-        st.markdown("### **LUMINA WEALTH**")
+        st.markdown(
+            """
+            ### <img src='path/to/your/image.png' 
+                style='height: 30px; vertical-align: middle; margin-right: 10px;'> 
+            **LUMINA WEALTH**
+            """, 
+            unsafe_allow_html=True
+        )
         
     with col2:
         if st.button("Home"):
