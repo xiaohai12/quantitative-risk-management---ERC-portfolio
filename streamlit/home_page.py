@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 import utils.web_util as wu
 import plotly.graph_objects as go
 import plotly.express as px
@@ -97,13 +98,14 @@ def create_chart(df):
 # NAVIGATION BAR
 # -----------------------------------------------------------------------------
 def render_navbar():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
     
     with col1:
         st.markdown(
             """
-            ### <img src="pictures/amber.png" 
+            ### <img src= BASE_DIR + "/pictures/amber.png" 
                 style='height: 30px; vertical-align: middle; margin-right: 10px;'> 
             **LUMINA WEALTH**
             """, 
