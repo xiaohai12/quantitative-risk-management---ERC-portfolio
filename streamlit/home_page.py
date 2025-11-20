@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import web_util as wu
 import plotly.graph_objects as go
 import plotly.express as px
 from datetime import date, timedelta
@@ -9,90 +10,14 @@ from datetime import date, timedelta
 # PAGE CONFIGURATION
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Lumina Wealth | Premium Investment Portfolios",
-    page_icon="✨",
+    page_title="Amber Quant | Premium Investment Portfolios",
+    page_icon="🔶",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
-# -----------------------------------------------------------------------------
-# CUSTOM CSS (The "Fancy & Pure" Aesthetic)
-# -----------------------------------------------------------------------------
-st.markdown("""
-    <style>
-    /* Import nice font */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-    html, body, [class*="css"]  {
-        font-family: 'Inter', sans-serif;
-    }
-
-    /* Hide Streamlit Header and Footer for cleaner look */
-    #MainMenu {visibility: visible;}
-    footer {visibility: visible;}
-    header {visibility: visible;}
-
-    /* Custom Top Navbar Style */
-    div.block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    /* Button Styling to look like Nav Links */
-    .stButton > button {
-        width: 100%;
-        border: none;
-        background-color: transparent;
-        color: #555;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    .stButton > button:hover {
-        color: #000;
-        background-color: #f0f2f6;
-    }
-    .stButton > button:focus {
-        color: #2E86C1;
-        border-bottom: 2px solid #2E86C1;
-    }
-
-    /* Metric Cards Styling */
-    div[data-testid="stMetric"] {
-        background-color: #ffffff;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    /* Hero Text */
-    .hero-title {
-        font-size: 3.5rem;
-        font-weight: 700;
-        background: -webkit-linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-align: center;
-        margin-bottom: 0.5rem;
-    }
-    .hero-subtitle {
-        font-size: 1.2rem;
-        color: #666;
-        text-align: center;
-        margin-bottom: 3rem;
-    }
-
-    /* Section headers */
-    .section-header {
-        font-size: 2rem;
-        font-weight: 600;
-        margin-top: 3rem;
-        margin-bottom: 1.5rem;
-        border-left: 5px solid #1a2a6c;
-        padding-left: 15px;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# Custom style
+wu.apply_custom_css()
 
 # -----------------------------------------------------------------------------
 # STATE MANAGEMENT

@@ -1,0 +1,105 @@
+import streamlit as st
+
+# Style
+def apply_custom_css():
+    """
+    Applies the custom 'Fancy & Pure' aesthetic CSS to the Streamlit app.
+    """
+    st.markdown("""
+        <style>
+        /* Import nice font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        html, body, [class*="css"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hide Streamlit Header and Footer for cleaner look */
+        #MainMenu {visibility: visible;}
+        footer {visibility: visible;}
+        header {visibility: visible;}
+
+        /* Custom Top Navbar Style */
+        div.block-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Button Styling to look like Nav Links */
+        .stButton > button {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .stButton > button:hover {
+            color: #000;
+            background-color: #f0f2f6;
+        }
+        .stButton > button:focus {
+            color: #2E86C1;
+            border-bottom: 2px solid #2E86C1;
+        }
+
+        /* Metric Cards Styling */
+        div[data-testid="stMetric"] {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Hero Text */
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: -webkit-linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #1a2a6c;
+            padding-left: 15px;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+# Navigation bar
+def render_navbar():
+    st.markdown("---")
+    col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
+    
+    with col1:
+        st.markdown("### **LUMINA WEALTH**")
+        
+    with col2:
+        if st.button("Home"):
+            st.switch_page("pages/Contact.py")
+    with col3:
+        if st.button("Portfolios"):
+            navigate_to("Portfolios")
+    with col4:
+        if st.button("Philosophy"):
+            navigate_to("Philosophy")
+    with col5:
+        if st.button("Contact"):
+            navigate_to("Contact")
+    
+    st.markdown("---")
