@@ -103,7 +103,7 @@ def render_navbar():
     with col1:
         st.markdown(
             """
-            ### <img src="/pictures/amber.png" 
+            ### <img src="pictures/amber.png" 
                 style='height: 30px; vertical-align: middle; margin-right: 10px;'> 
             **LUMINA WEALTH**
             """, 
