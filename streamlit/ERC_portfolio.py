@@ -23,7 +23,7 @@ if load_button:
             
         # Portfolio construction code :
         import os
-        import utilities as ut
+        import utils.utilities as ut
         
         # Load data
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
