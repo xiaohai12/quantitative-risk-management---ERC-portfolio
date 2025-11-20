@@ -99,13 +99,15 @@ def create_chart(df):
 # -----------------------------------------------------------------------------
 def render_navbar():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    image_path = os.path.join(BASE_DIR, "pictures", "amber.png")
+    
     st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
     
     with col1:
         st.markdown(
             """
-            ### <img src= BASE_DIR + "/pictures/amber.png" 
+            ### <img src=image_path 
                 style='height: 30px; vertical-align: middle; margin-right: 10px;'> 
             **LUMINA WEALTH**
             """, 
