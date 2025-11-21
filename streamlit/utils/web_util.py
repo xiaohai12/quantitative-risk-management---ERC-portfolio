@@ -34,6 +34,7 @@ def apply_custom_css():
             background-color: transparent;
             color: #000;
             font-weight: 600;
+            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
         .stButton > button:hover {
@@ -42,7 +43,7 @@ def apply_custom_css():
         }
         .stButton > button:focus,.stButton > button:active {
             color: #000 !important;
-            border-bottom-color: #FF9900
+            border-bottom: 3px solid #FF9900;
             
         }
         /* Metric Cards Styling */
