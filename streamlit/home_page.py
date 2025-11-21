@@ -127,6 +127,11 @@ def home_page():
             text-align: center;
             border-radius: 15px; /* Optional: looks nice with cards */
         }}
+        
+        .hero-section h1, .hero-section p {
+            -webkit-text-stroke: 2px black;   /* Outline thickness + color */
+            color: white;                     /* Fill color */
+        
         </style>
     """, unsafe_allow_html=True)
     
