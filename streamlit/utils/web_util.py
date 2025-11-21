@@ -100,6 +100,7 @@ def render_navbar():
         
     with col2:
         if st.button("Home"):
+            st.markdown("<div style='height:40px;'></div>", unsafe_allow_html=True)
             st.switch_page("home_page.py")
     with col3:
         if st.button("Portfolios"):
