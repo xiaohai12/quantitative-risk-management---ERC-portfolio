@@ -1,10 +1,16 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-
+import utils.web_util as wu
 # Define the pages
 
 st.set_page_config(layout="wide")
+
+# Custom style
+wu.apply_custom_css()
+# Nav bar
+wu.render_navbar()
+
 
 st.title("Design Your Investment Strategy ")
 
