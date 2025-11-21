@@ -131,10 +131,10 @@ def home_page():
         .hero-section h1, .hero-section p {{
             color: white;
             text-shadow:
-                -2px -2px 0 black,
-                 2px -2px 0 black,
-                -2px  2px 0 black,
-                 2px  2px 0 black;
+                -1px -1px 0 black,
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black;
         }}
         </style>
     """, unsafe_allow_html=True)
