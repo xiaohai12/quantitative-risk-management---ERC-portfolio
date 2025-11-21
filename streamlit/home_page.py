@@ -173,6 +173,9 @@ def home_page():
         """,
         unsafe_allow_html=True,
         )
+
+    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
+    
     # -- Key Metrics --
     m1, m2, m3, m4 = st.columns(4)
     m1.metric(label="Total Assets Managed", value="$142M", delta="+12% YTD")
