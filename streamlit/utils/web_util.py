@@ -99,8 +99,10 @@ def render_navbar():
         )
         
     with col2:
+        <div style="display: flex; align-items: center;">
         if st.button("Home"):
             st.switch_page("home_page.py")
+        </div>
     with col3:
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
