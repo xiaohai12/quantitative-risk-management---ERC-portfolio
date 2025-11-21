@@ -40,7 +40,7 @@ def apply_custom_css():
             color: #000;
             background-color: #FFCC99;
         }
-        .stButton > button:focus {
+        .stButton > button:active {
             color: #CC6600;
             border-bottom: 2px solid #CC6600;
         }
