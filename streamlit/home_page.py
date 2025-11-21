@@ -147,7 +147,7 @@ def home_page():
     """, unsafe_allow_html=True)
     
     
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("""<hr style="margin-top:5px; margin-bottom:5px;">""", unsafe_allow_html=True)
 
     st.markdown(
         """
@@ -165,8 +165,8 @@ def home_page():
         </style>
         
         <div class="container">
-        <div class="top">Welcome to HSBC in France, Your Partner in Asset Management</div>
-        <div class="lead">At HSBC, our clients are at the heart of everything we do.</div>
+        <div class="top">Welcome to AMBER QUANT, Your Partner in Asset Management</div>
+        <div class="lead">At AMBER QUANT, our clients are at the heart of everything we do.</div>
         <div class="lead">Leveraging our deep sector knowledge and the expertise of our international network, we work in close partnership with our clients. Our goal is to fully understand their long-term strategic objectives and their unique risk profiles, enabling us to design and propose customized investment solutions and portfolios specifically adapted to their needs.</div>
         <div class="lead">Whatever your financial ambitions, our teams are ready to listen and help you achieve them.</div>
         </div>
