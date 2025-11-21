@@ -176,7 +176,7 @@ def home_page():
 wu.render_navbar()
 
 forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
-forest_base64 = image_to_base64(forest_path) 
+forest_base64 = wu.image_to_base64(forest_path) 
 
 # 1. Use f""" for string interpolation
 # 2. Use url('data:image/png;base64, ...') syntax in CSS
