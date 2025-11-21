@@ -20,7 +20,18 @@ st.set_page_config(
 # Custom style
 wu.apply_custom_css()
 
+forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
+forest_base64 = wu.image_to_base64(forest_path)
 
+
+
+# 3. IMPORTANT: You must actually create the HTML Div that uses the class
+st.markdown("""
+    <div class="hero-section">
+        <h1>Welcome to the Portfolio</h1>
+        <p>Quantitative Risk Management</p>
+    </div>
+""", unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
