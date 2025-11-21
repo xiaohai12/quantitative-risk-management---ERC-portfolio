@@ -32,7 +32,7 @@ def apply_custom_css():
             width: 100%;
             border: none;
             background-color: transparent;
-            color: #555;
+            color: #CC6600;
             font-weight: 600;
             transition: all 0.3s ease;
         }
