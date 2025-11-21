@@ -114,7 +114,7 @@ def render_navbar():
         if st.button("Contact Us"):
             st.switch_page("Contact.py")
     
-    st.markdown("""<hr style="margin-top:-5px; margin-bottom:15px;">""", unsafe_allow_html=True)
+    st.markdown("""<hr style="margin-top:-3px; margin-bottom:15px;">""", unsafe_allow_html=True)
 
 # Convert images
 def image_to_base64(image_path: str) -> str:
