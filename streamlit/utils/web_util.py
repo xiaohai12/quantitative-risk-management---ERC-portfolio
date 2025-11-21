@@ -18,8 +18,8 @@ def apply_custom_css():
 
         /* Apply horizontal padding to the main content area */
         .appview-container .main {
-            padding-left: 50px;  /* left empty space */
-            padding-right: 50px; /* right empty space */
+            padding-left: 150px;  /* left empty space */
+            padding-right: 150px; /* right empty space */
         }
         
         /* Hide Streamlit Header and Footer for cleaner look */
