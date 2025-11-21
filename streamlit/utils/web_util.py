@@ -82,16 +82,30 @@ def apply_custom_css():
     """, unsafe_allow_html=True)
 
 # Navigation bar
+# -----------------------------------------------------------------------------
+# NAVIGATION BAR
+# -----------------------------------------------------------------------------
 def render_navbar():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    image_path = os.path.join(BASE_DIR, "pictures", "amber.png")
+    
     st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
     
     with col1:
-        st.markdown("### **LUMINA WEALTH**")
+        st.markdown(
+            f"""
+            <div style="display: flex; align-items: center;">
+                <img src="{image_path}" style="height:30px; margin-right:10px;">
+                <h3 style="margin:0;"><b>LUMINA WEALTH</b></h3>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         
     with col2:
         if st.button("Home"):
-            st.switch_page("pages/Contact.py")
+            navigate_to("Home")
     with col3:
         if st.button("Portfolios"):
             navigate_to("Portfolios")
