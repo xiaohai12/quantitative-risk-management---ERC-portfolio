@@ -37,9 +37,6 @@ def apply_custom_css():
         /* Button Styling to look like Nav Links */
         .stButton > button {
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             border: none;
             background-color: transparent;
             color: #000;
