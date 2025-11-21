@@ -9,26 +9,6 @@ wu.apply_custom_css()
 # Nav bar
 wu.render_navbar()
 
-# ---- GLOBAL STYLE (background + card feeling) ----
-st.markdown("""
-<style>
-    /* Fond bleu foncé premium */
-    .stApp {
-        background-color: #0A1B3F;   /* bleu foncé élégant */
-    }
-
-    /* Contenu central (carte blanche) */
-    .block-container {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 0 25px rgba(0,0,0,0.30);
-    }
-</style>
-""", unsafe_allow_html=True)
-
-
-
 
 # ---- HEADER ----
 st.title("📬 Contact Us")
