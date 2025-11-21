@@ -98,8 +98,8 @@ def render_navbar():
             f"""
             <div style="display: flex; align-items: center;">
                 <img src="data:image/png;base64,{img_base64}" 
-                     style="height:45px; margin-right:10px; margin-top:-5px;">
-                <h3 style="margin:0;"><b>LUMINA WEALTH</b></h3>
+                     style="height:40px; margin-right:10px; margin-top:-5px;">
+                <h3 style="margin:0;"><b>AMBER QUANT</b></h3>
             </div>
             """,
             unsafe_allow_html=True
