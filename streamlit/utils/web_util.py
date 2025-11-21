@@ -63,21 +63,46 @@ def apply_custom_css():
         }
 
         /* Hero Text */
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: -webkit-linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-section {{
+            position: relative;
+            height: 400px;
+            background-image: url("data:image/jpg;base64,{image_base64}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
             text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+        }}
+    
+        .hero-title {{
+            font-size: 50px;
+            font-weight: bold;
+        }}
+    
+        .hero-subtitle {{
+            font-size: 24px;
+            margin-top: 10px;
+        }}
+    
+        .hero-section::before {{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }}
+    
+        .hero-section > * {{
+            position: relative;
+            z-index: 1;
+        }}
+        
 
         /* Section headers */
         .section-header {
@@ -94,9 +119,9 @@ def apply_custom_css():
 # Navigation bar
 def render_navbar():
     
-    image_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/amber.png'
+    amber_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/amber.png'
     
-    img_base64 = image_to_base64(image_path)
+    amber_base64 = image_to_base64(amber_path) 
     
     st.markdown("---")
     col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
@@ -105,7 +130,7 @@ def render_navbar():
         st.markdown(
             f"""
             <div style="display: flex; align-items: center;">
-                <img src="data:image/png;base64,{img_base64}" 
+                <img src="data:image/png;base64,{amber_base64}" 
                      style="height:35px; margin-right:10px; margin-top:-8px;">
                 <h3 style="margin:0;font-size:28px;color:#CC6600;font-weight:700;letter-spacing:0.8px;font-family: 'Trajan Pro', 'Playfair Display', serif;"><b>AMBER QUANT</b></h3>
             </div>
