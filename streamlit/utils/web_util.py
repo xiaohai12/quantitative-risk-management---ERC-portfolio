@@ -18,8 +18,8 @@ def apply_custom_css():
 
         /* Apply horizontal padding to the main content area */
         .block-container  {
-            padding-left: 1500px;  /* left empty space */
-            padding-right: 1500px; /* right empty space */
+            padding-left: 100px;  /* left empty space */
+            padding-right: 100px; /* right empty space */
         }
         
         /* Hide Streamlit Header and Footer for cleaner look */
