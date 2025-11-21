@@ -82,7 +82,8 @@ def render_navbar():
     
     amber_base64 = image_to_base64(amber_path) 
     
-    st.markdown("---")
+    st.markdown(""" <hr style="margin-top:5px; margin-bottom:5px;"> """, unsafe_allow_html=True)
+    
     col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
     
     with col1:
@@ -113,7 +114,7 @@ def render_navbar():
         if st.button("Contact Us"):
             st.switch_page("Contact.py")
     
-    st.markdown("---")
+    st.markdown("""<hr style="margin-top:5px; margin-bottom:5px;">""", unsafe_allow_html=True)
 
 # Convert images
 def image_to_base64(image_path: str) -> str:
