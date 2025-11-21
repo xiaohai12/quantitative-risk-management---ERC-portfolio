@@ -91,7 +91,7 @@ def render_navbar():
     img_base64 = image_to_base64(image_path)
     
     st.markdown("---")
-    col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
+    col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
     
     with col1:
         st.markdown(
@@ -107,16 +107,19 @@ def render_navbar():
         
     with col2:
         if st.button("Home"):
-            navigate_to("Home")
+            st.switch_page("home_page.py")
     with col3:
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
     with col4:
-        if st.button("Philosophy"):
-            navigate_to("Philosophy")
+        if st.button("Our Methods"):
+            st.switch_page("Strategy_information.py")
     with col5:
-        if st.button("Contact"):
-            navigate_to("Contact")
+        if st.button("Our Team"):
+            st.switch_page("team.py")
+    with col6:
+        if st.button("Contact Us"):
+            st.switch_page("Contact.py")
     
     st.markdown("---")
 
