@@ -70,7 +70,7 @@ def apply_custom_css():
         .hero-section {
             position: relative;
             height: 400px;
-            background-image: <img src="data:image/png;base64,{forest_base64}>" ;
+            background-image: url("data:image/png;base64,{forest_base64}");
             background-size: cover;
             background-position: center;
             display: flex;
