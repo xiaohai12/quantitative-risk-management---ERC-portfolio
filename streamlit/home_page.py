@@ -131,7 +131,7 @@ def home_page():
         .hero-section h1, .hero-section p {
             -webkit-text-stroke: 2px black;   /* Outline thickness + color */
             color: white;                     /* Fill color */
-        
+        }
         </style>
     """, unsafe_allow_html=True)
     
