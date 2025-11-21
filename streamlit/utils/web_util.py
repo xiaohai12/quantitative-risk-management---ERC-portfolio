@@ -98,8 +98,8 @@ def render_navbar():
             f"""
             <div style="display: flex; align-items: center;">
                 <img src="data:image/png;base64,{img_base64}" 
-                     style="height:40px; margin-right:10px; margin-top:-5px;">
-                <h3 style="margin:0;font-size:28px;color:#D4AF37;font-weight:700;letter-spacing:1px;font-family:'Helvetica Neue', sans-serif;"><b>AMBER QUANT</b></h3>
+                     style="height:37px; margin-right:10px; margin-top:-5px;">
+                <h3 style="margin:0;font-size:28px;color:#FFBF00;font-weight:700;letter-spacing:0.8px;font-family: 'Trajan Pro', 'Playfair Display', serif;"><b>AMBER QUANT</b></h3>
             </div>
             """,
             unsafe_allow_html=True
