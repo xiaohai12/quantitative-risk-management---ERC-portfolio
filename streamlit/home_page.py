@@ -147,7 +147,7 @@ def home_page():
     """, unsafe_allow_html=True)
     
     
-    st.markdown("""<hr style="margin-top:15px; margin-bottom:5px;">""", unsafe_allow_html=True)
+    st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 
     st.markdown(
         """
