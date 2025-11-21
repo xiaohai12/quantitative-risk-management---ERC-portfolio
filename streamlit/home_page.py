@@ -102,9 +102,15 @@ def create_chart(df):
 
 def home_page():
     # -- Hero Section --
-    st.markdown('<div class="hero-title">Wealth. Elevated.</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Intelligent portfolio management for the modern investor. <br>Pure data, zero clutter.</div>', unsafe_allow_html=True)
-
+   st.markdown(
+        """
+        <div class="hero-section">
+            <div class="hero-title">Wealth. Elevated.</div>
+            <div class="hero-subtitle">Intelligent portfolio management for the modern investor. <br>Pure data, zero clutter.</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     # -- Key Metrics --
     m1, m2, m3, m4 = st.columns(4)
     m1.metric(label="Total Assets Managed", value="$142M", delta="+12% YTD")
