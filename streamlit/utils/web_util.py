@@ -112,7 +112,7 @@ def render_navbar():
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
     with col4:
-        if st.button("Our Methods"):
+        if st.button("Methodology"):
             st.switch_page("Strategy_information.py")
     with col5:
         if st.button("Our Team"):
