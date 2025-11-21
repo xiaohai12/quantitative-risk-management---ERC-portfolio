@@ -128,9 +128,14 @@ def home_page():
             border-radius: 15px; /* Optional: looks nice with cards */
         }}
         
+        <style>
         .hero-section h1, .hero-section p {
-            -webkit-text-stroke: 2px black;   /* Outline thickness + color */
-            color: white;                     /* Fill color */
+            color: white;
+            text-shadow:
+                -2px -2px 0 black,
+                 2px -2px 0 black,
+                -2px  2px 0 black,
+                 2px  2px 0 black;
         }
         </style>
     """, unsafe_allow_html=True)
