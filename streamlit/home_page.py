@@ -128,7 +128,6 @@ def home_page():
             border-radius: 15px; /* Optional: looks nice with cards */
         }}
         
-        <style>
         .hero-section h1, .hero-section p {
             color: white;
             text-shadow:
