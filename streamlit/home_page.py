@@ -103,15 +103,40 @@ def create_chart(df):
 
 def home_page():
     # -- Hero Section --
-    st.markdown(
-        """
+    forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
+    forest_base64 = wu.image_to_base64(forest_path) 
+    
+    # 1. Use f""" for string interpolation
+    # 2. Use url('data:image/png;base64, ...') syntax in CSS
+    st.markdown(f"""
+        <style>
+        /* ... your other fonts and settings ... */
+        
+        .hero-section {{
+            position: relative;
+            height: 400px;
+            /* THE FIX IS HERE: Use url() instead of <img> */
+            background-image: url("data:image/png;base64,{forest_base64}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            border-radius: 15px; /* Optional: looks nice with cards */
+        }}
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # 3. IMPORTANT: You must actually create the HTML Div that uses the class
+    st.markdown("""
         <div class="hero-section">
-            <div class="hero-title">Wealth. Elevated.</div>
-            <div class="hero-subtitle">Intelligent portfolio management for the modern investor. <br>Pure data, zero clutter.</div>
+            <h1>Welcome to the Portfolio</h1>
+            <p>Quantitative Risk Management</p>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
     
     # -- Key Metrics --
     m1, m2, m3, m4 = st.columns(4)
@@ -165,42 +190,6 @@ def home_page():
 
 
 wu.render_navbar()
-
-forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
-forest_base64 = wu.image_to_base64(forest_path) 
-
-# 1. Use f""" for string interpolation
-# 2. Use url('data:image/png;base64, ...') syntax in CSS
-st.markdown(f"""
-    <style>
-    /* ... your other fonts and settings ... */
-    
-    .hero-section {{
-        position: relative;
-        height: 400px;
-        /* THE FIX IS HERE: Use url() instead of <img> */
-        background-image: url("data:image/png;base64,{forest_base64}");
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        text-align: center;
-        border-radius: 15px; /* Optional: looks nice with cards */
-    }}
-    </style>
-""", unsafe_allow_html=True)
-
-# 3. IMPORTANT: You must actually create the HTML Div that uses the class
-st.markdown("""
-    <div class="hero-section">
-        <h1>Welcome to the Portfolio</h1>
-        <p>Quantitative Risk Management</p>
-    </div>
-""", unsafe_allow_html=True)
-
 
 
 if st.session_state.page == 'Home':
