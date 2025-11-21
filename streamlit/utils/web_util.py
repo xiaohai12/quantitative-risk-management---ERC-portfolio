@@ -44,7 +44,7 @@ def apply_custom_css():
         }
         .stButton > button:focus,.stButton > button:active {
             color: #000 !important;
-            border-bottom: 3px solid #FF9900;
+            border-bottom: 3px solid #CC6600!important;
             
         }
         /* Metric Cards Styling */
