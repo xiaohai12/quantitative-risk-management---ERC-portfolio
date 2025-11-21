@@ -14,7 +14,7 @@ st.set_page_config(
     page_title="Amber Quant | Premium Investment Portfolios",
     page_icon="🔶",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Custom style
