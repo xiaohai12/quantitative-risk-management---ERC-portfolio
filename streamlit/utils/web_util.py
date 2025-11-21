@@ -67,7 +67,7 @@ def apply_custom_css():
         }
 
         /* Hero Text */
-        .hero-section {{
+        .hero-section {
             position: relative;
             height: 400px;
             background-image: url("data:image/png;base64,{forest_base64}");
@@ -79,19 +79,19 @@ def apply_custom_css():
             align-items: center;
             color: white;
             text-align: center;
-        }}
+        }
     
-        .hero-title {{
+        .hero-title {
             font-size: 50px;
             font-weight: bold;
-        }}
+        }
     
-        .hero-subtitle {{
+        .hero-subtitle {
             font-size: 24px;
             margin-top: 10px;
-        }}
+        }
     
-        .hero-section::before {{
+        .hero-section::before {
             content: "";
             position: absolute;
             top: 0;
@@ -100,12 +100,12 @@ def apply_custom_css():
             height: 100%;
             background: rgba(0, 0, 0, 0.4);
             z-index: 0;
-        }}
+        }
     
-        .hero-section > * {{
+        .hero-section > * {
             position: relative;
             z-index: 1;
-        }}
+        }
         
 
         /* Section headers */
