@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import base64
 
 # Style
 def apply_custom_css():
@@ -83,12 +84,11 @@ def apply_custom_css():
     """, unsafe_allow_html=True)
 
 # Navigation bar
-# -----------------------------------------------------------------------------
-# NAVIGATION BAR
-# -----------------------------------------------------------------------------
 def render_navbar():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     image_path = os.path.join(BASE_DIR, "pictures", "amber.png")
+    
+    img_base64 = image_to_base64(image_path)
     
     st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
@@ -97,7 +97,8 @@ def render_navbar():
         st.markdown(
             f"""
             <div style="display: flex; align-items: center;">
-                <img src="{image_path}" style="height:30px; margin-right:10px;">
+                <img src="data:image/png;base64,{img_base64}" 
+                     style="height:30px; margin-right:10px;">
                 <h3 style="margin:0;"><b>LUMINA WEALTH</b></h3>
             </div>
             """,
@@ -118,3 +119,9 @@ def render_navbar():
             navigate_to("Contact")
     
     st.markdown("---")
+
+# Convert images
+def image_to_base64(image_path: str) -> str:
+    """Convert a local image file to a base64-encoded string."""
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
