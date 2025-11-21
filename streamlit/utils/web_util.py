@@ -38,7 +38,7 @@ def apply_custom_css():
         }
         .stButton > button:hover {
             color: #000;
-            background-color: #f0f2f6;
+            background-color: #CC6600;
         }
         .stButton > button:focus {
             color: #2E86C1;
