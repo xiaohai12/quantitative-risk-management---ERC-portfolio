@@ -155,57 +155,12 @@ def home_page():
             unsafe_allow_html=True
         )
 
-def portfolios_page():
-    st.markdown('<div class="hero-title">Our Strategies</div>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("🌊 The Blue Ocean Fund")
-        st.write("Focused on emerging markets and high-growth tech sectors.")
-        st.progress(85, text="Risk Level: High")
-        st.line_chart(pd.DataFrame(np.random.randn(20, 3), columns=["Tech", "Bio", "Crypto"]))
-        
-    with col2:
-        st.subheader("🏔️ The Iron Mountain")
-        st.write("Focused on dividends, bonds, and real estate trusts.")
-        st.progress(30, text="Risk Level: Low")
-        st.line_chart(pd.DataFrame(np.random.randn(20, 3), columns=["Bonds", "REITs", "Gold"]))
-
-def philosophy_page():
-    st.markdown('<div class="hero-title">Our Philosophy</div>', unsafe_allow_html=True)
-    st.write("### Data over Emotion.")
-    st.write("At Lumina, we believe that human emotion is the enemy of wealth generation. We use strict quantitative models to make decisions.")
-
-def contact_page():
-    st.markdown('<div class="hero-title">Get in Touch</div>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        st.text_input("Name")
-        st.text_input("Email")
-        st.selectbox("Interest", ["Individual Investment", "Corporate Treasury", "Retirement Planning"])
-        st.text_area("Message")
-        st.button("Send Message")
-    
-    with col2:
-        st.map(pd.DataFrame({'lat': [40.7128], 'lon': [-74.0060]})) # NYC coordinates
-        st.write("**Lumina Wealth HQ**")
-        st.write("100 Wall Street, New York, NY")
-
-# -----------------------------------------------------------------------------
-# MAIN APP LOGIC
-# -----------------------------------------------------------------------------
 
 wu.render_navbar()
 
 if st.session_state.page == 'Home':
     home_page()
-elif st.session_state.page == 'Portfolios':
-    portfolios_page()
-elif st.session_state.page == 'Philosophy':
-    philosophy_page()
-elif st.session_state.page == 'Contact':
-    contact_page()
+
 
 # Footer filler
 st.write("")
