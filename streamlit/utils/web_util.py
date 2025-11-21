@@ -84,7 +84,7 @@ def render_navbar():
     
     st.markdown(""" <hr style="margin-top:15px; margin-bottom:15px;"> """, unsafe_allow_html=True)
     
-    col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
+    col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1],vertical_alignment="center")
     
     with col1:
         st.markdown(
