@@ -37,6 +37,9 @@ def apply_custom_css():
         /* Button Styling to look like Nav Links */
         .stButton > button {
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border: none;
             background-color: transparent;
             color: #000;
@@ -84,14 +87,14 @@ def render_navbar():
     
     st.markdown(""" <hr style="margin-top:15px; margin-bottom:15px;"> """, unsafe_allow_html=True)
     
-    col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1],vertical_alignment="center")
+    col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
     
     with col1:
         st.markdown(
             f"""
             <div style="display: flex; align-items: center;">
                 <img src="data:image/png;base64,{amber_base64}" 
-                     style="height:35px; margin-right:10px; margin-top:0px;">
+                     style="height:35px; margin-right:10px; margin-top:-8px;">
                 <h3 style="margin:0;font-size:28px;color:#CC6600;font-weight:700;letter-spacing:0.8px;font-family: 'Trajan Pro', 'Playfair Display', serif;"><b>AMBER QUANT</b></h3>
             </div>
             """,
