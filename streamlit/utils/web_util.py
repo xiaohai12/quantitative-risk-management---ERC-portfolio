@@ -40,6 +40,7 @@ def apply_custom_css():
         .stButton > button:hover {
             color: #000;
             background-color: #FFCC99;
+            border-bottom: 3px solid transparent;
         }
         .stButton > button:focus,.stButton > button:active {
             color: #000 !important;
