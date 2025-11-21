@@ -21,7 +21,7 @@ st.set_page_config(
 wu.apply_custom_css()
 
 forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
-forest_base64 = image_to_base64(forest_path)
+forest_base64 = wu.image_to_base64(forest_path)
 
 st.markdown(f"""
     <style>
