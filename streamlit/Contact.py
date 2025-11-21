@@ -4,6 +4,9 @@ import utils.web_util as wu
 
 st.set_page_config(page_title="Contact Us", page_icon="📬")
 
+# Custom style
+wu.apply_custom_css()
+# Nav bar
 wu.render_navbar()
 
 # ---- GLOBAL STYLE (background + card feeling) ----
