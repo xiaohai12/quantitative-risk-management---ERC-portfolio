@@ -21,15 +21,6 @@ st.set_page_config(
 wu.apply_custom_css()
 
 
-# 3. IMPORTANT: You must actually create the HTML Div that uses the class
-st.markdown("""
-    <div class="hero-section">
-        <h1>Welcome to the Portfolio</h1>
-        <p>Quantitative Risk Management</p>
-    </div>
-""", unsafe_allow_html=True)
-
-
 # -----------------------------------------------------------------------------
 # STATE MANAGEMENT
 # -----------------------------------------------------------------------------
