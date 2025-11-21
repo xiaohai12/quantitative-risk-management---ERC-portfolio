@@ -17,7 +17,7 @@ def apply_custom_css():
         }
 
         /* Apply horizontal padding to the main content area */
-        .appview-container .main {
+        .block-container  {
             padding-left: 1500px;  /* left empty space */
             padding-right: 1500px; /* right empty space */
         }
