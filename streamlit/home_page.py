@@ -20,6 +20,9 @@ st.set_page_config(
 # Custom style
 wu.apply_custom_css()
 
+forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
+forest_base64 = image_to_base64(forest_path)
+
 st.markdown(f"""
     <style>
     /* ... your other fonts and settings ... */
