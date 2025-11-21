@@ -1,7 +1,10 @@
 import re
 import streamlit as st
 
+
 st.set_page_config(page_title="Contact Us", page_icon="📬")
+
+wu.render_navbar()
 
 # ---- GLOBAL STYLE (background + card feeling) ----
 st.markdown("""
