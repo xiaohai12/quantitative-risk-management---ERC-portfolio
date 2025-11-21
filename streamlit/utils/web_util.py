@@ -92,7 +92,7 @@ def render_navbar():
             <div style="display: flex; align-items: center;">
                 <img src="data:image/png;base64,{amber_base64}" 
                      style="height:35px; margin-right:10px; margin-top:-8px;">
-                <h3 style="margin:0;margin-top:-50px;font-size:28px;color:#CC6600;font-weight:700;letter-spacing:0.8px;font-family: 'Trajan Pro', 'Playfair Display', serif;"><b>AMBER QUANT</b></h3>
+                <h3 style="margin:0;margin-top:-15px;font-size:28px;color:#CC6600;font-weight:700;letter-spacing:0.8px;font-family: 'Trajan Pro', 'Playfair Display', serif;"><b>AMBER QUANT</b></h3>
             </div>
             """,
             unsafe_allow_html=True
