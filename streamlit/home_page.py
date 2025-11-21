@@ -148,7 +148,31 @@ def home_page():
     
     
     st.markdown("<br><br>", unsafe_allow_html=True)
-    
+
+    st.markdown(
+        """
+        <style>
+        .top {
+            font-size: 42px; /* bigger first line */
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .lead {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        </style>
+        
+        <div class="container">
+        <div class="top">Welcome to HSBC in France, Your Partner in Asset Management</div>
+        <div class="lead">At HSBC, our clients are at the heart of everything we do.</div>
+        <div class="lead">Leveraging our deep sector knowledge and the expertise of our international network, we work in close partnership with our clients. Our goal is to fully understand their long-term strategic objectives and their unique risk profiles, enabling us to design and propose customized investment solutions and portfolios specifically adapted to their needs.</div>
+        <div class="lead">Whatever your financial ambitions, our teams are ready to listen and help you achieve them.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
     # -- Key Metrics --
     m1, m2, m3, m4 = st.columns(4)
     m1.metric(label="Total Assets Managed", value="$142M", delta="+12% YTD")
