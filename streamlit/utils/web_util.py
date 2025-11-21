@@ -42,7 +42,7 @@ def apply_custom_css():
         }
         .stButton > button:focus,.stButton > button:active {
             color: #000; 
-            background-color: #FFCC99; 
+            
         }
         /* Metric Cards Styling */
         div[data-testid="stMetric"] {
