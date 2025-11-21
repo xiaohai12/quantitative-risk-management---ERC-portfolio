@@ -20,6 +20,37 @@ st.set_page_config(
 # Custom style
 wu.apply_custom_css()
 
+st.markdown(f"""
+    <style>
+    /* ... your other fonts and settings ... */
+    
+    .hero-section {{
+        position: relative;
+        height: 400px;
+        /* THE FIX IS HERE: Use url() instead of <img> */
+        background-image: url("data:image/png;base64,{forest_base64}");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        border-radius: 15px; /* Optional: looks nice with cards */
+    }}
+    </style>
+""", unsafe_allow_html=True)
+
+# 3. IMPORTANT: You must actually create the HTML Div that uses the class
+st.markdown("""
+    <div class="hero-section">
+        <h1>Welcome to the Portfolio</h1>
+        <p>Quantitative Risk Management</p>
+    </div>
+""", unsafe_allow_html=True)
+
+
 # -----------------------------------------------------------------------------
 # STATE MANAGEMENT
 # -----------------------------------------------------------------------------
