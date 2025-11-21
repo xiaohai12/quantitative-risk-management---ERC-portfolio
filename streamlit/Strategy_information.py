@@ -1,6 +1,12 @@
 import streamlit as st
+import utils.web_util as wu
 
-# st.set_page_config(page_title="Strategy overview", page_icon="📊")
+st.set_page_config(page_title="Strategy overview", page_icon="📊",layout="wide")
+
+# Custom style
+wu.apply_custom_css()
+# Nav bar
+wu.render_navbar()
 
 st.title("📊 Strategy overview")
 st.markdown("---")
