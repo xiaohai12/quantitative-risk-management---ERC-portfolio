@@ -41,8 +41,8 @@ def apply_custom_css():
             background-color: #FFCC99;
         }
         .stButton > button:focus {
-            color: #2E86C1;
-            border-bottom: 2px solid #2E86C1;
+            color: #CC6600;
+            border-bottom: 2px solid #CC6600;
         }
 
         /* Metric Cards Styling */
