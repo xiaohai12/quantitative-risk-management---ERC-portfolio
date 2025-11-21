@@ -102,7 +102,7 @@ def create_chart(df):
 
 def home_page():
     # -- Hero Section --
-   st.markdown(
+    st.markdown(
         """
         <div class="hero-section">
             <div class="hero-title">Wealth. Elevated.</div>
