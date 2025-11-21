@@ -7,10 +7,7 @@ def apply_custom_css():
     """
     Applies the custom 'Fancy & Pure' aesthetic CSS to the Streamlit app.
     """
-    forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
-    
-    forest_base64 = image_to_base64(forest_path) 
-    
+
     st.markdown("""
         <style>
         /* Import nice font */
@@ -65,48 +62,6 @@ def apply_custom_css():
             border: 1px solid #e0e0e0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-
-        /* Hero Text */
-        .hero-section {
-            position: relative;
-            height: 400px;
-            background-image: url("data:image/png;base64,{forest_base64}");
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
-    
-        .hero-title {
-            font-size: 50px;
-            font-weight: bold;
-        }
-    
-        .hero-subtitle {
-            font-size: 24px;
-            margin-top: 10px;
-        }
-    
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 0;
-        }
-    
-        .hero-section > * {
-            position: relative;
-            z-index: 1;
-        }
-        
 
         /* Section headers */
         .section-header {
