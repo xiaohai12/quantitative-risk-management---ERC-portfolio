@@ -129,12 +129,12 @@ def home_page():
         }}
         
         .hero-section h1, .hero-section p {{
-            color: #2b2b2b;
+            color: white;
             text-shadow:
-                -1px -1px 0 white,
-                 1px -1px 0 white,
-                -1px  1px 0 white,
-                 1px  1px 0 white;
+                -1px -1px 0 black,
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black;
         }}
         </style>
     """, unsafe_allow_html=True)
