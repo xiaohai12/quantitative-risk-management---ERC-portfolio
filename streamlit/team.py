@@ -1,7 +1,7 @@
 import streamlit as st
 import utils.web_util as wu
 
-st.set_page_config(page_title="Our Team", page_icon="🤝",layout="wide")
+st.set_page_config(page_title="Our Team", page_icon="🤝",layout="wide",initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()
