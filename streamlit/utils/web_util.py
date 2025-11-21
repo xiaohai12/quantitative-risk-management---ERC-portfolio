@@ -7,6 +7,10 @@ def apply_custom_css():
     """
     Applies the custom 'Fancy & Pure' aesthetic CSS to the Streamlit app.
     """
+    forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
+    
+    forest_base64 = image_to_base64(forest_path) 
+    
     st.markdown("""
         <style>
         /* Import nice font */
@@ -66,7 +70,7 @@ def apply_custom_css():
         .hero-section {{
             position: relative;
             height: 400px;
-            background-image: url("data:image/jpg;base64,{image_base64}");
+            background-image: url("data:image/png;base64,{forest_base64}");
             background-size: cover;
             background-position: center;
             display: flex;
