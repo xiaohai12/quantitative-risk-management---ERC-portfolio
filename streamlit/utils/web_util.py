@@ -110,7 +110,7 @@ def render_navbar():
             navigate_to("Home")
     with col3:
         if st.button("Portfolios"):
-            st.switch_page(ERC_portfolio_page)
+            st.switch_page("ERC_portfolio.py")
     with col4:
         if st.button("Philosophy"):
             navigate_to("Philosophy")
