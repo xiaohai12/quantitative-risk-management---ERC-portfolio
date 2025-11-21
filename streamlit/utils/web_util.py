@@ -85,8 +85,8 @@ def apply_custom_css():
 
 # Navigation bar
 def render_navbar():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    image_path = os.path.join(BASE_DIR, "pictures", "amber.png")
+    
+    image_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/amber.png'
     
     img_base64 = image_to_base64(image_path)
     
