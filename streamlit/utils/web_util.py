@@ -16,6 +16,12 @@ def apply_custom_css():
             font-family: 'Inter', sans-serif;
         }
 
+        /* Apply horizontal padding to the main content area */
+        .appview-container .main {
+            padding-left: 50px;  /* left empty space */
+            padding-right: 50px; /* right empty space */
+        }
+        
         /* Hide Streamlit Header and Footer for cleaner look */
         #MainMenu {visibility: visible;}
         footer {visibility: visible;}
