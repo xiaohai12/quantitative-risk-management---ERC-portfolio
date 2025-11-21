@@ -40,11 +40,10 @@ def apply_custom_css():
             color: #000;
             background-color: #FFCC99;
         }
-        .stButton > button:active {
-            color: #555;
-            border-bottom: 2px solid #CC6600;
+        .stButton > button:focus,.stButton > button:active {
+            color: #000; 
+            background-color: #FFCC99; 
         }
-
         /* Metric Cards Styling */
         div[data-testid="stMetric"] {
             background-color: #ffffff;
