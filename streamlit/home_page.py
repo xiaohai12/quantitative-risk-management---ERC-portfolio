@@ -105,15 +105,15 @@ def render_navbar():
     col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
     
     with col1:
-    st.markdown(
-        f"""
-        <div style="display: flex; align-items: center;">
-            <img src="{image_path}" style="height:30px; margin-right:10px;">
-            <h3 style="margin:0;"><b>LUMINA WEALTH</b></h3>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f"""
+            <div style="display: flex; align-items: center;">
+                <img src="{image_path}" style="height:30px; margin-right:10px;">
+                <h3 style="margin:0;"><b>LUMINA WEALTH</b></h3>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         
     with col2:
         if st.button("Home"):
