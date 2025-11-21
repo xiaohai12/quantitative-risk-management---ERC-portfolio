@@ -86,17 +86,6 @@ def render_navbar():
     
     col1, col2, col3, col4, col5, col6 = st.columns([2, 1, 1, 1, 1,1])
     
-    st.markdown("""
-        <style>
-            .vertical-center {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-    
     with col1:
         st.markdown(
             f"""
@@ -110,11 +99,8 @@ def render_navbar():
         )
         
     with col2:
-        st.markdown("<div class='vertical-center'>", unsafe_allow_html=True)
         if st.button("Home"):
             st.switch_page("home_page.py")
-        st.markdown("</div>", unsafe_allow_html=True)
-    
     with col3:
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
