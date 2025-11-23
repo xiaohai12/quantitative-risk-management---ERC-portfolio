@@ -1,12 +1,13 @@
 import streamlit as st
 import utils.web_util as wu
+from statics import IMG_DIR
 
-st.set_page_config(page_title="Our Team", page_icon="🤝",layout="wide",initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Our Team", layout="wide",initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()
 # Nav bar
-wu.render_navbar()
+wu.render_navbar(IMG_DIR)
 
 # Page Header
 st.title("🤝Our Team")
@@ -87,7 +88,7 @@ for i, member in enumerate(team_members):
 
 # Project Information Section
 st.markdown("---")
-st.markdown("## 📊 About This Project")
+st.markdown("## About This Project")
 
 col1, col2 = st.columns(2)
 
@@ -111,7 +112,7 @@ with col2:
 
 # Contact Section
 st.markdown("---")
-st.markdown("## 📬 Get In Touch")
+st.markdown("## Get In Touch")
 st.info(
     "For inquiries about our project or methodologies, please contact any team member via email. We welcome feedback and discussions about portfolio management strategies.")
 

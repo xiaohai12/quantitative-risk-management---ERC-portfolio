@@ -1,17 +1,18 @@
 import streamlit as st
 import utils.web_util as wu
+from statics import IMG_DIR
 
-st.set_page_config(page_title="Strategy overview", page_icon="📊",layout="wide",initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Strategy overview", layout="wide",initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()
 # Nav bar
-wu.render_navbar()
+wu.render_navbar(IMG_DIR)
 
-st.title("📊 Strategy overview")
+st.title("Strategy overview")
 st.markdown("---")
 
-st.header("🔹 What Is Equal Risk Contribution (ERC)?")
+st.header("What Is Equal Risk Contribution (ERC)?")
 st.write("""
 Equal Risk Contribution (ERC) is a portfolio optimization method where each asset 
 contributes equally to total portfolio risk. Instead of allocating by capital 
@@ -23,7 +24,7 @@ This means:
 - It naturally adapts to changing market conditions.
 """)
 
-st.header("🔹 Why We Use ERC")
+st.header("Why We Use ERC")
 st.write("""
 ERC is particularly attractive for multi-asset or multi-industry portfolios because:
 
@@ -33,7 +34,7 @@ ERC is particularly attractive for multi-asset or multi-industry portfolios beca
 - **Transparent and intuitive**  
 """)
 
-st.header("📈 Data Description")
+st.header("Data Description")
 st.write("""
 Our ERC system uses a multi-asset dataset collected directly from **Yahoo Finance** 
 via the `yfinance` API. The dataset covers four major asset classes, allowing us 
@@ -88,7 +89,7 @@ We extract:
 Crypto helps analyze the ERC model under extreme-volatility conditions.
 """)
 
-st.header("🌱 ESG Integration")
+st.header("ESG Integration")
 st.write("""
 We extend the ERC framework to incorporate **carbon intensity** and **ESG metrics**, such as:
 
@@ -103,5 +104,5 @@ We provide:
 """)
 
 st.markdown("---")
-st.subheader("📚 Want to Explore?")
+st.subheader("Want to Explore?")
 st.write("Navigate to **ERC Portfolio** to interact with the optimization tool.")

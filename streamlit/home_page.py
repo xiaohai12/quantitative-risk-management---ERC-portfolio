@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import utils.web_util as wu
+from statics import IMG_DIR
 import plotly.graph_objects as go
 import plotly.express as px
 from datetime import date, timedelta
@@ -103,7 +104,7 @@ def create_chart(df):
 
 def home_page():
     # -- Hero Section --
-    forest_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/forest.png'
+    forest_path = os.path.join(IMG_DIR,"forest.png")
     forest_base64 = wu.image_to_base64(forest_path) 
     
     # 1. Use f""" for string interpolation
@@ -200,15 +201,15 @@ def home_page():
     c1, c2, c3 = st.columns(3)
     
     with c1:
-        st.markdown("### 🛡️ Risk-First Approach")
+        st.markdown("### Risk-First Approach")
         st.info("We prioritize capital preservation. Our algorithms actively hedge against downside volatility before chasing upside.")
     
     with c2:
-        st.markdown("### 🧠 AI-Driven Rebalancing")
+        st.markdown("### AI-Driven Rebalancing")
         st.info("Your portfolio is monitored 24/7. We automatically rebalance based on macro-economic shifts, not just calendar dates.")
 
     with c3:
-        st.markdown("### 💎 Transparent Fee Structure")
+        st.markdown("### Transparent Fee Structure")
         st.info("No hidden trading fees. No front-loading. Just a simple, flat advisory fee based on assets under management.")
 
     # -- CTA --
@@ -227,7 +228,7 @@ def home_page():
         )
 
 
-wu.render_navbar()
+wu.render_navbar(IMG_DIR)
 
 
 if st.session_state.page == 'Home':

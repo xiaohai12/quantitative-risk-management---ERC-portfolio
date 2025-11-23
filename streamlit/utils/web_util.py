@@ -76,9 +76,9 @@ def apply_custom_css():
     """, unsafe_allow_html=True)
 
 # Navigation bar
-def render_navbar():
-    
-    amber_path = '/mount/src/quantitative-risk-management---erc-portfolio/streamlit/pictures/amber.png'
+def render_navbar(IMG_DIR):
+
+    amber_path = os.path.join(IMG_DIR, "amber.png")
     
     amber_base64 = image_to_base64(amber_path) 
     

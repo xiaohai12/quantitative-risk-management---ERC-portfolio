@@ -1,7 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 
-st.title("Risk Tolerance Chatbot 🤖")
+st.title("Risk Tolerance Chatbot")
 
 # Initialize lightweight model once
 @st.cache_resource

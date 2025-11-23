@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import utils.web_util as wu
+from statics import IMG_DIR
 # Define the pages
 
 st.set_page_config(page_title="Portfolios",layout="wide",initial_sidebar_state="collapsed")
@@ -9,7 +10,7 @@ st.set_page_config(page_title="Portfolios",layout="wide",initial_sidebar_state="
 # Custom style
 wu.apply_custom_css()
 # Nav bar
-wu.render_navbar()
+wu.render_navbar(IMG_DIR)
 
 
 st.title("Design Your Investment Strategy ")
@@ -231,7 +232,7 @@ st.divider()
 # 3. Launch & Display Results
 # ---
 st.header("3. Your Portfolio Performance")
-launch_button = st.button("🚀 Launch Portfolio Construction")
+launch_button = st.button("Launch Portfolio Construction")
 
 if launch_button:
     # Check if at least one asset is selected

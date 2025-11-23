@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Page configuration
-st.title("📊 Risk Preference Assessment")
+st.title("Risk Preference Assessment")
 st.markdown("Answer the following questions to evaluate your risk tolerance profile.")
 st.markdown("---")
 
@@ -135,7 +135,7 @@ for q in questions:
     st.markdown("---")
 
 # Submit button
-if st.button("📊 Calculate My Risk Score", type="primary", use_container_width=True):
+if st.button("Calculate My Risk Score", type="primary", use_container_width=True):
     st.session_state.submitted = True
 
 # Calculate and display results
