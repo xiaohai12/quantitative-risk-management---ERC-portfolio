@@ -7,7 +7,7 @@ ERC_portfolio_page = st.Page("ERC_portfolio.py", title="ERC portfolio")
 Contact_page = st.Page("Contact.py", title="Contact US")
 Risk_Preference = st.Page("risk_preference.py", title="Risk Preference")
 Our_Team = st.Page("team.py", title="Our Team")
-Methodology = st.Page("methodology.py", title="ERC Strategy Information")
+Methodology = st.Page("methodology.py", title="Methodology")
 LLM = st.Page("LLM.py", title="LLM")
 
 # Set up navigation
