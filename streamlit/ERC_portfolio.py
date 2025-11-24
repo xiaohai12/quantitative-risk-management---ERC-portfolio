@@ -242,7 +242,7 @@ if launch_button:
         # This block runs only when the button is clicked
         with st.spinner("Constructing your optimal portfolio..."):
 
-            import utilities as ut
+            import utils.utilities as ut
             
             # ERC performmance
             equity_flat, equity_mean, equity_vol, equity_sharpe, equity_cumu = ut.erc_performance(st.session_state.equity_erc_returns, st.session_state.equity_returns,2017)
