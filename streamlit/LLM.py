@@ -122,7 +122,6 @@ if prompt := st.chat_input("Type your message here..."):
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json"
             }
-            st.write('the api key is', api_key)
 
             # Format messages for the API
             api_messages = [
