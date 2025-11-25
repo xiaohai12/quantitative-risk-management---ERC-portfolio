@@ -28,18 +28,7 @@ st.markdown("""
 try:
     api_key = st.secrets["OPENROUTER_API_KEY"]
 except (KeyError, FileNotFoundError):
-    st.error("⚠️ OpenRouter API key not found. Please configure it in `.streamlit/secrets.toml`")
-    st.info("""
-    **Setup Instructions:**
-
-    1. Create a `.streamlit` folder in your project root
-    2. Create a `secrets.toml` file inside it
-    3. Add your API key:
-    ```
-    OPENROUTER_API_KEY = "your-api-key-here"
-    ```
-    4. Add `.streamlit/secrets.toml` to your `.gitignore`
-    """)
+    st.error("⚠️ OpenRouter API key not found.")
     st.stop()
 
 # Initialize session state for chat history
@@ -48,22 +37,36 @@ if "messages" not in st.session_state:
     # Add initial greeting message
     st.session_state.messages.append({
         "role": "assistant",
-        "content": "Hello! I'm here to provide general information about financial topics and markets. Please note that I provide educational information only, not personalized financial advice. Always consult with qualified financial advisors before making investment decisions. How can I assist you today?"
+        "content": """Hi! I’m Amber from Amber Quant 👋 
+How can I help you explore your options today?  
+*Note: This is educational only. Please always consult a financial advisor (we would be happy to meet you!) or do your own research, before investing.*"""
     })
 
 # Sidebar for settings
 with st.sidebar:
     st.title("⚙️ Settings")
 
-    model = st.selectbox(
-        "Model",
-        ["deepseek/deepseek-chat", "deepseek/deepseek-reasoner"],
-        help="Select the DeepSeek model to use"
-    )
-
     system_prompt = st.text_area(
         "System Prompt",
-        value="You are a helpful financial information assistant. You provide general information about financial topics and markets. Always remind users that you provide educational information only, not personalized financial advice, and that they should consult with qualified financial advisors before making investment decisions.",
+        value = """You are Amber, a concise educational assistant from Amber Quant.
+Available investments:
+• Stocks (ESG-compliant option available)
+• Commodities (ESG-compliant option available)
+• Bonds (standard only, NO ESG version)
+• Cryptocurrencies (standard only, NO ESG version)
+
+Rules (strict):
+- Keep every reply very short (2–4 sentences max).
+- Only mention ESG for Stocks and Commodities. Never say or imply ESG exists for Bonds or Crypto.
+- Never recommend specific products, amounts, or timing.
+- NEVER give personalized advice.
+- EVERY single reply MUST include this exact sentence (or very close variation):
+  “
+  *Note: This is educational only. Please always consult a financial advisor (we would be happy to meet you!) or do your own research before investing.*”
+
+Example of correct reply:
+“Conservative investors often look at bonds or ESG commodities. ESG options are only available for stocks and commodities. 
+*Note: This is educational only. Please always consult a financial advisor (we would be happy to meet you!) or do your own research before investing.*”""",
         height=150,
         help="Instructions for how the AI should behave"
     )
@@ -72,7 +75,7 @@ with st.sidebar:
         "Temperature",
         min_value=0.0,
         max_value=2.0,
-        value=0.7,
+        value=0.6,
         step=0.1,
         help="Controls randomness in responses"
     )
@@ -80,8 +83,8 @@ with st.sidebar:
     max_tokens = st.number_input(
         "Max Tokens",
         min_value=100,
-        max_value=4000,
-        value=1000,
+        max_value=1000,
+        value=500,
         step=100,
         help="Maximum length of the response"
     )
@@ -94,6 +97,7 @@ with st.sidebar:
 
 # Main chat interface
 st.title("💬 AI Chat Assistant")
+st.caption("Powered by DeepSeek")
 
 # Display chat messages
 for message in st.session_state.messages:
@@ -136,7 +140,7 @@ if prompt := st.chat_input("Type your message here..."):
                 })
 
             data = {
-                "model": model,
+                "model": "deepseek/deepseek-chat",
                 "messages": api_messages,
                 "temperature": temperature,
                 "max_tokens": max_tokens
