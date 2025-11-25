@@ -97,7 +97,6 @@ Example of correct reply:
 
 # Main chat interface
 st.title("💬 AI Chat Assistant")
-st.caption("Powered by DeepSeek")
 
 # Display chat messages
 for message in st.session_state.messages:
