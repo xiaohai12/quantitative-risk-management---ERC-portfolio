@@ -106,7 +106,7 @@ def render_navbar(IMG_DIR):
             st.switch_page("ERC_portfolio.py")
     with col4:
         if st.button("Methodology"):
-            st.switch_page("Strategy_information.py")
+            st.switch_page("methodology.py")
     with col5:
         if st.button("Our Team"):
             st.switch_page("team.py")
