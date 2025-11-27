@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
-from statics import IMG_DIR
 import utils.web_util as wu
+from statics import IMG_DIR
+# Define the pages
 
 # Page configuration
 st.set_page_config(
@@ -13,7 +14,6 @@ st.set_page_config(
 wu.apply_custom_css()
 # Nav bar
 wu.render_navbar(IMG_DIR)
-
 # Custom CSS for ChatGPT-like styling
 st.markdown("""
 <style>
