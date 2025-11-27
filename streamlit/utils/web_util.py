@@ -114,7 +114,7 @@ def render_navbar(IMG_DIR):
         if st.button("Our Team"):
             st.switch_page("team.py")
     with col7:
-        if st.button("LLM Chat"):
+        if st.button("AI Chat"):
             st.switch_page("LLM.py")
     with col8:
         if st.button("Contact Us"):
