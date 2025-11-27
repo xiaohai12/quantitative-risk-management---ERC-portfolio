@@ -7,6 +7,10 @@ st.set_page_config(
     page_icon="💬",
     layout="wide"
 )
+# Custom style
+wu.apply_custom_css()
+# Nav bar
+wu.render_navbar(IMG_DIR)
 
 # Custom CSS for ChatGPT-like styling
 st.markdown("""
