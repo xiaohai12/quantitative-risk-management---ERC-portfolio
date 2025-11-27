@@ -84,7 +84,7 @@ def render_navbar(IMG_DIR):
     
     st.markdown(""" <hr style="margin-top:15px; margin-bottom:15px;"> """, unsafe_allow_html=True)
     
-    col1, col2, col3, col4, col5, col6, col7 = st.columns([2, 1, 1, 1, 1,1,1])
+    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns([2, 1, 1, 1, 1,1,1,1])
     
     with col1:
         st.markdown(
@@ -101,6 +101,9 @@ def render_navbar(IMG_DIR):
     with col2:
         if st.button("Home"):
             st.switch_page("home_page.py")
+    with col8:
+        if st.button("Risk Profile"):
+            st.switch_page("risk_preference.py")
     with col3:
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
