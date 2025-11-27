@@ -2,15 +2,17 @@ import streamlit as st
 import utils.web_util as wu
 from statics import IMG_DIR
 
+# Custom style
+wu.apply_custom_css()
+# Nav bar
+wu.render_navbar(IMG_DIR)
+
+
 # Page configuration
 st.title("Risk Preference Assessment")
 st.markdown("Answer the following questions to evaluate your risk tolerance profile.")
 st.markdown("---")
 
-# Custom style
-wu.apply_custom_css()
-# Nav bar
-wu.render_navbar(IMG_DIR)
 
 # Initialize session state for storing answers
 if 'answers' not in st.session_state:
