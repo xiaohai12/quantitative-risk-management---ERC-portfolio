@@ -101,22 +101,22 @@ def render_navbar(IMG_DIR):
     with col2:
         if st.button("Home"):
             st.switch_page("home_page.py")
-    with col8:
+    with col3:
         if st.button("Risk Profile"):
             st.switch_page("risk_preference.py")
-    with col3:
+    with col4:
         if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
-    with col4:
+    with col5:
         if st.button("Methodology"):
             st.switch_page("methodology.py")
-    with col5:
+    with col6:
         if st.button("Our Team"):
             st.switch_page("team.py")
-    with col6:
+    with col7:
         if st.button("LLM Chat"):
             st.switch_page("LLM.py")
-    with col7:
+    with col8:
         if st.button("Contact Us"):
             st.switch_page("Contact.py")
     
