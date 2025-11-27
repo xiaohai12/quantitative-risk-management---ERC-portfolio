@@ -10,6 +10,18 @@ st.set_page_config(
     page_icon="💬",
     layout="wide"
 )
+
+# ---- Hide the sidebar completely ----
+hide_sidebar_style = """
+<style>
+    [data-testid="stSidebar"] {display: none;}
+    [data-testid="stSidebarNav"] {display: none;}
+    .css-1d391kg {display: none;} /* older streamlit versions */
+</style>
+"""
+st.markdown(hide_sidebar_style, unsafe_allow_html=True)
+
+
 # Custom style
 wu.apply_custom_css()
 # Nav bar
