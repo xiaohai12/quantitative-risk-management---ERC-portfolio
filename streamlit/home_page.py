@@ -45,21 +45,21 @@ def get_dummy_data():
     sp500_returns = np.random.normal(loc=0.0003, scale=0.01, size=len(dates))
     sp500_price = 100 * (1 + sp500_returns).cumprod()
     
-    # Lumina Portfolio Simulation (Slightly better alpha, lower beta)
-    lumina_returns = np.random.normal(loc=0.0004, scale=0.008, size=len(dates))
-    lumina_price = 100 * (1 + lumina_returns).cumprod()
+    # amber Portfolio Simulation (Slightly better alpha, lower beta)
+    amber_returns = np.random.normal(loc=0.0004, scale=0.008, size=len(dates))
+    amber_price = 100 * (1 + amber_returns).cumprod()
 
-    return pd.DataFrame({'Date': dates, 'S&P 500': sp500_price, 'Lumina Aggressive': lumina_price})
+    return pd.DataFrame({'Date': dates, 'S&P 500': sp500_price, 'Amber Aggressive': amber_price})
 
 def create_chart(df):
     """Creates a fancy Plotly chart."""
     fig = go.Figure()
 
-    # Add Lumina Line (Filled Area)
+    # Add amber Line (Filled Area)
     fig.add_trace(go.Scatter(
-        x=df['Date'], y=df['Lumina Aggressive'],
+        x=df['Date'], y=df['Amber Aggressive'],
         mode='lines',
-        name='Lumina Aggressive',
+        name='Amber Aggressive',
         line=dict(color='#2E86C1', width=3),
         fill='tozeroy',
         fillcolor='rgba(46, 134, 193, 0.1)'
@@ -196,7 +196,7 @@ def home_page():
     st.plotly_chart(fig, use_container_width=True)
 
     # -- Value Props --
-    st.markdown('<div class="section-header">Why Lumina?</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Why Amber?</div>', unsafe_allow_html=True)
     
     c1, c2, c3 = st.columns(3)
     
@@ -239,4 +239,4 @@ if st.session_state.page == 'Home':
 st.write("")
 st.write("")
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: #888; font-size: 0.8rem;'>© 2025 Lumina Wealth Management. All rights reserved. Investments involve risk.</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; color: #888; font-size: 0.8rem;'>© 2025 Amber Wealth Management. All rights reserved. Investments involve risk.</div>", unsafe_allow_html=True)
