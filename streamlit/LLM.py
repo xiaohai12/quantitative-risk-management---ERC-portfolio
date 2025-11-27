@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import utils.web_util as wu
 
 # Page configuration
 st.set_page_config(
