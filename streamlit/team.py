@@ -10,7 +10,7 @@ wu.apply_custom_css()
 wu.render_navbar(IMG_DIR)
 
 # Page Header
-st.title("🤝Our Team")
+st.title("Our Team")
 st.markdown("### Meet the Portfolio Management Team")
 st.markdown("---")
 

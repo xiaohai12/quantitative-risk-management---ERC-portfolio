@@ -7,6 +7,17 @@ wu.apply_custom_css()
 # Nav bar
 wu.render_navbar(IMG_DIR)
 
+# ---- Hide the sidebar completely ----
+hide_sidebar_style = """
+<style>
+    [data-testid="stSidebar"] {display: none;}
+    [data-testid="stSidebarNav"] {display: none;}
+    .css-1d391kg {display: none;} /* older streamlit versions */
+</style>
+"""
+st.markdown(hide_sidebar_style, unsafe_allow_html=True)
+
+
 
 # Page configuration
 st.title("Risk Preference Assessment")
