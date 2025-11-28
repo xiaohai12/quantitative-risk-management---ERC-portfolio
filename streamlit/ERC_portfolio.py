@@ -270,7 +270,11 @@ if launch_button:
             col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%" )
             col2.metric("Annual Volatility", f"{MeanVar_vol * 100:.2f}%")
             col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
-            col4.metric("Cumulative Return", f"{MeanVar_cumu:.2f}" )
+            col4.metric(
+                "Cumulative Return",
+                f"{MeanVar_cumu:.2%}",
+                delta=None
+            )
             
             st.markdown("<br><br><br>", unsafe_allow_html=True)
             # Display  graph
