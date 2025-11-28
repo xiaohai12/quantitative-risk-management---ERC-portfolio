@@ -44,7 +44,7 @@ def apply_custom_css():
             font-weight: 600;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            font-size: 30px;
+            
         }
         .stButton > button:hover {
             color: #000;
@@ -76,7 +76,7 @@ def apply_custom_css():
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 8px;
-            font-size: 16px;
+            
         }
 
         .dropdown-button:hover {
