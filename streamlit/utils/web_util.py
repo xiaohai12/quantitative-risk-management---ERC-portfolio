@@ -74,7 +74,7 @@ def apply_custom_css():
             border-bottom: 3px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
-            
+            border-radius: 8px;
         }
 
         .dropdown-button:hover {
@@ -90,7 +90,7 @@ def apply_custom_css():
             z-index: 1000 ;
             border-radius: 5px;
             margin-top: 5px;
-            border-radius: 8px;
+            
         }
 
         .dropdown-content a {
