@@ -304,8 +304,23 @@ if launch_button:
             col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
             col4.metric("Cumulative Return", f"{MeanVar_cumu:.2f}")
 
+             # --- Results Section ---
+            st.subheader("Simulated Portfolio Performance")
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            # Display  metrics
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%" )
+            col2.metric("Annual Volatility", f"{MeanVar_vol * 100:.2f}%")
+            col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
+            col4.metric("Cumulative Return", f"{MeanVar_cumu:.2f}" )
+            
+            st.markdown("<br><br><br>", unsafe_allow_html=True)
             # Display  graph
-            st.subheader("Portfolio Growth Simulation")
-            col1, col2, col3 = st.columns([3, 1, 1])
+            col1, col2,col3 = st.columns([4.5,0.8, 2.8])
             with col1:
                 st.pyplot(cumu_graph_final)
+
+            with col3:
+                fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
+                st.pyplot(fig1)
