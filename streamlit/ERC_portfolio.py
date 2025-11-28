@@ -20,6 +20,41 @@ c1, c2 = st.columns([4, 1])
 with c1:
     st.caption("Use the options below to configure your portfolio.")
 
+with c2:
+    load_button = st.button("Load Data")
+
+if load_button:
+    with st.spinner("This might take a minute..."):
+        # Portfolio construction code :
+        import os
+        import utils.utilities as ut
+
+        # Load data
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+        equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv")
+        commodity_data = pd.read_csv(BASE_DIR + "/dataImporter/commodities_data.csv")
+        crypto_data = pd.read_csv(BASE_DIR + "/dataImporter/cryptos_data.csv")
+        bonds_data = pd.read_csv(BASE_DIR + "/dataImporter/bonds_data.csv")
+        equity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/equity_data_esg.csv")
+        commodity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/commodity_data_esg.csv")
+
+        equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv")
+        equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv")
+        commodity_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_returns.csv")
+        commodity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_esg_returns.csv")
+        crypto_returns = pd.read_csv(BASE_DIR + "/dataImporter/crypto_returns.csv")
+        bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv")
+
+        # ERC portfolio
+        equity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+        equity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+        commodity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+        commodity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+        crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
+
+        st.success("Data loaded successfully !")
+
 st.divider()
 # ---
 # 1. Asset & ESG Selection
@@ -187,55 +222,25 @@ if launch_button:
         st.error("Cannot build portfolio. Please select at least one asset class above.")
     else:
         # This block runs only when the button is clicked
-        with st.spinner("Loading data and constructing your optimal portfolio..."):
+        with st.spinner("Constructing your optimal portfolio..."):
 
-            import os
             import utils.utilities as ut
 
-            # Load data
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-            equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv", index_col=0)
-            equity_data.index = pd.to_datetime(equity_data.index)
-            commodity_data = pd.read_csv(BASE_DIR + "/dataImporter/commodities_data.csv", index_col=0)
-            commodity_data.index = pd.to_datetime(commodity_data.index)
-            crypto_data = pd.read_csv(BASE_DIR + "/dataImporter/cryptos_data.csv", index_col=0)
-            crypto_data.index = pd.to_datetime(crypto_data.index)
-            bonds_data = pd.read_csv(BASE_DIR + "/dataImporter/bonds_data.csv", index_col=0)
-            bonds_data.index = pd.to_datetime(bonds_data.index)
-            equity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/equity_data_esg.csv", index_col=0)
-            equity_data_esg.index = pd.to_datetime(equity_data_esg.index)
-            commodity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/commodity_data_esg.csv", index_col=0)
-            commodity_data_esg.index = pd.to_datetime(commodity_data_esg.index)
-
-            equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv", index_col=0)
-            equity_returns.index = pd.to_datetime(equity_returns.index)
-            equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv", index_col=0)
-            equity_esg_returns.index = pd.to_datetime(equity_esg_returns.index)
-            commodity_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_returns.csv", index_col=0)
-            commodity_returns.index = pd.to_datetime(commodity_returns.index)
-            commodity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_esg_returns.csv", index_col=0)
-            commodity_esg_returns.index = pd.to_datetime(commodity_esg_returns.index)
-            crypto_returns = pd.read_csv(BASE_DIR + "/dataImporter/crypto_returns.csv", index_col=0)
-            crypto_returns.index = pd.to_datetime(crypto_returns.index)
-            bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv", index_col=0)
-            bonds_returns.index = pd.to_datetime(bonds_returns.index)
-
-            # ERC portfolio
-            equity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv", index_col=0)
-            equity_erc_returns.index = pd.to_datetime(equity_erc_returns.index)
-            equity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv", index_col=0)
-            equity_esg_erc_returns.index = pd.to_datetime(equity_esg_erc_returns.index)
-            commodity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv", index_col=0)
-            commodity_erc_returns.index = pd.to_datetime(commodity_erc_returns.index)
-            commodity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv",
-                                                    index_col=0)
-            commodity_esg_erc_returns.index = pd.to_datetime(commodity_esg_erc_returns.index)
-            crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv", index_col=0)
-            crypto_erc_returns.index = pd.to_datetime(crypto_erc_returns.index)
+            # ERC performmance
+            equity_flat, equity_mean, equity_vol, equity_sharpe, equity_cumu = ut.erc_performance(
+                st.session_state.equity_erc_returns, st.session_state.equity_returns, 2017)
+            equity_esg_flat, equity_esg_mean, equity_esg_vol, equity_esg_sharpe, equity_esg_cumu = ut.erc_performance(
+                st.session_state.equity_esg_erc_returns, st.session_state.equity_esg_returns, 2017)
+            commodity_flat, commodity_mean, commodity_vol, commodity_sharpe, commodity_cumu = ut.erc_performance(
+                st.session_state.commodity_erc_returns, st.session_state.commodity_returns, 2017)
+            commodity_esg_flat, commodity_esg_mean, commodity_esg_vol, commodity_esg_sharpe, commodity_esg_cumu = ut.erc_performance(
+                st.session_state.commodity_esg_erc_returns, st.session_state.commodity_esg_returns, 2017)
+            crypto_flat, crypto_mean, crypto_vol, crypto_sharpe, crypto_cumu = ut.erc_performance(
+                st.session_state.crypto_erc_returns, st.session_state.crypto_returns, 2017)
 
             # Bonds performance
-            bonds_flat, bonds_mean, bonds_vol, bonds_sharpe, bonds_cumu = ut.bonds_performance(bonds_returns, 2017)
+            bonds_flat, bonds_mean, bonds_vol, bonds_sharpe, bonds_cumu = ut.bonds_performance(
+                st.session_state.bonds_returns, 2017)
 
             # Cumulative return plots
             cumu_grap_equity = ut.cumu_graph(equity_flat)
@@ -263,14 +268,14 @@ if launch_button:
             # --- Results Section ---
             st.subheader("📈 Simulated Performance")
 
-            # Display metrics
+            # Display  metrics
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%")
             col2.metric("Annual Volatility", f"{MeanVar_vol * 100:.2f}%")
             col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
             col4.metric("Cumulative Return", f"{MeanVar_cumu:.2f}")
 
-            # Display graph
+            # Display  graph
             st.subheader("Portfolio Growth Simulation")
             col1, col2, col3 = st.columns([3, 1, 1])
             with col1:
