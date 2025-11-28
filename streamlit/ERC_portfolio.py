@@ -294,16 +294,7 @@ if launch_button:
 
             st.success("Portfolio construction complete!")
 
-            # --- Results Section ---
-            st.subheader("📈 Simulated Performance")
-
-            # Display  metrics
-            col1, col2, col3, col4 = st.columns(4)
-            col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%")
-            col2.metric("Annual Volatility", f"{MeanVar_vol * 100:.2f}%")
-            col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
-            col4.metric("Cumulative Return", f"{MeanVar_cumu:.2f}")
-
+            
              # --- Results Section ---
             st.subheader("Simulated Portfolio Performance")
             st.markdown("<br>", unsafe_allow_html=True)
