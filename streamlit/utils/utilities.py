@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
-
+import seaborn as sns
 
 def dailyreturns(dailyprice) :
 
@@ -166,23 +166,43 @@ def bonds_performance(bonds_returns, startyear):
    
 
 # Graph of cumulative return
-def cumu_graph(flatportreturns):
-    # Calculate cumulative returns
-    cumulative_returns_plot = (1 + flatportreturns['Daily Returns']).cumprod()
+def cumu_graph(flatportreturns: pd.DataFrame):
+    # Set the Seaborn style
+    sns.set_theme(style="whitegrid")
 
-    # Create the figure object
-    fig, ax = plt.subplots(figsize=(12, 6))
+    # 1. Calculate cumulative returns
+    cumulative_returns_series = (1 + flatportreturns['Daily Returns']).cumprod()
 
-    # Plot the cumulative returns on the axes
-    ax.plot(cumulative_returns_plot.index, cumulative_returns_plot.values)
+    start_date = cumulative_returns_series.index[0] - pd.Timedelta(days=1)
+        
+    start_value = pd.Series(1.0, index=[start_date])
+
+    # Combine the start value with the calculated returns
+    cumulative_returns_plot = pd.concat([start_value, cumulative_returns_series])
+
+    # 2. Create the figure object
+    fig, ax = plt.subplots(figsize=(14, 7))
+
+    # 3. Plot the cumulative returns
+    ax.plot(
+        cumulative_returns_plot.index, 
+        cumulative_returns_plot.values, 
+        label='Portfolio Return',
+        color='#1f77b4',
+        linewidth=1.8
+    )
+
+    # 4. Set labels and title (rest of the code is unchanged and good)
+    ax.set_title('Cumulative Portfolio Performance', fontsize=18, fontweight='bold', pad=15)
+    ax.set_xlabel('Date', fontsize=14)
+    ax.set_ylabel('Cumulative Growth (Growth of $1)', fontsize=14)
     
-    # Set labels and title on the axes
-    ax.set_title('Cumulative Portfolio Returns')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Cumulative Return')
-    ax.grid(True)
-   
-    # Return the Matplotlib figure object
+    ax.axhline(y=1.0, color='red', linestyle='--', linewidth=1)
+    ax.tick_params(axis='both', which='major', labelsize=12)
+    sns.despine(ax=ax, top=True, right=True)
+    ax.legend(loc='upper left', frameon=True, fontsize=12)
+
+    # 5. Return the Matplotlib figure object
     return fig
 
     
@@ -244,40 +264,28 @@ def combine_returns(equity, equityESG, commodity, commodityESG, crypto, bonds, c
 
 
 
-#Mean-Var Portfolio
-def meanvar_portfolio(combined_returns,risk_aversion):
-
-    combined_returns.index = pd.to_datetime(combined_returns.index) # Ensure datetime index
-
-    # Define the risk_aversion_coefficient.
+#Mean-Var Portfolio with Weight Tracking
+def meanvar_portfolio(combined_returns, risk_aversion):
+    combined_returns.index = pd.to_datetime(combined_returns.index)
     risk_aversion_coefficient = risk_aversion
-
-    all_monthly_portfolio_returns = [] # List to store daily returns for each monthly period
-
-    # Define the start and end dates for the monthly loop
+    all_portfolio_returns = []
+    all_weights = []  # Store weights with dates and asset names
+    
     start_loop_date = pd.Timestamp('2018-01-01')
-    end_loop_date = pd.Timestamp('2025-10-01') # Loop until October 2025
-
-    # Generate a sequence of month start dates
+    end_loop_date = pd.Timestamp('2025-10-01')
     monthly_periods = pd.date_range(start=start_loop_date, end=end_loop_date, freq='MS')
-
-    # Loop through each month
+    
+    asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
+    
     for month_start in monthly_periods:
-
-        # Define the lookback period
         lookback_data = combined_returns.loc[combined_returns.index < month_start].tail(63)
-
-        # Calculate annualized mean returns and annualized covariance matrix
         asset_means_lookback = lookback_data.mean() * 252
         annualized_cov_matrix_lookback = lookback_data.cov() * 252
-
         num_assets = len(asset_means_lookback)
         initial_weights = np.array([1 / num_assets] * num_assets)
-
         constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
         bounds = tuple((0, 1) for _ in range(num_assets))
-
-        # Optimization for optimal weights for the current month, based on lookback data
+        
         optimization_result = minimize(
             negative_utility_function,
             initial_weights,
@@ -287,31 +295,37 @@ def meanvar_portfolio(combined_returns,risk_aversion):
             constraints=constraints,
             tol=1e-20
         )
-
         optimal_weights = optimization_result.x
-
-
-        # Get daily returns for the current month
+        
         next_month_start = month_start + pd.DateOffset(months=1)
-        combined_returns_expost = combined_returns.loc[(combined_returns.index >= month_start) & (combined_returns.index < next_month_start)]
-
+        combined_returns_expost = combined_returns.loc[
+            (combined_returns.index >= month_start) & (combined_returns.index < next_month_start)
+        ]
+        
         weights = optimal_weights
-        month_port_daily_returns = [] # Changed name to reflect monthly loop
-
+        month_port_daily_returns = []
+        
+        # Store initial weights for this month
+        weight_dict = {'date': month_start}
+        for i, asset in enumerate(asset_names):
+            weight_dict[asset] = weights[i]
+        all_weights.append(weight_dict)
+        
         for t in range(len(combined_returns_expost)):
-            # Calculate portfolio return for the current day
             portfolio_return = np.dot(weights, combined_returns_expost.iloc[t])
-
             month_port_daily_returns.append(portfolio_return)
-
-            # Adjust weights for the next day (if it's not the last day)
-            if t < len(combined_returns_expost)-1:
+            
+            if t < len(combined_returns_expost) - 1:
                 weights_numerator = weights * (1 + combined_returns_expost.iloc[t])
                 weights = weights_numerator / (1 + portfolio_return)
-
-        all_monthly_portfolio_returns.append(month_port_daily_returns)
-
-    return all_monthly_portfolio_returns
+        
+        all_portfolio_returns.append(month_port_daily_returns)
+    
+    # Convert weights to DataFrame
+    weights_df = pd.DataFrame(all_weights)
+    weights_df.set_index('date', inplace=True)
+    
+    return all_portfolio_returns, weights_df
 
 
 
@@ -357,6 +371,46 @@ def riskscore_to_aversion(risk_score):
     
     return aversion_map[risk_score]
 
+
+def plot_portfolio_composition(weights_df, title="Portfolio Composition Over Time"):
+    """
+    Creates a pie chart showing average portfolio composition.
+   
+    """
+    import matplotlib.pyplot as plt
+    
+    # Calculate average weights across all periods
+    avg_weights = weights_df.mean()
+    
+    # Filter out assets with very small average weights (< 0.5%)
+    significant_weights = avg_weights[avg_weights > 0.005]
+    other_weight = avg_weights[avg_weights <= 0.005].sum()
+    
+    if other_weight > 0:
+        significant_weights['Other'] = other_weight
+    
+    # Create pie chart
+    fig, ax = plt.subplots(figsize=(10, 8))
+    colors = plt.cm.Set3(range(len(significant_weights)))
+    
+    wedges, texts, autotexts = ax.pie(
+        significant_weights.values,
+        labels=significant_weights.index,
+        autopct='%1.1f%%',
+        startangle=90,
+        colors=colors,
+        textprops={'fontsize': 10}
+    )
+    
+    # Enhance text visibility
+    for autotext in autotexts:
+        autotext.set_color('black')
+        autotext.set_fontweight('bold')
+    
+    ax.set_title(title, fontsize=14, fontweight='bold', pad=20)
+    plt.tight_layout()
+    
+    return fig
 
 
 
