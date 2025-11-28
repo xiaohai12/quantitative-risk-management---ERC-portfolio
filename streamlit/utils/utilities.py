@@ -143,6 +143,8 @@ def bonds_performance(bonds_returns, startyear):
 
     returns = bonds_returns.rename(columns={'AGG': 'Daily Returns'})
     
+    returns['Date'] = pd.to_datetime(returns['Date'])
+    returns.set_index('Date', inplace=True)
     returns = returns[returns.index.year >= startyear]
     
     # Assuming 252 trading days in a year
