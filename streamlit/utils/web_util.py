@@ -63,6 +63,7 @@ def apply_custom_css():
             display: inline-block;
             padding-bottom: 20px;
             width: 100%;
+            font-size: 16px !important;
         }
 
         .dropdown-button {
