@@ -60,6 +60,7 @@ def apply_custom_css():
         .dropdown {
             position: relative;
             display: inline-block;
+            padding-bottom: 20px;
             width: 100%;
         }
 
