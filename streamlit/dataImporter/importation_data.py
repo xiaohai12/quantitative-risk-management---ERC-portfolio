@@ -1,5 +1,10 @@
 def importer_data(start='2016-01-01',end='2025-11-01'):
     import yfinance as yf
+    import os
+    import sys
+    from pathlib import Path
+    sys.path.append(str(Path(__file__).parent.parent))
+    import utils.utilities as ut
     import requests
     import pandas as pd
     import time
@@ -52,6 +57,16 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
         ]
 
         crypto_data = yf.download(crypto_tickers, start=start_date, end=end_date)['Close']
+        crypto_data = crypto_data.reset_index()
+
+        # Clean crypto to adjust trading days
+        crypto_data['Date'] = pd.to_datetime(crypto_data['Date'])
+        crypto_data = crypto_data.set_index('Date')
+
+        # Load equity data to match dates
+        equity_data = pd.read_csv('equity_data.csv')
+        equity_data['Date'] = pd.to_datetime(equity_data['Date'])
+        crypto_data = crypto_data.loc[crypto_data.index.isin(equity_data['Date'])]
 
         crypto_data.to_csv('cryptos_data.csv')
 
@@ -102,7 +117,38 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
         agg_close = yf.download('AGG', start_date, end_date)['Close']
         agg_close.to_csv('bonds_data.csv')
 
-    import_equity(start_date= start, end_date=end)
+    import_equity(start_date=start, end_date=end)
     import_cryptos(start_date=start, end_date=end)
     import_commodities(start_date=start, end_date=end)
     import_bonds(start_date=start, end_date=end)
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    equity_data = pd.read_csv(BASE_DIR + "/equity_data.csv")
+    commodity_data = pd.read_csv(BASE_DIR + "/commodities_data.csv")
+    crypto_data = pd.read_csv(BASE_DIR + "/cryptos_data.csv")
+    bonds_data = pd.read_csv(BASE_DIR + "/bonds_data.csv")
+
+    equity_data_esg = ut.equity_to_esg(equity_data)
+    commodity_data_esg = ut.commodity_to_esg(commodity_data)
+
+    equity_data_esg.to_csv(BASE_DIR + "/equity_data_esg.csv")
+    commodity_data_esg.to_csv(BASE_DIR + "/commodity_data_esg.csv")
+
+    # Compute daily returns
+    equity_returns = ut.dailyreturns(equity_data)
+    equity_esg_returns = ut.dailyreturns(equity_data_esg)
+    commodity_returns = ut.dailyreturns(commodity_data)
+    commodity_esg_returns = ut.dailyreturns(commodity_data_esg)
+    crypto_returns = ut.dailyreturns(crypto_data)
+    bonds_returns = ut.dailyreturns(bonds_data)
+
+    # Save returns as CSV
+    equity_returns.to_csv(BASE_DIR + "/equity_returns.csv")
+    equity_esg_returns.to_csv(BASE_DIR + "/equity_esg_returns.csv")
+    commodity_returns.to_csv(BASE_DIR + "/commodity_returns.csv")
+    commodity_esg_returns.to_csv(BASE_DIR + "/commodity_esg_returns.csv")
+    crypto_returns.to_csv(BASE_DIR + "/crypto_returns.csv")
+    bonds_returns.to_csv(BASE_DIR + "/bonds_returns.csv")
+
+importer_data(start='2016-01-01',end='2025-11-01')
