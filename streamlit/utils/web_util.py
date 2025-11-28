@@ -63,7 +63,6 @@ def apply_custom_css():
             display: inline-block;
             padding-bottom: 20px;
             width: 100%;
-            font-size: 30px !important;
         }
 
         .dropdown-button {
@@ -71,7 +70,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-size: 15px !important;
+            font-size: 20px !important;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
