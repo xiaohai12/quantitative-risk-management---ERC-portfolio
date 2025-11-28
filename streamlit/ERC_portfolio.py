@@ -262,9 +262,19 @@ if launch_button:
 
             
              # --- Results Section ---
-            st.subheader("Simulated Portfolio Performance")
+            st.subheader("Historic Portfolio Performance")
+            st.markdown("<br><br><br>", unsafe_allow_html=True)
+            # Display  graph
+            col1, col2,col3 = st.columns([4.5,0.8, 2.8])
+            with col1:
+                st.pyplot(cumu_graph_final)
+
+            with col3:
+                fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
+                st.pyplot(fig1)
+
             st.markdown("<br>", unsafe_allow_html=True)
-            
+
             # Display  metrics
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%" )
@@ -275,13 +285,3 @@ if launch_button:
                 f"{MeanVar_cumu:.2%}",
                 delta=None
             )
-            
-            st.markdown("<br><br><br>", unsafe_allow_html=True)
-            # Display  graph
-            col1, col2,col3 = st.columns([4.5,0.8, 2.8])
-            with col1:
-                st.pyplot(cumu_graph_final)
-
-            with col3:
-                fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
-                st.pyplot(fig1)
