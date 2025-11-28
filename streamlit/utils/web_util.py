@@ -71,7 +71,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-size: 30px !important;
+            font-size: 15px !important;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
@@ -93,7 +93,6 @@ def apply_custom_css():
             z-index: 1000 ;
             border-radius: 5px;
             margin-top: 5px;
-            font-size: 16px !important;
         }
 
         .dropdown-content a {
