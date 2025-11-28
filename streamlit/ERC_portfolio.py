@@ -57,12 +57,13 @@ if load_button:
         st.session_state.crypto_returns = ut.dailyreturns(crypto_data)
         st.session_state.bonds_returns = ut.dailyreturns(bonds_data)
 
+        
         # ERC portfolio
-        st.session_state.equity_erc_returns = ut.erc_portfolio(st.session_state.equity_returns)
-        st.session_state.equity_esg_erc_returns = ut.erc_portfolio(st.session_state.equity_esg_returns)
-        st.session_state.commodity_erc_returns = ut.erc_portfolio(st.session_state.commodity_returns)
-        st.session_state.commodity_esg_erc_returns = ut.erc_portfolio(st.session_state.commodity_esg_returns)
-        st.session_state.crypto_erc_returns = ut.erc_portfolio(st.session_state.crypto_returns)
+        st.session_state.equity_erc_returns = ut.erc_portfolio(st.session_state.equity_returns, weights_file= BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+        st.session_state.equity_esg_erc_returns = ut.erc_portfolio(st.session_state.equity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+        st.session_state.commodity_erc_returns = ut.erc_portfolio(st.session_state.commodity_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+        st.session_state.commodity_esg_erc_returns = ut.erc_portfolio(st.session_state.commodity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+        st.session_state.crypto_erc_returns = ut.erc_portfolio(st.session_state.crypto_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
         
         st.success("Data loaded successfully !")         
 
