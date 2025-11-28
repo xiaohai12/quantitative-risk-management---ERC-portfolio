@@ -22,41 +22,7 @@ c1, c2 = st.columns([4, 1])
 with c1:
     st.caption("Use the options below to configure your portfolio.")
 
-with c2:
-    load_button = st.button("Load Data")
-'''
-if load_button:
-    with st.spinner("This might take a minute..."):
-        # Portfolio construction code :
-        import os
-        import utils.utilities as ut
 
-        # Load data
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-        equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv")
-        commodity_data = pd.read_csv(BASE_DIR + "/dataImporter/commodities_data.csv")
-        crypto_data = pd.read_csv(BASE_DIR + "/dataImporter/cryptos_data.csv")
-        bonds_data = pd.read_csv(BASE_DIR + "/dataImporter/bonds_data.csv")
-        equity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/equity_data_esg.csv")
-        commodity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/commodity_data_esg.csv")
-
-        equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv")
-        equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv")
-        commodity_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_returns.csv")
-        commodity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_esg_returns.csv")
-        crypto_returns = pd.read_csv(BASE_DIR + "/dataImporter/crypto_returns.csv")
-        bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv")
-
-        # ERC portfolio
-        equity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv")
-        equity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
-        commodity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
-        commodity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
-        crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
-
-        st.success("Data loaded successfully !")
-'''
 st.divider()
 # ---
 # 1. Asset & ESG Selection
