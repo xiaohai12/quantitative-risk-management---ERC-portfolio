@@ -287,9 +287,9 @@ if launch_button:
             risk_aversion = ut.riskscore_to_aversion(st.session_state.risk_score)
 
             # Final portfolio
-            all_monthly_portfolio_returns = ut.meanvar_portfolio(combined_returns, risk_aversion)
+            all_portfolio_returns, weights_df = ut.meanvar_portfolio(combined_returns, risk_aversion)
             MeanVar_flat, MeanVar_mean, MeanVar_vol, MeanVar_sharpe, MeanVar_cumu = ut.erc_performance(
-                all_monthly_portfolio_returns, combined_returns, 2018)
+                all_portfolio_returns, combined_returns, 2018)
             cumu_graph_final = ut.cumu_graph(MeanVar_flat)
 
             st.success("Portfolio construction complete!")
