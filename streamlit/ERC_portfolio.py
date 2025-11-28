@@ -246,12 +246,13 @@ if launch_button:
             bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv")
 
             # ERC portfolio
-            equity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv")
-            equity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
-            commodity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
-            commodity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
-            crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
-
+            equity_erc_returns = ut.erc_portfolio(st.session_state.equity_returns, weights_file= BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+            equity_esg_erc_returns = ut.erc_portfolio(st.session_state.equity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+            commodity_erc_returns = ut.erc_portfolio(st.session_state.commodity_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+            commodity_esg_erc_returns = ut.erc_portfolio(st.session_state.commodity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+            crypto_erc_returns = ut.erc_portfolio(st.session_state.crypto_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
+            
+            
             # ERC performmance
             equity_flat, equity_mean, equity_vol, equity_sharpe, equity_cumu = ut.erc_performance(
                 equity_erc_returns, equity_returns, 2017)
