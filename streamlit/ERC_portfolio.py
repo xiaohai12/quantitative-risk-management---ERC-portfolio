@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import utils.web_util as wu
 from statics import IMG_DIR
-import seaborn as sns
+
 
 
 # Define the pages
