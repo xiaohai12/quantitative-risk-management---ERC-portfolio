@@ -73,7 +73,6 @@ def apply_custom_css():
             border-bottom: 3px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
             font-size: 14px;
         }
 
