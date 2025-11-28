@@ -44,7 +44,7 @@ def apply_custom_css():
             font-weight: 600;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            font-size: 20px !important;
+            
         }
         .stButton > button:hover {
             color: #000;
@@ -63,7 +63,7 @@ def apply_custom_css():
             display: inline-block;
             padding-bottom: 20px;
             width: 100%;
-            font-size: 16px !important;
+            font-size: 30px !important;
         }
 
         .dropdown-button {
@@ -71,7 +71,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-size: 16px !important;
+            font-size: 30px !important;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
@@ -93,7 +93,7 @@ def apply_custom_css():
             z-index: 1000 ;
             border-radius: 5px;
             margin-top: 5px;
-            
+            font-size: 16px !important;
         }
 
         .dropdown-content a {
