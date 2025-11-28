@@ -22,7 +22,7 @@ with c1:
 
 with c2:
     load_button = st.button("Load Data")
-
+'''
 if load_button:
     with st.spinner("This might take a minute..."):
         # Portfolio construction code :
@@ -54,7 +54,7 @@ if load_button:
         crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
 
         st.success("Data loaded successfully !")
-
+'''
 st.divider()
 # ---
 # 1. Asset & ESG Selection
@@ -225,22 +225,48 @@ if launch_button:
         with st.spinner("Constructing your optimal portfolio..."):
 
             import utils.utilities as ut
+            import os
+            import utils.utilities as ut
+
+            # Load data
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+            equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv")
+            commodity_data = pd.read_csv(BASE_DIR + "/dataImporter/commodities_data.csv")
+            crypto_data = pd.read_csv(BASE_DIR + "/dataImporter/cryptos_data.csv")
+            bonds_data = pd.read_csv(BASE_DIR + "/dataImporter/bonds_data.csv")
+            equity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/equity_data_esg.csv")
+            commodity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/commodity_data_esg.csv")
+
+            equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv")
+            equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv")
+            commodity_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_returns.csv")
+            commodity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_esg_returns.csv")
+            crypto_returns = pd.read_csv(BASE_DIR + "/dataImporter/crypto_returns.csv")
+            bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv")
+
+            # ERC portfolio
+            equity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+            equity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+            commodity_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+            commodity_esg_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+            crypto_erc_returns = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
 
             # ERC performmance
             equity_flat, equity_mean, equity_vol, equity_sharpe, equity_cumu = ut.erc_performance(
-                st.session_state.equity_erc_returns, st.session_state.equity_returns, 2017)
+                equity_erc_returns, equity_returns, 2017)
             equity_esg_flat, equity_esg_mean, equity_esg_vol, equity_esg_sharpe, equity_esg_cumu = ut.erc_performance(
-                st.session_state.equity_esg_erc_returns, st.session_state.equity_esg_returns, 2017)
+                equity_esg_erc_returns, equity_esg_returns, 2017)
             commodity_flat, commodity_mean, commodity_vol, commodity_sharpe, commodity_cumu = ut.erc_performance(
-                st.session_state.commodity_erc_returns, st.session_state.commodity_returns, 2017)
+                commodity_erc_returns, commodity_returns, 2017)
             commodity_esg_flat, commodity_esg_mean, commodity_esg_vol, commodity_esg_sharpe, commodity_esg_cumu = ut.erc_performance(
-                st.session_state.commodity_esg_erc_returns, st.session_state.commodity_esg_returns, 2017)
+                commodity_esg_erc_returns, commodity_esg_returns, 2017)
             crypto_flat, crypto_mean, crypto_vol, crypto_sharpe, crypto_cumu = ut.erc_performance(
-                st.session_state.crypto_erc_returns, st.session_state.crypto_returns, 2017)
+                crypto_erc_returns, crypto_returns, 2017)
 
             # Bonds performance
             bonds_flat, bonds_mean, bonds_vol, bonds_sharpe, bonds_cumu = ut.bonds_performance(
-                st.session_state.bonds_returns, 2017)
+                bonds_returns, 2017)
 
             # Cumulative return plots
             cumu_grap_equity = ut.cumu_graph(equity_flat)
