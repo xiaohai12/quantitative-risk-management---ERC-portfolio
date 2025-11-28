@@ -166,7 +166,7 @@ def home_page():
         </style>
         
         <div class="container">
-        <div class="top">Welcome to Amberr Quant, Your Partner in Asset Management</div>
+        <div class="top">Welcome to Amber Quant, Your Partner in Asset Management</div>
         <div class="lead">At Amber Quant, our clients are at the heart of everything we do.</div>
         <div class="lead">Leveraging our deep sector knowledge and the expertise of our international network, we work in close partnership with our clients. Our goal is to fully understand their long-term strategic objectives and their unique risk profiles, enabling us to design and propose customized investment solutions and portfolios specifically adapted to their needs.</div>
         <div class="lead">Whatever your financial ambitions, our teams are ready to listen and help you achieve them.</div>
