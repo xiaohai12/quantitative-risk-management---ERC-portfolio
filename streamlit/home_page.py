@@ -179,7 +179,7 @@ def home_page():
     
     # -- Key Metrics --
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric(label="Total Assets Managed", value="$142M", delta="+12% YTD")
+    m1.metric(label="AUM", value="CHF 342M", delta="+12% YTD")
     m2.metric(label="Avg. Client Return", value="18.4%", delta="+4.2% vs Market")
     m3.metric(label="Active Portfolios", value="1,204", delta="24 New")
     m4.metric(label="Management Fee", value="0.65%", delta_color="off")
