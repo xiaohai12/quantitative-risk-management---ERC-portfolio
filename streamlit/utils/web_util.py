@@ -87,7 +87,7 @@ def apply_custom_css():
             background-color: #ffffff;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
+            z-index: 1000 !important;
             border-radius: 5px;
             margin-top: 5px;
         }
