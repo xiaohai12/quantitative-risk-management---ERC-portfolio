@@ -40,6 +40,7 @@ def apply_custom_css():
             width: 100%;
             border: none;
             background-color: transparent;
+            font-size: 18px !important;
             color: #000;
             font-weight: 600;
             border-bottom: 3px solid transparent;
@@ -70,7 +71,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-size: 20px !important;
+            font-size: 18px !important;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
