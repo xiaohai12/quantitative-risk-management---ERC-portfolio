@@ -272,7 +272,7 @@ if launch_button:
             col3.metric("Sharpe Ratio", f"{MeanVar_sharpe:.2f}")
             col4.metric(
                 "Cumulative Return",
-                f"{MeanVar_cumu * 100:.2%}%",
+                f"{MeanVar_cumu * 100:.2f}%",
                 delta=None
             )
             
