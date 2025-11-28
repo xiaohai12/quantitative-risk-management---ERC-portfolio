@@ -48,6 +48,9 @@ def erc_portfolio(returns, weights_file='erc_weights.csv'):
     
     portfolio_returns_by_year = []
     
+    returns['Date'] = pd.to_datetime(returns['Date'])
+    returns.set_index('Date', inplace=True)
+    
     # Iterate through each row in weights_df
     for idx, row in weights_df.iterrows():
         year = int(row['year'])
