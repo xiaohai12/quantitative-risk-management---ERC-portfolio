@@ -175,7 +175,7 @@ def render_navbar(IMG_DIR):
         # Dropdown "Help"
         st.markdown("""
             <div class="dropdown">
-                <button class="dropdown-button">Help ▼</button>
+                <button class="dropdown-button">Help ▾</button>
                 <div class="dropdown-content">
                     <a href="?page=risk_profile">Risk Profile</a>
                     <a href="?page=ai_chat">AI Chat</a>
@@ -195,7 +195,7 @@ def render_navbar(IMG_DIR):
         # Dropdown "About Us"
         st.markdown("""
             <div class="dropdown">
-                <button class="dropdown-button">About Us ▼</button>
+                <button class="dropdown-button">About Us ▾</button>
                 <div class="dropdown-content">
                     <a href="?page=team">Our Team</a>
                     <a href="?page=contact">Contact Us</a>
