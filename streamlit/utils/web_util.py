@@ -44,7 +44,6 @@ def apply_custom_css():
             font-weight: 600;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            font-size: 16px !important;
         }
         .stButton > button:hover {
             color: #000;
@@ -70,7 +69,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-size: 18px !important;
+            font-size: 16px !important;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
