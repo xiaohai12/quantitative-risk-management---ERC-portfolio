@@ -37,88 +37,57 @@ def dailyreturns(dailyprice) :
         return daily_returns
 
 
-#Functions for Optimization
 
-# Define a function to calculate the portfolio risk (standard deviation)
-def portfolio_risk(weights, cov_matrix):
-
-    return np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
-
-# Define a function to calculate the risk contribution of each asset in the portfolio
-def risk_contribution(weights, cov_matrix):
-
-    portfolio_std = portfolio_risk(weights, cov_matrix)
-    # Marginal contribution to risk
-    marginal_contribution = np.dot(cov_matrix, weights) / portfolio_std
-    # Risk contribution
-    risk_contrib = weights * marginal_contribution
-    return risk_contrib
-
-# Define a function to minimize, which aims to equalize the risk contributions
-def objective_function(weights, cov_matrix):
-
-    risk_contribs = risk_contribution(weights, cov_matrix)
-    # We want all risk contributions to be equal, so minimize the sum of squared differences
-    # from the average risk contribution.
-    return np.sum((risk_contribs - np.mean(risk_contribs))**2)*1000
-
-
-#ERC Portfolio
-def erc_portfolio(returns):
-
-    # store cumulative returns for each year
+def erc_portfolio(returns, weights_file='erc_weights.csv'):
+    """
+    Calculate portfolio returns using pre-computed weights from CSV
+    """
+    # Load weights from CSV
+    weights_df = pd.read_csv(weights_file)
+    print(f"Loaded weights from {weights_file}")
+    
     portfolio_returns_by_year = []
-
-    # Iterate through the years from 2016 to 2025
-    for year in range(2016, 2025):
-
-        # Filter data for the current year
-        daily_returns_year = returns.loc[returns.index.year == year]
-
-        # Drop columns with any NaN values in this year
-        daily_returns_year = daily_returns_year.dropna(axis=1)
-
-        # Store the column names for the current year
-        columns = daily_returns_year.columns
-
-        covariance_matrix_year = daily_returns_year.cov()
-
-        # Calculate ERC weights for the current year
-        num_assets_year = len(covariance_matrix_year.columns)
-        initial_weights_year = np.array(num_assets_year * [1. / num_assets_year])
-
-        constraints_year = ({'type': 'eq', 'fun': lambda weights: np.sum(weights) - 1})
-        bounds_year = tuple((0, 1) for asset in range(num_assets_year))
-        options = {'ftol': 1e-8, 'maxiter': 1000}
-
-
-        result_year = minimize(objective_function, initial_weights_year, args=(covariance_matrix_year,),
-                                  method='SLSQP', bounds=bounds_year, constraints=constraints_year,
-                                  options=options, tol=1e-10)
-
-        erc_weights_year = result_year.x
-
-        #Calculate the daily portfolio returns for the current year using the weights
-        daily_returns_expost = returns.loc[returns.index.year == year+1]
-        daily_returns_expost = daily_returns_expost[daily_returns_expost.columns.intersection(columns)]
-
-        weights = erc_weights_year
+    
+    # Iterate through each row in weights_df
+    for idx, row in weights_df.iterrows():
+        year = int(row['year'])
+        print(f"Calculating returns for year {year} (applied to {year+1})...")
+        
+        # Extract weights and asset names for this year
+        weight_dict = row.drop('year').dropna().to_dict()
+        columns = list(weight_dict.keys())
+        erc_weights_year = np.array(list(weight_dict.values()))
+        
+        # Get ex-post returns for the next year
+        daily_returns_expost = returns.loc[returns.index.year == year + 1]
+        
+        # Filter to only include assets that were in the training period
+        daily_returns_expost = daily_returns_expost[
+            daily_returns_expost.columns.intersection(columns)
+        ]
+        
+        # Ensure weights match the available assets
+        available_columns = daily_returns_expost.columns.tolist()
+        weights = np.array([weight_dict[col] for col in available_columns])
+        
+        # Normalize weights in case some assets are missing
+        weights = weights / np.sum(weights)
+        
+        # Calculate daily portfolio returns with daily rebalancing
         year_port_daily_returns = []
-
+        
         for t in range(len(daily_returns_expost)):
             # Calculate portfolio return for the current day
-            firstportfolio_return = np.dot(weights, daily_returns_expost.iloc[t])
-
-            year_port_daily_returns.append(firstportfolio_return)
-
+            portfolio_return = np.dot(weights, daily_returns_expost.iloc[t])
+            year_port_daily_returns.append(portfolio_return)
+            
             # Adjust weights for the next day (if it's not the last day)
-            if t < len(daily_returns_expost)-1:
+            if t < len(daily_returns_expost) - 1:
                 weights_numerator = weights * (1 + daily_returns_expost.iloc[t])
-                weights = weights_numerator / (1 + firstportfolio_return)
-
-
+                weights = weights_numerator / (1 + portfolio_return)
+        
         portfolio_returns_by_year.append(year_port_daily_returns)
-
+    
     return portfolio_returns_by_year
 
 
