@@ -42,6 +42,7 @@ def apply_custom_css():
             background-color: transparent;
             color: #000;
             font-weight: 600;
+            font-size: 20px;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
