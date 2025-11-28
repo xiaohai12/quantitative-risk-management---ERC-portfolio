@@ -33,11 +33,11 @@ team_members = [
     "email": "yann.suttor@unil.ch"
     },
     {
-        "name": "Marcus Rodriguez",
+        "name": "David Antonelli",
         "role": "Quantitative Analyst",
         "bio": "Expert in quantitative modeling and statistical analysis. Develops algorithms for portfolio optimization and performance measurement.",
         "expertise": ["Quantitative Modeling", "Statistical Analysis", "Python Programming"],
-        "email": "marcus.rodriguez@university.edu"
+        "email": "david.antonelli@unil.ch"
     },
     {
         "name": "Shengzhao Lei",
