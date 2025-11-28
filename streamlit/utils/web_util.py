@@ -40,12 +40,11 @@ def apply_custom_css():
             width: 100%;
             border: none;
             background-color: transparent;
-            font-size: 18px !important;
             color: #000;
             font-weight: 600;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            
+             font-size: 18px !important;
         }
         .stButton > button:hover {
             color: #000;
