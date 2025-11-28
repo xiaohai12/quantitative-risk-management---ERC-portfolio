@@ -68,7 +68,7 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-weight: 600;
+            font-weight: 300;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
