@@ -47,9 +47,6 @@ def apply_custom_css():
             transition: all 0.3s ease;
         }
        
-        .stButton > button > div > span {
-            font-size: 18px !important; 
-        }
         
         .stButton > button:hover {
             color: #000;
