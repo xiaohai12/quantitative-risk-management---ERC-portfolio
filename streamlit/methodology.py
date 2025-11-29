@@ -243,22 +243,22 @@ st.markdown("""
         <div class="asset-card">
             <div class="asset-icon">📈</div>
             <div class="asset-title">Equities</div>
-            <div class="asset-description">S&P 500, NASDAQ, sector ETFs, and individual stocks for growth exposure</div>
+            <div class="asset-description">US large-cap equities via S&P 500 for core portfolio growth</div>
         </div>
         <div class="asset-card">
             <div class="asset-icon">🏆</div>
             <div class="asset-title">Commodities</div>
-            <div class="asset-description">Gold, Oil, Natural Gas for inflation and supply-shock hedging</div>
+            <div class="asset-description">Gold, Oil, Soybeans... for inflation and supply-shock hedging</div>
         </div>
         <div class="asset-card">
             <div class="asset-icon">🏦</div>
             <div class="asset-title">Bonds</div>
-            <div class="asset-description">Treasury ETFs and corporate bonds for defensive stability</div>
+            <div class="asset-description">US Aggregate Bond Index for diversified fixed income and portfolio stability</div>
         </div>
         <div class="asset-card">
             <div class="asset-icon">₿</div>
             <div class="asset-title">Crypto</div>
-            <div class="asset-description">BTC, ETH for high-volatility, high-growth potential</div>
+            <div class="asset-description">BTC, ETH... for high-volatility, high-growth potential</div>
         </div>
     </div>
 """, unsafe_allow_html=True)
