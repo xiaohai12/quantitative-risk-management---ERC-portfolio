@@ -516,11 +516,7 @@ if launch_button:
 
             risk_contrib_df = ut.calculate_risk_contribution(weights_df, combined_returns)
             
-            
-            cumulative_returns_series = (1 + MeanVar_flat).cumprod()
-            cumulative_returns_series.to_csv('tradi_cumu.csv')
-            
-            
+           
             st.success("Portfolio construction complete!")
 
             
