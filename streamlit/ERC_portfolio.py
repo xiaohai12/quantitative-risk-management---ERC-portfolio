@@ -53,7 +53,7 @@ asset_labels = [
 ]
 
 st.markdown(
-    "<p style='font-size: 20px; font-weight: 500; margin-bottom: -25px'>Choose an asset class to learn more about its characteristics.</p>",
+    "<p style='font-size: 20px; font-weight: 500; margin-bottom: -25px'>Choose an asset class to learn more about its ERC Portfolio characteristics.</p>",
     unsafe_allow_html=True
 )
 
@@ -292,7 +292,7 @@ selected_assets_list = [0, 0, 0, 0, 0, 0]
 col1, col2 = st.columns([3, 1])
 
 with col1:
-    st.subheader("Available Assets")
+    st.subheader("Available ERC Portfolios")
     # Use toggles to represent the user's "base" choices
     select_bonds = st.toggle("Bonds", value=True)
     select_equity = st.toggle("Equity", value=True)
