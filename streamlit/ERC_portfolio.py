@@ -242,9 +242,20 @@ with col2:
 
     # Custom HTML for larger, centered metric
     st.markdown(f"""
-        <div style="text-align: center; padding: 20px; background-color: "#F0F2F6"; border-radius: 10px;">
-            <h1 style="margin: 0px 0; font-size: 30px; font-weight: bold;">Score: {st.session_state.risk_score}</h1>
-            <h1 style="margin: 0px 0; font-size: 24px;">{color} {profile} Profile</h2> <p style="margin: 0px 0; font-size: 20px; color: #666;">{delta_label}</p>
+        <div style="text-align: center; padding: 20px; background-color: #F0F2F6; border-radius: 10px;">
+            <h1 style="margin: 0; font-size: 30px; font-weight: bold;">
+                Score: {st.session_state.risk_score}
+            </h1>
+
+            <!-- Profile + delta on the same line -->
+            <div style="margin-top: 10px; font-size: 0;"> <!-- trick to remove unwanted space between inline-block -->
+                <h2 style="margin: 0; font-size: 24px; display: inline;">
+                    {color} {profile} Profile
+                </h2>
+                <span style="margin: 0 0 0 12px; font-size: 20px; color: #666; display: inline;">
+                    – {delta_label}
+                </span>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
