@@ -77,6 +77,8 @@ def apply_custom_css():
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 8px;
+            font-weight: 600;
+            font-size: 20px;
 
         }
 
@@ -95,16 +97,22 @@ def apply_custom_css():
             margin-top: 5px;
         }
 
-        .dropdown-content a {
+        .dropdown-content button {
             color: #000;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
             font-weight: 500;
             transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        .dropdown-content a:hover {
+        .dropdown-content button:hover {
             background-color: #FFCC99;
             border-radius: 5px;
         }
@@ -136,6 +144,11 @@ def apply_custom_css():
             border-left: 5px solid #1a2a6c;
             padding-left: 15px;
         }
+
+        /* Hide the dropdown items by default */
+        .dropdown-items {
+            display: none;
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -163,44 +176,32 @@ def render_navbar(IMG_DIR):
         )
 
     with col2:
-        if st.button("Home"):
+        if st.button("Home", key="nav_home"):
             st.switch_page("home_page.py")
 
     with col3:
-        if st.button("Portfolios"):
+        if st.button("Portfolios", key="nav_portfolios"):
             st.switch_page("ERC_portfolio.py")
 
     with col4:
-        if st.button("Methodology"):
+        if st.button("Methodology", key="nav_methodology"):
             st.switch_page("methodology.py")
 
     with col5:
-        # Create a container for the Help dropdown
-        help_options = st.selectbox(
-            "Help",
-            ["Select...", "Risk Profile", "AI Chat"],
-            key="help_dropdown",
-            label_visibility="visible"
-        )
-
-        if help_options == "Risk Profile":
-            st.switch_page("risk_preference.py")
-        elif help_options == "AI Chat":
-            st.switch_page("LLM.py")
+        # Help dropdown with popover
+        with st.popover("Help ▾"):
+            if st.button("Risk Profile", key="help_risk", use_container_width=True):
+                st.switch_page("risk_preference.py")
+            if st.button("AI Chat", key="help_ai", use_container_width=True):
+                st.switch_page("LLM.py")
 
     with col6:
-        # Create a container for the About Us dropdown
-        about_options = st.selectbox(
-            "About Us",
-            ["Select...", "Our Team", "Contact Us"],
-            key="about_dropdown",
-            label_visibility="visible"
-        )
-
-        if about_options == "Our Team":
-            st.switch_page("team.py")
-        elif about_options == "Contact Us":
-            st.switch_page("Contact.py")
+        # About Us dropdown with popover
+        with st.popover("About Us ▾"):
+            if st.button("Our Team", key="about_team", use_container_width=True):
+                st.switch_page("team.py")
+            if st.button("Contact Us", key="about_contact", use_container_width=True):
+                st.switch_page("Contact.py")
 
     st.markdown("""<hr style="margin-top:-2px; margin-bottom:15px;">""", unsafe_allow_html=True)
 
@@ -210,4 +211,3 @@ def image_to_base64(image_path: str) -> str:
     """Convert a local image file to a base64-encoded string."""
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
-    
