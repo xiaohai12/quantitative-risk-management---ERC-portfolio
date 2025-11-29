@@ -201,16 +201,16 @@ def home_page():
     c1, c2, c3 = st.columns(3)
     
     with c1:
-        st.markdown("### Risk-First Approach")
-        st.info("We prioritize capital preservation. Our algorithms actively hedge against downside volatility before chasing upside.")
+        st.markdown("### Adaptive Portfolio Management")
+        st.info("We continuously monitor changes in correlations and volatility regimes to maintain a stable and efficient portfolio structure.")
     
     with c2:
-        st.markdown("### AI-Driven Rebalancing")
-        st.info("Your portfolio is monitored 24/7. We automatically rebalance based on macro-economic shifts, not just calendar dates.")
+        st.markdown("### Full Transparency")
+        st.info("Every allocation is clear and explainable. You can see exactly how each asset contributes to total risk and performance — no black box.")
 
     with c3:
-        st.markdown("### Transparent Fee Structure")
-        st.info("No hidden trading fees. No front-loading. Just a simple, flat advisory fee based on assets under management.")
+        st.markdown("### Broad Multi-Asset Diversification")
+        st.info("Our portfolios allocate across five distinct asset classes, reducing concentration risks and enhancing long-term stability across different market environments.")
 
     # -- CTA --
     st.write("")
