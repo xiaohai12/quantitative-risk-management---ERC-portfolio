@@ -265,7 +265,7 @@ if launch_button:
 
             st.markdown("<br><br><br>", unsafe_allow_html=True)
             # Display  graph
-            col1, col2,col3 = st.columns([3,1, 3])
+            col1, col2,col3 = st.columns([3,1, 2])
             with col1:
                 cumu_graph_final = ut.cumu_graph_vol(MeanVar_flat)
                 st.pyplot(cumu_graph_final)
