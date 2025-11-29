@@ -623,8 +623,10 @@ def plot_risk_contribution(risk_contrib_df, combined_returns):
     fig, axes = plt.subplots(3, 1, figsize=(14, 12))
     
     # Plot 1: Risk Contribution Over Time (Stacked Area)
-    risk_data.plot.area(ax=axes[0], alpha=0.7, linewidth=0)
-    axes[0].set_title('Risk Contribution by Asset Over Time', fontsize=14, fontweight='bold')
+    # Handle potential negative values by using absolute values
+    risk_data_abs = risk_data.abs()
+    risk_data_abs.plot.area(ax=axes[0], alpha=0.7, linewidth=0)
+    axes[0].set_title('Risk Contribution by Asset Over Time (Absolute Values)', fontsize=14, fontweight='bold')
     axes[0].set_ylabel('Risk Contribution (%)', fontsize=12)
     axes[0].legend(loc='center left', bbox_to_anchor=(1, 0.5))
     axes[0].grid(True, alpha=0.3)
