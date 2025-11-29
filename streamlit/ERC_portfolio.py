@@ -126,8 +126,8 @@ elif selected_asset == 'Equity (ESG)':
     with col1:
         st.pyplot(cumu_graph_equity_esg)
     with col3:
-        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
-        #risk_contrib = ut.compute_last_year_risk_contribution(weights, equity_esg_returns)
+        equity_esg_rc = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_equity_esg.csv")
+        
         #fig1 = ut.plot_risk_contribution_many(risk_contrib, equity_esg_flat)
         #st.pyplot(fig1)
         pass
