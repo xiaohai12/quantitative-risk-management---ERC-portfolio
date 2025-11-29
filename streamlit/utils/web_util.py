@@ -210,3 +210,4 @@ def image_to_base64(image_path: str) -> str:
     """Convert a local image file to a base64-encoded string."""
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+    
