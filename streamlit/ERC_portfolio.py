@@ -53,7 +53,7 @@ asset_labels = [
 ]
 
 st.markdown(
-    "<p style='font-size: 20px; font-weight: 500; margin-bottom: -25px'>Choose an asset class to learn more:</p>",
+    "<p style='font-size: 20px; font-weight: 500; margin-bottom: -25px'>Choose an asset class to learn more about its characteristics.</p>",
     unsafe_allow_html=True
 )
 
