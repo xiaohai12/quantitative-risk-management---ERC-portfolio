@@ -53,6 +53,7 @@ def navigate_to(page):
 # -----------------------------------------------------------------------------
 def get_dummy_data():
     """Generates random walk data to simulate portfolio performance."""
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     dates = pd.date_range(start=date.today() - timedelta(days=365*2), end=date.today())
     
     # Simulate returns
@@ -93,7 +94,7 @@ def create_chart(df):
     fig.update_layout(
         title="",
         xaxis_title="",
-        yaxis_title="Normalized Return (%)",
+        yaxis_title="Cumulative Returns (%)",
         template="plotly_white",
         hovermode="x unified",
         margin=dict(l=20, r=20, t=20, b=20),
@@ -205,8 +206,8 @@ def home_page():
     st.write("") 
 
     # -- Interactive Chart Section --
-    st.markdown('<div class="section-header">Performance Projection</div>', unsafe_allow_html=True)
-    st.write("Track the historical performance of our flagship aggressive growth algorithm compared to the market benchmark.")
+    st.markdown('<div class="section-header">Historic Performance</div>', unsafe_allow_html=True)
+    st.write("Compare the historical performance of our best-selling portfolios.")
     
     df = get_dummy_data()
     fig = create_chart(df)
