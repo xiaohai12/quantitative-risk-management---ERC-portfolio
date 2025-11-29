@@ -9,6 +9,7 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
     import pandas as pd
     import time
     from scipy.optimize import minimize
+    import numpy as np
     
     # Equity
     def import_equity(start_date, end_date):
