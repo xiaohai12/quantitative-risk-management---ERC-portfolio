@@ -263,7 +263,7 @@ if launch_button:
              # --- Results Section ---
             st.subheader("Historic  Portfolio Performance :")
 
-            st.markdown("<br><br><br>", unsafe_allow_html=True)
+            st.markdown("<br><br>", unsafe_allow_html=True)
             # Display  graph
             col1, col2,col3 = st.columns([3,1, 2])
             with col1:
@@ -277,6 +277,7 @@ if launch_button:
 
 
             st.divider()
+            st.markdown("<br>", unsafe_allow_html=True)
             # Display  metrics
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%")
