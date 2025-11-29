@@ -350,7 +350,7 @@ with st.expander("How does ERC (Equal Risk Contribution) allocation work?"):
 
 with st.expander("How do you treat bonds, commodities, and crypto in the portfolio?"):
     st.write(
-        "All asset classes are used to construct asset classes specific ERC portfolios. The different ERC portfolios are then combined according to your risk preferences. ."
+        "All asset classes are first used to build their own risk-balanced (ERC) portfolios. Then we combine these portfolios in proportions that match your individual risk preferences."
     )
 
 with st.expander("Is this platform giving me investment advice?"):
