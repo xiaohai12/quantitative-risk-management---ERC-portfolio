@@ -801,75 +801,50 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
     
     return fig
 
-def plot_risk_contributions_solo(df, figsize=(20, 8)):
-  
-    # Get the last row (excluding first column if it's a date/identifier)
+def plot_risk_contributions_solo(df, figsize=(16, 7)):
+    """
+    Plot absolute risk contributions from the last row of the dataframe.
+    
+    """
+    # Get the last row, ignoring first column (date)
     last_row = df.iloc[-1]
+    date_label = last_row.iloc[0]
+    values = last_row.iloc[1:].values.astype(float)
+    labels = df.columns[1:]
+
     
-    # Check if first column is non-numeric (date/identifier)
-    if not pd.api.types.is_numeric_dtype(df.iloc[:, 0]):
-        date_label = last_row.iloc[0]
-        values = last_row.iloc[1:].values.astype(float)
-        labels = df.columns[1:]
-    else:
-        date_label = "2025"
-        values = last_row.values.astype(float)
-        labels = df.columns
+    # Randomly sample 30 values if more than 30
+    if len(values) > 30:
+        random_idx = np.random.choice(len(values), size=30, replace=False)
+        values = values[random_idx]
+        labels = labels[random_idx]
     
-    # Take absolute values
-    abs_values = np.abs(values)
-    
-    # Sort by absolute value (descending)
-    sorted_idx = np.argsort(abs_values)[::-1]
-    sorted_values = abs_values[sorted_idx]
-    sorted_labels = labels[sorted_idx]
     
     # Create the plot
     fig, ax = plt.subplots(figsize=figsize)
     
-    # Create bar plot with very thin bars
-    x_pos = np.arange(len(sorted_values))
-    bars = ax.bar(x_pos, sorted_values, width=0.8, 
-                   color='steelblue', edgecolor='none', alpha=0.8)
+    # Create alternating colors
+    colors = ['steelblue' if i % 2 == 0 else 'lightsteelblue' for i in range(len(values))]
     
-    # Color the top contributors differently
-    top_n = min(20, len(bars))
-    for i in range(top_n):
-        bars[i].set_color('coral')
-        bars[i].set_alpha(0.9)
+    # Create bar plot with small bars that don't touch
+    x_pos = np.arange(len(values))
+    bars = ax.bar(x_pos, values, width=0.6, 
+                   color=colors, edgecolor='none', alpha=0.85)
+    
     
     # Formatting
-    ax.set_xlabel('Assets', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Absolute Risk Contribution', fontsize=12, fontweight='bold')
-    ax.set_title(f'Absolute Risk Contributions - {date_label}\n({len(sorted_values)} assets)', 
-                 fontsize=14, fontweight='bold', pad=20)
+    ax.set_xlabel('Assets (max 30 random assets)', fontsize=11, fontweight='bold')
+    ax.set_ylabel('Absolute Risk Contribution', fontsize=11, fontweight='bold')
+    ax.set_title(f'Assets Risk Contribution 2025', 
+                 fontsize=16, fontweight='bold', pad=15)
     
-    # Remove x-axis labels (too many to show)
+    # Remove x-axis ticks
     ax.set_xticks([])
     
-    # Add grid
-    ax.grid(axis='y', alpha=0.3, linestyle='--')
+    # Add subtle grid
+    ax.grid(axis='y', alpha=0.2, linestyle='--', linewidth=0.5)
     ax.set_axisbelow(True)
     
-    # Add statistics text box
-    stats_text = f'Total Assets: {len(sorted_values)}\n'
-    stats_text += f'Max Contribution: {sorted_values[0]:.4f}\n'
-    stats_text += f'Mean Contribution: {sorted_values.mean():.4f}\n'
-    stats_text += f'Top 20 Sum: {sorted_values[:20].sum():.4f}'
-    
-    ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,
-            verticalalignment='top', bbox=dict(boxstyle='round', 
-            facecolor='wheat', alpha=0.5), fontsize=10, family='monospace')
-    
-    # Add top contributors legend
-    top_contrib_text = 'Top 5 Contributors:\n'
-    for i in range(min(5, len(sorted_labels))):
-        top_contrib_text += f'{i+1}. {sorted_labels[i]}: {sorted_values[i]:.4f}\n'
-    
-    ax.text(0.98, 0.98, top_contrib_text, transform=ax.transAxes,
-            verticalalignment='top', horizontalalignment='right',
-            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5),
-            fontsize=9, family='monospace')
     
     plt.tight_layout()
-    return fig, ax        
+    return fig, ax
