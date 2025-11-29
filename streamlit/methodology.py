@@ -288,7 +288,7 @@ with col1:
     st.write("• Source constituents from several certified green funds or ETFs.")
     st.write("• Analyze the intersection of constituents — firms absent from most selected fund are excluded.")
     st.write("• Transparent reporting: list of excluded firms and percentage of the universe removed.")
-    st.write(" Commodities exclusions: fossil fuels and natural gas removed from the investment universe.")
+    st.write("• Commodities exclusions: fossil fuels and natural gas removed from the investment universe.")
 with col2:
     st.success("♻️ Green‑Fund Filter")
     st.write("Exclude firms absent in most selected green funds")
