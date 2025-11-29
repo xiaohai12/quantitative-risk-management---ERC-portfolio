@@ -292,5 +292,4 @@ if launch_button:
                 st.pyplot(ut.plot_drawdown(all_portfolio_returns))
 
             with col3:
-                fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
                 st.pyplot(ut.plot_risk_contribution(risk_contrib_df, combined_returns))
