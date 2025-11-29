@@ -198,7 +198,7 @@ def home_page():
     # -- Value Props --
     st.markdown('<div class="section-header">Why Amber?</div>', unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3 = st.columns([1.2, 1.2, 1.2])
     
     with c1:
         st.markdown("### Adaptive Portfolio Management")
