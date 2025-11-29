@@ -253,7 +253,6 @@ if launch_button:
             all_portfolio_returns, weights_df = ut.meanvar_portfolio(combined_returns, risk_aversion)
             MeanVar_flat, MeanVar_mean, MeanVar_vol, MeanVar_sharpe, MeanVar_cumu = ut.erc_performance(
                 all_portfolio_returns, combined_returns, 2018)
-            cumu_graph_final = ut.cumu_graph(MeanVar_flat)
 
             risk_contrib_df = ut.calculate_risk_contribution(weights_df, combined_returns)
             
@@ -268,6 +267,7 @@ if launch_button:
             # Display  graph
             col1, col2,col3 = st.columns([3,1, 3])
             with col1:
+                cumu_graph_final = ut.cumu_graph_vol(MeanVar_flat)
                 st.pyplot(cumu_graph_final)
 
             with col3:
