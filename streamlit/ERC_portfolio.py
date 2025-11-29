@@ -289,7 +289,7 @@ if launch_button:
              # Display  graph
             col1, col2,col3 = st.columns([4,1, 4])
             with col1:
-                st.pyplot(plot_drawdown(all_portfolio_returns))
+                st.pyplot(ut.plot_drawdown(all_portfolio_returns))
 
             with col3:
                 fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
