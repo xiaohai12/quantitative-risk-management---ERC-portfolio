@@ -180,8 +180,8 @@ def render_navbar(IMG_DIR):
             <div class="dropdown">
                 <button class="dropdown-button">Help ▾</button>
                 <div class="dropdown-content">
-                    <a href="?page=risk_profile">Risk Profile</a>
-                    <a href="?page=ai_chat">AI Chat</a>
+                    <a href="#" onclick="window.location.search='?page=risk_profile';return false;">Risk Profile</a>
+                    <a href="#" onclick="window.location.search='?page=ai_chat';return false;">AI Chat</a>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -198,10 +198,10 @@ def render_navbar(IMG_DIR):
         # Dropdown "About Us"
         st.markdown("""
             <div class="dropdown">
-                <button class="dropdown-button">About Us ▾</button>
+                <button class="dropdown-button">Help ▾</button>
                 <div class="dropdown-content">
-                    <a href="?page=team">Our Team</a>
-                    <a href="?page=contact">Contact Us</a>
+                    <a href="#" onclick="window.location.search='?page=risk_profile';return false;">Risk Profile</a>
+                    <a href="#" onclick="window.location.search='?page=ai_chat';return false;">AI Chat</a>
                 </div>
             </div>
         """, unsafe_allow_html=True)

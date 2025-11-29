@@ -12,7 +12,7 @@ wu.render_navbar(IMG_DIR)
 
 
 # ---- HEADER ----
-st.title("📬 Contact Us")
+st.title("Contact Us")
 
 st.write(
     """
