@@ -232,6 +232,7 @@ def home_page():
     st.write("")
     st.write("")
     cta_col1, cta_col2, cta_col3 = st.columns([1,2,1])
+    # ...existing code...
     with cta_col2:
         st.markdown(
             """
@@ -247,13 +248,19 @@ def home_page():
               display: inline-block;
               margin-top: 16px;
               padding: 10px 20px;
-              background: #2E86C1;
-              color: white;
+              background: transparent;               /* no background by default */
+              color: #2E86C1;                        /* button text color */
               text-decoration: none;
               border-radius: 8px;
               font-weight: 600;
+              border: 2px solid transparent;         /* keep size stable */
+              transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
             }
-            .cta-btn:hover { opacity: 0.9; }
+            .cta-btn:hover {
+              background: #FFCC99;                   /* orange on hover */
+              color: #000;
+              border-color: #CC6600;
+            }
             </style>
             <div class="cta-box">
                 <h3>Ready to optimize your wealth?</h3>
@@ -263,6 +270,7 @@ def home_page():
             """,
             unsafe_allow_html=True
         )
+
     if st.session_state.page == "contact":
         st.switch_page("Contact.py")
 
