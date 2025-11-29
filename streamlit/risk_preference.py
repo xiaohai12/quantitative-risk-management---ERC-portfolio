@@ -90,15 +90,27 @@ st.markdown("""
         border-color: #FFCC99;
     }
 
-    /* Slider styling */
+    /* Radio button circles - theme color */
+    div[data-testid="stRadio"] label span:first-child {
+        border-color: #CC6600 !important;
+    }
+
+    div[data-testid="stRadio"] label span:first-child svg {
+        color: #CC6600 !important;
+        fill: #CC6600 !important;
+    }
+
+    /* Selected radio button */
+    div[data-testid="stRadio"] label[data-checked="true"] span:first-child {
+        background-color: #CC6600 !important;
+        border-color: #CC6600 !important;
+    }
+
+    /* Slider styling - neutral colors */
     div[data-testid="stSlider"] {
         padding: 20px 15px;
         background: #f8f9fa;
         border-radius: 8px;
-    }
-
-    div[data-testid="stSlider"] > div > div > div {
-        background: #FFCC99 !important;
     }
 
     /* Submit button area */
@@ -109,23 +121,6 @@ st.markdown("""
         text-align: center;
         margin-top: 30px;
         border: 2px solid #FFCC99;
-    }
-
-    /* Progress indicator */
-    .progress-indicator {
-        background: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-        text-align: center;
-        border-left: 4px solid #CC6600;
-    }
-
-    .progress-text {
-        color: #CC6600;
-        font-weight: 600;
-        font-size: 1.1rem;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -242,15 +237,6 @@ questions = [
         }
     }
 ]
-
-# Progress indicator
-answered = len([k for k in st.session_state.answers if k in [q['id'] for q in questions]])
-total = len(questions)
-st.markdown(f"""
-    <div class="progress-indicator">
-        <span class="progress-text">Progress: {answered}/{total} questions answered</span>
-    </div>
-""", unsafe_allow_html=True)
 
 # Display questions
 for idx, q in enumerate(questions, 1):
