@@ -312,29 +312,30 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("""
     <div class="section-card">
         <h2 class="section-title">How We Construct Multi‑Asset Portfolios</h2>
+    </div>
+""", unsafe_allow_html=True)
 
-        <p>
-            We combine bonds, commodities, equities and crypto into a single, transparent
-            mean–variance optimization (MVO) framework. The process is designed around a
-            client-specific <strong>risk aversion score</strong> which controls the trade‑off
-            between expected return and portfolio risk.
-        </p>
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.write("""
+    We combine bonds, commodities, equities and crypto into a single, transparent
+    mean–variance optimization (MVO) framework. The process is driven by a client‑specific
+    risk‑aversion score which controls the trade‑off between expected return and portfolio risk.
+    """)
+    st.write("Key ideas:")
+    st.write("• Inputs: expected returns per asset class and a covariance matrix capturing volatilities and correlations.")
+    st.write("• Risk aversion (γ): a single scalar—lower γ is more aggressive, higher γ is more conservative.")
+    st.write("• Optimization: MVO finds weights that balance return vs risk (intuitively aligned with Σ⁻¹μ scaled by 1/γ) and then enforces practical constraints (sum-to-one, bounds, etc.).")
+    st.write("• Robustness: we apply covariance shrinkage, regularization, box constraints and turnover penalties to produce implementable allocations across assets with very different risk profiles (e.g. bonds vs crypto).")
+with col2:
+    st.info("Risk Aversion (γ)\n\n1 — Aggressive\n\n3 — Balanced\n\n6 — Conservative")
 
-        <p><strong>Workflow (high level):</strong></p>
-        <ul>
-            <li><strong>Inputs:</strong> expected returns per asset class (historical or model-based) and a covariance matrix capturing cross-asset volatilities and correlations.</li>
-            <li><strong>Risk aversion score (γ):</strong> a single scalar representing client preference — lower γ → more aggressive, higher γ → more conservative. Typical values: 1 (aggressive), 3 (balanced), 6 (conservative).</li>
-            <li><strong>Mean–variance solve:</strong> choose weights w to maximize μᵀw − (γ/2) wᵀΣw subject to practical constraints (sum(w)=1, bounds, etc.). Intuitively the solution is aligned with Σ⁻¹μ scaled by 1/γ and then adjusted to satisfy constraints.</li>
-            <li><strong>Practical adjustments:</strong> covariance shrinkage, L2 regularization, box constraints and turnover penalties are applied to make allocations robust and implementable across asset classes with very different volatilities (e.g., bonds vs crypto).</li>
-        </ul>
-
-        <p>
-            This approach lets us control portfolio risk centrally via the risk‑aversion parameter,
-            while MVO efficiently allocates across asset classes based on expected return and
-            cross‑asset risks. For production use we prefer regularized solvers (or convex
-            optimization libraries) to enforce bounds, transaction cost models and bespoke
-            regulatory or ESG constraints.
-        </p>
+st.markdown("""
+    <div class="feature-box">
+        <strong>Practical Adjustments:</strong> Regularization, covariance shrinkage, and convex solvers ensure stable allocations and control turnover.
+    </div>
+    <div class="feature-box">
+        <strong>Why this helps:</strong> Centralizing risk control through γ enables consistent behaviour across asset classes while letting the optimizer exploit expected return signals and cross‑asset diversification.
     </div>
 """, unsafe_allow_html=True)
 
