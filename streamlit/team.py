@@ -47,18 +47,18 @@ team_members = [
         "email": "shengzhao.lei@unil.ch"
     },
     {
-        "name": "James Thompson",
-        "role": "Market Research Analyst",
-        "bio": "Conducts comprehensive market research and economic analysis. Provides insights on market trends and investment opportunities.",
-        "expertise": ["Market Analysis", "Economic Research", "Sector Analysis"],
-        "email": "james.thompson@university.edu"
+    "name": "Jiali Wu",
+    "role": "Financial & Market Analyst",
+    "bio": "Specializes in financial and market analysis, combining quantitative theories with real-world market orientation, with a focus on delivering valuable and sustainable long-term investment plans.",
+    "expertise": ["Financial Analysis", "Market Research", "Quantitative Methods"],
+    "email": "jiali.wu@unil.ch"
     },
     {
-        "name": "Priya Patel",
+        "name": "Agon Bleta",
         "role": "Data Visualization & Reporting",
-        "bio": "Creates intuitive dashboards and comprehensive reports. Transforms complex financial data into actionable insights through visualization.",
-        "expertise": ["Data Visualization", "Dashboard Design", "Financial Reporting"],
-        "email": "priya.patel@university.edu"
+        "bio": "Builds intuitive dahsboards and automated performance reports for investment decision-making. Transforms complex financial and portfolio data into actionable insights through advanced visualization.",
+        "expertise": ["Data Visualization", "Dashboard Design", "Financial reporting"],
+        "email": "agon.bleta@unil.ch"
     }
 ]
 
