@@ -516,7 +516,7 @@ if launch_button:
 
             risk_contrib_df = ut.calculate_risk_contribution(weights_df, combined_returns)
             
-            
+           
             st.success("Portfolio construction complete!")
 
             
