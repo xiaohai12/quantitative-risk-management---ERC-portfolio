@@ -8,7 +8,8 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
     import requests
     import pandas as pd
     import time
-
+    from scipy.optimize import minimize
+    
     # Equity
     def import_equity(start_date, end_date):
         sp500_tickers = ['A', 'AAL', 'AAPL', 'ABBV', 'ABNB', 'ABT', 'ACN', 'ADBE', 'ADI', 'ADM','ADP', 'ADSK', 'AEE', 'AEP', 'AES', 'AFL', 'AIG', 'AIZ', 'AJG', 'AKAM', 'ALB', 'ALGN', 'ALK', 'ALL', 'ALLE', 'AMAT', 'AMCR', 'AMD', 'AME', 'AMGN', 'AMP', 'AMT', 'AMZN', 'ANET', 'AON', 'AOS', 'APA', 'APD', 'APH', 'APO', 'APP', 'APTV', 'ARE', 'AVB', 'AVGO', 'AVY', 'AWK', 'AXON', 'AXP', 'AZO', 'BA', 'BAC', 'BBWI', 'BBY', 'BDX', 'BEN', 'BF-B', 'BIIB', 'BK', 'BKNG', 'BLK', 'BMY', 'BR', 'BRK-B', 'BSX', 'BWA', 'BX', 'BXP', 'C', 'CAG', 'CAH', 'CARR', 'CAT', 'CB', 'CBOE', 'CCL', 'CDNS', 'CDW', 'CEG', 'CF', 'CFG', 'CHD', 'CHRW', 'CHTR', 'CI', 'CINF', 'CL', 'CLX', 'CMA', 'CMCSA', 'CME', 'CMG', 'CMI', 'CMS', 'CNC', 'CNP', 'COF', 'COIN', 'COO', 'COP', 'COR', 'COST', 'CPB', 'CPRT', 'CPT', 'CRL', 'CRM', 'CRWD', 'CSCO', 'CSGP', 'CSX', 'CTAS', 'CTRA', 'CTSH', 'CVS', 'CVX', 'D', 'DAL', 'DASH', 'DD', 'DE', 'DECK', 'DG', 'DGX', 'DHI', 'DHR', 'DIS', 'DLR', 'DLTR', 'DOV', 'DOW', 'DPZ', 'DRI', 'DTE', 'DUK', 'DVA', 'DVN', 'DXCM', 'EA', 'EBAY', 'ECL', 'ED', 'EFX', 'EG', 'EIX', 'EL', 'ELV', 'EME',  'EMN', 'EMR', 'EOG', 'EPAM', 'EQIX', 'EQT', 'ERJ', 'ES', 'ESS', 'ETN',  'ETR', 'ETSY', 'EVRG', 'EW', 'EXC', 'EXPD', 'EXPE', 'EXR', 'F', 'FAST', 'FCX', 'FDS', 'FDX', 'FE', 'FFIV', 'FI', 'FICO', 'FIS', 'FITB', 'FMC', 'FOX', 'FOXA', 'FRT', 'FSLR', 'FTNT', 'FTV', 'GD', 'GE', 'GEHC', 'GEV', 'GEN', 'GILD', 'GIS', 'GL', 'GLW', 'GM', 'GNRC', 'GOOG', 'GOOGL', 'GPC',
@@ -151,4 +152,84 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
     crypto_returns.to_csv(BASE_DIR + "/crypto_returns.csv")
     bonds_returns.to_csv(BASE_DIR + "/bonds_returns.csv")
 
+
+    # Com^pute ERC weights
+    def portfolio_risk(weights, cov_matrix):
+        """Calculate the portfolio risk (standard deviation)"""
+        return np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+    
+    def risk_contribution(weights, cov_matrix):
+        """Calculate the risk contribution of each asset in the portfolio"""
+        portfolio_std = portfolio_risk(weights, cov_matrix)
+        # Marginal contribution to risk
+        marginal_contribution = np.dot(cov_matrix, weights) / portfolio_std
+        # Risk contribution
+        risk_contrib = weights * marginal_contribution
+        return risk_contrib
+    
+    def objective_function(weights, cov_matrix):
+        """Minimize function to equalize risk contributions"""
+        risk_contribs = risk_contribution(weights, cov_matrix)
+        # We want all risk contributions to be equal, so minimize the sum of squared differences
+        # from the average risk contribution.
+        return np.sum((risk_contribs - np.mean(risk_contribs))**2) * 1000
+    
+    def compute_erc_weights(returns, output_file='erc_weights.csv'):
+        """
+        Compute ERC weights for each year and export to CSV
+        """
+        weights_data = []
+        
+        # Iterate through the years from 2016 to 2024
+        for year in range(2016, 2025):
+            print(f"Computing weights for year {year}...")
+            
+            # Filter data for the current year
+            daily_returns_year = returns.loc[returns.index.year == year]
+            
+            # Drop columns with any NaN values in this year
+            daily_returns_year = daily_returns_year.dropna(axis=1)
+            
+            # Store the column names for the current year
+            columns = daily_returns_year.columns.tolist()
+            
+            # Calculate covariance matrix
+            covariance_matrix_year = daily_returns_year.cov()
+            
+            # Calculate ERC weights for the current year
+            num_assets_year = len(covariance_matrix_year.columns)
+            initial_weights_year = np.array(num_assets_year * [1. / num_assets_year])
+            constraints_year = ({'type': 'eq', 'fun': lambda weights: np.sum(weights) - 1})
+            bounds_year = tuple((0, 1) for asset in range(num_assets_year))
+            options = {'ftol': 1e-10, 'maxiter': 1000}
+            
+            result_year = minimize(objective_function, initial_weights_year, 
+                                  args=(covariance_matrix_year,),
+                                  method='SLSQP', bounds=bounds_year, 
+                                  constraints=constraints_year,
+                                  options=options, tol=1e-10)
+            
+            erc_weights_year = result_year.x
+            
+            # Store weights with asset names
+            weight_dict = {'year': year}
+            for asset, weight in zip(columns, erc_weights_year):
+                weight_dict[asset] = weight
+            
+            weights_data.append(weight_dict)
+        
+        # Create DataFrame
+        weights_df = pd.DataFrame(weights_data)
+        
+        # Export to CSV
+        weights_df.to_csv(output_file, index=False)
+        print(f"\nWeights exported to {output_file}")
+        
+        return weights_df
+
+    weights_eq = compute_erc_weights(equity_returns, output_file='erc_weights_equity.csv')
+    weights_eqesg = compute_erc_weights(equity_esg_returns, output_file='erc_weights_equity_esg.csv')
+    weights_com = compute_erc_weights(commodity_returns, output_file='erc_weights_commodity.csv')
+    weights_comseg = compute_erc_weights(commodity_esg_returns, output_file='erc_weights_commodity_esg.csv')
+    weights_crypto = compute_erc_weights(crypto_returns, output_file='erc_weights_crypto.csv')
 importer_data(start='2016-01-01',end='2025-11-01')
