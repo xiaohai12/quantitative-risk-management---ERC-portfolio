@@ -90,14 +90,13 @@ if selected_asset == 'Equity (Standard)':
         f"{equity_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_grap_equity)
     with col3:
         risk_contrib = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_equity.csv")
-        fig = ut.plot_risk_contribution_solo(risk_contrib)
+        fig, ax = ut.plot_risk_contributions_solo(risk_contrib)
         st.pyplot(fig)
-        pass
 
 elif selected_asset == 'Equity (ESG)':
     st.write("""
@@ -121,15 +120,13 @@ elif selected_asset == 'Equity (ESG)':
         f"{equity_esg_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_graph_equity_esg)
     with col3:
         equity_esg_rc = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_equity_esg.csv")
-        
-        #fig1 = ut.plot_risk_contribution_many(risk_contrib, equity_esg_flat)
-        #st.pyplot(fig1)
-        pass
+        fig, ax = ut.plot_risk_contributions_solo(equity_esg_rc)
+        st.pyplot(fig)
 
 elif selected_asset == 'Commodity (Standard)':
     st.write("""
@@ -153,15 +150,13 @@ elif selected_asset == 'Commodity (Standard)':
         f"{commodity_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_graph_commodity)
     with col3:
-        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
-        #risk_contrib = ut.compute_last_year_risk_contribution(weights, commodity_returns)
-        #fig1 = ut.plot_risk_contribution_many(risk_contrib, commodity_flat)
-        #st.pyplot(fig1)
-        pass
+        risk_contrib = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_commodity.csv")
+        fig, ax = ut.plot_risk_contributions_solo(risk_contrib)
+        st.pyplot(fig)
     
 elif selected_asset == 'Commodity (ESG)':
     st.write("""
@@ -184,15 +179,13 @@ elif selected_asset == 'Commodity (ESG)':
         f"{commodity_esg_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_graph_commodity_esg)
     with col3:
-        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
-        #risk_contrib = ut.compute_last_year_risk_contribution(weights, commodity_esg_returns)
-        #fig1 = ut.plot_risk_contribution_many(risk_contrib, commodity_esg_flat)
-        #st.pyplot(fig1)
-        pass
+        risk_contrib = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_commodity_esg.csv")
+        fig, ax = ut.plot_risk_contributions_solo(risk_contrib)
+        st.pyplot(fig)
     
 elif selected_asset == 'Crypto':
     st.write("""
@@ -216,15 +209,13 @@ elif selected_asset == 'Crypto':
         f"{crypto_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_graph_crypto)
     with col3:
-        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
-        #risk_contrib = ut.compute_last_year_risk_contribution(weights, crypto_returns)
-        #fig1 = ut.plot_risk_contribution_many(risk_contrib, crypto_flat)
-        #st.pyplot(fig1)
-        pass
+        risk_contrib = pd.read_csv(BASE_DIR + "/dataImporter/erc_risk_contributions_crypto.csv")
+        fig, ax = ut.plot_risk_contributions_solo(risk_contrib)
+        st.pyplot(fig)
     
 elif selected_asset == 'Bonds':
     st.write("""
@@ -247,12 +238,12 @@ elif selected_asset == 'Bonds':
         f"{bonds_cumu * 100:.2f}%",
         delta=None)
     
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([4.5, 0.6, 5])
     with col1:
         st.pyplot(cumu_graph_bonds)
     with col3:
-        # Bonds don't have ERC weights, so just show empty space or alternative viz
-        st.write("") # Placeholder since bonds don't have risk contribution plot
+        st.write("**Risk Contribution**")
+        st.write("Bonds is a single index and hence has a single absolute risk contribution of 1.0")
 
 st.divider()
 
