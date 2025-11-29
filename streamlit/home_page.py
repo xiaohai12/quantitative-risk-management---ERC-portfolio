@@ -37,6 +37,12 @@ st.markdown("""
     font-weight: 700;
     margin-bottom: 8px;
 }
+            
+function goToContact() {
+    const url = new URL(window.location);
+    url.searchParams.set("page", "contact");
+    window.location.href = url.toString();
+}
 </style>
 """, unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
@@ -235,11 +241,12 @@ def home_page():
     with cta_col2:
         st.markdown(
             """
-            <div style="background-color: #f8f9fa; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #ddd;">
+            <div onclick="goToContact()" 
+                style="cursor: pointer; background-color: #f8f9fa; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #ddd;">
                 <h3>Ready to optimize your wealth?</h3>
                 <p>Schedule a free consultation with our senior advisors today.</p>
             </div>
-            """, 
+            """,
             unsafe_allow_html=True
         )
 
