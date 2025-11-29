@@ -27,7 +27,7 @@ st.markdown("""
     background-color: #eef5ff;
     padding: 20px;
     border-radius: 12px;
-    min-height: 160px;    /* force same box height */
+    min-height: 120px;    /* force same box height */
     display: flex;
     align-items: center;
     font-size: 16px;
