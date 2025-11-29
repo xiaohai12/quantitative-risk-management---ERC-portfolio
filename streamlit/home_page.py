@@ -24,7 +24,7 @@ wu.apply_custom_css()
 st.markdown("""
 <style>
 .feature-card {
-    background-color: #eef5ff;
+    background-color: #FFCC99;
     padding: 20px;
     border-radius: 12px;
     min-height: 120px;    /* force same box height */
