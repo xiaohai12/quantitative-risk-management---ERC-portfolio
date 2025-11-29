@@ -663,7 +663,7 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
     
     # Create figure with two subplots
     fig = plt.figure(figsize=(16, 10))
-    gs = fig.add_gridspec(2, 1, height_ratios=[1.5, 1], hspace=0.25)
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.5, 1], hspace=0.5)
     
     # ===== SUBPLOT 1: Cumulative Returns =====
     ax1 = fig.add_subplot(gs[0])
@@ -701,15 +701,6 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
     # Baseline at 1.0
     ax1.axhline(y=1.0, color='#95a5a6', linestyle='--', linewidth=1.5, alpha=0.7, label='Initial Investment')
     
-    # Calculate and display key metrics
-    final_value = cumulative_returns_plot.values[-1]
-    total_return = (final_value - 1) * 100
-    
-    # Add text box with performance metrics
-    textstr = f'Total Return: {total_return:+.2f}%\nFinal Value: ${final_value:.2f}'
-    props = dict(boxstyle='round,pad=0.8', facecolor='white', alpha=0.9, edgecolor='#bdc3c7', linewidth=1.5)
-    ax1.text(0.02, 0.98, textstr, transform=ax1.transAxes, fontsize=11,
-             verticalalignment='top', bbox=props, family='monospace')
     
     # Styling
     ax1.set_title('Cumulative Portfolio Performance', fontsize=16, fontweight='bold', pad=20, color='#2c3e50')
@@ -750,11 +741,6 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
     ax2.axhline(y=mean_vol, color='#c0392b', linestyle='--', linewidth=1.5, 
                 alpha=0.7, label=f'Mean Volatility: {mean_vol:.2f}%')
     
-    # Calculate current volatility
-    current_vol = rolling_vol.iloc[-1]
-    textstr_vol = f'Current Vol: {current_vol:.2f}%\nMean Vol: {mean_vol:.2f}%'
-    ax2.text(0.02, 0.98, textstr_vol, transform=ax2.transAxes, fontsize=11,
-             verticalalignment='top', bbox=props, family='monospace')
     
     # Styling
     ax2.set_title('Portfolio Volatility (Annualized)', fontsize=16, fontweight='bold', pad=15, color='#2c3e50')
@@ -768,10 +754,6 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
     # Format y-axis with percentage
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f'{y:.1f}%'))
     
-    # Add subtle border to entire figure
-    fig.patch.set_facecolor('white')
-    fig.patch.set_edgecolor('#bdc3c7')
-    fig.patch.set_linewidth(2)
     
     plt.tight_layout()
     
