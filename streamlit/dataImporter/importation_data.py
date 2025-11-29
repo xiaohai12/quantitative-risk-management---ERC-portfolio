@@ -254,3 +254,4 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
     weights_crypto, risk_contrib_crypto = compute_erc_weights(crypto_returns, output_file='erc_weights_crypto.csv', risk_contrib_file='erc_risk_contributions_crypto.csv')
 
 importer_data(start='2016-01-01',end='2025-11-01')
+
