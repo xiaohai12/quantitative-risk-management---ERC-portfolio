@@ -291,21 +291,21 @@ st.markdown("""
 col1, col2 = st.columns([3, 2])
 with col1:
     st.write("""
-    We extend the ERC framework by applying an ESG index at the firm level. Instead of filtering
-    on raw emissions or individual score components, we rank firms by their ESG index performance
-    and exclude those with the worst index performance from the investable universe.
+    We derive the investable universe from the constituents of multiple certified green funds. We take the intersection of the
+    selected green funds' constituent lists and exclude any firm that is not present
+    in all of them. This enforces a conservative green-screen: only firms consistently
+    included across the chosen green funds remain investable.
     """)
 
-    st.markdown("**Key ESG Index Features:**")
-    st.write("• A composite ESG index is computed per firm using third‑party data and standardized methodology.")
-    st.write("• Firms in the bottom segment of the ESG index (poorest ESG performance) are removed prior to optimization.")
-    st.write("• Sector‑aware replacement logic ensures investable coverage when exclusions occur.")
-    st.write("• We report ESG index coverage and the list/percentage of excluded holdings for transparency.")
-
+    st.markdown("**Key features:**")
+    st.write("• Source constituents from several certified green funds or ETFs.")
+    st.write("• Compute the intersection of constituents — firms absent from any selected fund are excluded.")
+    st.write("• Sector‑aware replacement logic ensures coverage if exclusions create gaps.")
+    st.write("• Transparent reporting: list of excluded firms and percentage of the universe removed.")
 with col2:
-    st.success("🌍 **ESG Index Screening**")
-    st.write("Firms with the worst ESG index performance are excluded before optimization")
-    st.metric("ESG Index Exclusion", "Bottom 20% excluded")
+    st.success("♻️ Green‑Fund Filter")
+    st.write("Exclude firms not present in all selected green funds")
+    st.metric("Filter Method", "Intersection of selected funds")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- Portfolio construction explanation (multi-asset, risk-aversion, MVO) ---
