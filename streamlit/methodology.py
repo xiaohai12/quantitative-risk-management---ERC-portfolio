@@ -197,7 +197,7 @@ with col2:
 
 st.markdown("""
     <div class="feature-box">
-        <strong>Equal Risk Contribution: Each asset contributes equally to the portfolio’s total risk.
+        <strong>Equal Risk Contribution:</strong> Each asset contributes equally to the portfolio’s total risk.
     </div>
     <div class="feature-box">
         <strong>Volatility Protection:</strong> Avoids concentration in high-volatility assets
