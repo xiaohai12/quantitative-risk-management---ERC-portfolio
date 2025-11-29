@@ -275,6 +275,8 @@ if launch_button:
                 st.pyplot(fig1)
             st.markdown("<br>", unsafe_allow_html=True)
 
+
+            st.divider()
             # Display  metrics
             col1, col2, col3, col4 = st.columns(4)
             col1.metric("Expected Annual Return", f"{MeanVar_mean * 100:.2f}%")
@@ -286,6 +288,8 @@ if launch_button:
                 delta=None
             )
 
+            st.divider()
+            
             st.markdown("<br>", unsafe_allow_html=True)
             # Display  graph
             col1, col2,col3 = st.columns([4,1, 4])
