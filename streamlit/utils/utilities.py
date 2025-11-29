@@ -593,62 +593,51 @@ def calculate_risk_contribution(weights_df, combined_returns):
     return risk_contrib_df
 
 
-def plot_risk_contribution(risk_contrib_df, combined_returns):
+def plot_average_risk_contribution(risk_contrib_df: pd.DataFrame, combined_returns: pd.DataFrame):
     """
-    Visualize risk contributions over time
+    Visualize the AVERAGE risk contributions by asset (Bar Plot only).
     """
+    
+    # 1. Data Preparation (Identical to original function)
     asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
     
-    # Extract risk contribution columns
+    # Extract risk contribution columns and rename
     risk_cols = [col for col in risk_contrib_df.columns if col.endswith('_risk_contrib')]
     risk_data = risk_contrib_df[risk_cols]
     risk_data.columns = [col.replace('_risk_contrib', '') for col in risk_data.columns]
     
-    # Extract weight columns
-    weight_cols = [col for col in risk_contrib_df.columns if col.endswith('_weight')]
-    weight_data = risk_contrib_df[weight_cols]
-    weight_data.columns = [col.replace('_weight', '') for col in weight_data.columns]
-    
-    # Calculate averages
+    # Calculate average risk contribution
     avg_risk = risk_data.mean()
-    avg_weight = weight_data.mean()
     
-    fig, axes = plt.subplots(2, 1, figsize=(14, 10))
+    # 2. Create the Figure (Single Subplot)
+    fig, ax = plt.subplots(figsize=(12, 6)) # Adjusted size for a cleaner single plot
     
-    # Plot 1: Average Risk Contribution by Asset (Bar Plot)
+    # 3. Plot 1: Average Risk Contribution by Asset (Bar Plot)
     x_pos = np.arange(len(asset_names))
-    bars = axes[0].bar(x_pos, avg_risk.values, alpha=0.7, edgecolor='black', linewidth=1.5)
+    bars = ax.bar(x_pos, avg_risk.values, alpha=0.8, edgecolor='black', linewidth=1.0)
     
-    # Color bars based on contribution level
-    colors = plt.cm.RdYlGn_r(avg_risk.values / avg_risk.max())
+    # Sticking to original logic (normalized by max):
+    colors = plt.cm.RdYlGn_r(avg_risk.values / avg_risk.max()) 
+    
     for bar, color in zip(bars, colors):
         bar.set_color(color)
-    
-    axes[0].set_xticks(x_pos)
-    axes[0].set_xticklabels(asset_names, rotation=45, ha='right')
-    axes[0].set_ylabel('Average Risk Contribution (%)', fontsize=12)
-    axes[0].set_title('Average Risk Contribution by Asset', fontsize=14, fontweight='bold')
-    axes[0].grid(True, alpha=0.3, axis='y')
-    axes[0].axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+        
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(asset_names, rotation=45, ha='right', fontsize=10)
+    ax.set_ylabel('Average Risk Contribution (%)', fontsize=12, fontweight='bold')
+    ax.set_title('Average Risk Contribution by Asset', fontsize=16, fontweight='bold', pad=15)
+    ax.grid(True, alpha=0.3, axis='y')
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
     
     # Add value labels on bars
     for i, (bar, val) in enumerate(zip(bars, avg_risk.values)):
         height = bar.get_height()
-        axes[0].text(bar.get_x() + bar.get_width()/2., height,
-                    f'{val:.2f}%',
-                    ha='center', va='bottom' if height >= 0 else 'top',
-                    fontsize=9, fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width()/2., height,
+                f'{val:.2f}%',
+                ha='center', va='bottom' if height >= 0 else 'top',
+                fontsize=9, fontweight='bold', color='black')
     
-    # Plot 2: Portfolio Volatility Over Time
-    axes[1].plot(risk_contrib_df.index, risk_contrib_df['portfolio_vol'], 
-                linewidth=2, color='darkblue')
-    axes[1].fill_between(risk_contrib_df.index, 0, risk_contrib_df['portfolio_vol'], 
-                         alpha=0.3, color='blue')
-    axes[1].set_ylabel('Portfolio Volatility (%)', fontsize=12)
-    axes[1].set_xlabel('Date', fontsize=12)
-    axes[1].set_title('Portfolio Volatility Over Time', fontsize=14, fontweight='bold')
-    axes[1].grid(True, alpha=0.3)
-    
+    # 4. Final Formatting
     plt.tight_layout()
     plt.show()
 
