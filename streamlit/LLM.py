@@ -46,7 +46,7 @@ wu.render_navbar(IMG_DIR)
 # Hero section
 st.markdown("""
     <div class="hero-assessment">
-        <h1>💬 Amber AI Chat Assistant</h1>
+        <h1>💬 Amber AI  Assistant</h1>
     </div>
 """, unsafe_allow_html=True)
 
