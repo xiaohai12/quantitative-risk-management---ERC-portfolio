@@ -243,9 +243,8 @@ with col2:
     # Custom HTML for larger, centered metric
     st.markdown(f"""
         <div style="text-align: center; padding: 20px; background-color: "#F0F2F6"; border-radius: 10px;">
-            <h1 style="margin: 0px 0; font-size: 24px;">{color} {profile} Profile</h2>
             <h1 style="margin: 0px 0; font-size: 30px; font-weight: bold;">Score: {st.session_state.risk_score}</h1>
-            <p style="margin: 0px 0; font-size: 20px; color: #666;">{delta_label}</p>
+            <h1 style="margin: 0px 0; font-size: 24px;">{color} {profile} Profile</h2> <p style="margin: 0px 0; font-size: 20px; color: #666;">{delta_label}</p>
         </div>
     """, unsafe_allow_html=True)
 
