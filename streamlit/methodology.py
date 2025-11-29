@@ -305,15 +305,14 @@ st.markdown("""
 col1, col2 = st.columns([3, 1])
 with col1:
     st.write("""
-    We combine bonds, commodities, equities and crypto into a single, transparent
+    We combine bonds, commodities, equities and crypto ERCs into a single, transparent
     mean–variance optimization (MVO) framework. The process is driven by a client‑specific
     risk level score which controls the trade‑off between expected return and portfolio risk.
     """)
     st.write("Key ideas:")
-    st.write("• Inputs: expected returns per asset class and a covariance matrix capturing volatilities and correlations.")
+    st.write("• Inputs: expected returns per asset class ERCs and a covariance matrix capturing volatilities and correlations.")
     st.write("• Risk level score (γ): a single scalar—lower γ is more conservative, higher γ is more aggressive, it will convert into risk aversion score for MVO framework.")
     st.write("• Optimization: MVO finds weights that balance return vs risk and then enforces practical constraints (sum-to-one, bounds, etc.).")
-    st.write("• Robustness: we apply covariance shrinkage, regularization, box constraints and turnover penalties to produce implementable allocations across assets with very different risk profiles (e.g. bonds vs crypto).")
 with col2:
     st.info("Risk Level Score (γ)\n\n0 — Conservative\n\n5 — Balanced\n\n10 — Aggressive")
 
