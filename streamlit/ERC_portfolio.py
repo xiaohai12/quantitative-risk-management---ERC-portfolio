@@ -159,10 +159,6 @@ with col2:
         </div>
     """, unsafe_allow_html=True)
 
-# Visual progress bar
-st.markdown("### Risk Tolerance Scale")
-st.progress(st.session_state.risk_score / 10)
-
 # Info about the selection
 if st.session_state.risk_score <= 3:
     st.info("💼 **Conservative**: You prefer stability and capital preservation. Low-risk investments suit you best.")
