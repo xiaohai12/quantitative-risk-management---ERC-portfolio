@@ -291,22 +291,21 @@ st.markdown("""
 col1, col2 = st.columns([3, 2])
 with col1:
     st.write("""
-    We extend the ERC framework to incorporate company‑level ESG scores. Rather than relying on raw carbon
-    emissions, we obtain standardized ESG ratings for each security and apply an exclusion filter:
-    any asset with an ESG score below a configurable threshold is removed from the investable universe.
+    We extend the ERC framework by applying an ESG index at the firm level. Instead of filtering
+    on raw emissions or individual score components, we rank firms by their ESG index performance
+    and exclude those with the worst index performance from the investable universe.
     """)
 
-    st.markdown("**Key ESG Features:**")
-    st.write("• Company-level ESG scores from third‑party providers")
-    st.write("• Exclusion filter based on configurable ESG score thresholds")
-    st.write("• Sector-level constraints and replacement logic for excluded securities")
-    st.write("• Reporting of ESG coverage and list of excluded holdings")
+    st.markdown("**Key ESG Index Features:**")
+    st.write("• A composite ESG index is computed per firm using third‑party data and standardized methodology.")
+    st.write("• Firms in the bottom segment of the ESG index (poorest ESG performance) are removed prior to optimization.")
+    st.write("• Sector‑aware replacement logic ensures investable coverage when exclusions occur.")
+    st.write("• We report ESG index coverage and the list/percentage of excluded holdings for transparency.")
 
 with col2:
-    st.success("🌍 **ESG Screening**")
-    st.write("Securities below the ESG threshold are excluded before optimization")
-    st.metric("ESG Exclusion Threshold", "Score ≤ 40")
-
+    st.success("🌍 **ESG Index Screening**")
+    st.write("Firms with the worst ESG index performance are excluded before optimization")
+    st.metric("ESG Index Exclusion", "Bottom 20% excluded")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- Portfolio construction explanation (multi-asset, risk-aversion, MVO) ---
