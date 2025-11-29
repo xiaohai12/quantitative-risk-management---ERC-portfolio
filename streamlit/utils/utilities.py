@@ -489,47 +489,47 @@ def calculate_drawdown(portfolio_returns):
     return drawdown_series, max_drawdown, max_dd_duration, drawdown_info
 
 
-def plot_drawdown(portfolio_returns, dates=None):
+def plot_drawdown_only(portfolio_returns, dates=None):
     """
-    Plot cumulative returns with drawdown visualization
+    Plot only the drawdown visualization.
     """
+    # 1. Calculate drawdown and associated metrics
     drawdown_series, max_dd, max_duration, dd_info = calculate_drawdown(portfolio_returns)
     
-    # Flatten returns
+    # 2. Flatten returns (Kept for robust handling of input format)
     if isinstance(portfolio_returns, list):
+        # Flatten list of lists
         flat_returns = [ret for month in portfolio_returns for ret in month]
         returns_series = pd.Series(flat_returns)
     else:
+        # Use the input directly if it's already a Series/DataFrame
         returns_series = portfolio_returns
     
-    cumulative_wealth = (1 + returns_series).cumprod()
+    # We use a figsize that is wider and shorter, suitable for a single plot.
+    fig, ax = plt.subplots(1, 1, figsize=(14, 6))
     
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
+    # 4. Drawdown Series Plot (Adapted from the original ax2)
+    ax.fill_between(
+        range(len(drawdown_series)),
+        drawdown_series.values * 100, # Drawdown values as percentage
+        0,                             # Fill down to the zero line
+        alpha=0.5, 
+        color='red'
+    )
+    ax.plot(drawdown_series.values * 100, color='darkred', linewidth=1.5)
     
-    # Plot 1: Cumulative Returns
-    ax1.plot(cumulative_wealth.values, label='Portfolio Value', linewidth=2)
-    ax1.plot(cumulative_wealth.cummax().values, label='Peak Value', 
-             linestyle='--', alpha=0.7, linewidth=1.5)
-    ax1.fill_between(range(len(cumulative_wealth)), 
-                      cumulative_wealth.values, 
-                      cumulative_wealth.cummax().values,
-                      alpha=0.3, color='red', label='Drawdown')
-    ax1.set_ylabel('Cumulative Wealth', fontsize=12)
-    ax1.set_title('Portfolio Cumulative Returns with Drawdown Periods', fontsize=14, fontweight='bold')
-    ax1.legend(loc='best')
-    ax1.grid(True, alpha=0.3)
+    # 5. Set labels and title
+    ax.set_ylabel('Drawdown (%)', fontsize=12)
+    ax.set_xlabel('Trading Days', fontsize=12)
+    ax.set_title(
+        f'Drawdown Over Time (Max DD: {max_dd*100:.2f}%, Max Duration: {max_duration} days)',
+        fontsize=14, 
+        fontweight='bold'
+    )
     
-    # Plot 2: Drawdown Series
-    ax2.fill_between(range(len(drawdown_series)), 
-                      drawdown_series.values * 100, 0,
-                      alpha=0.5, color='red')
-    ax2.plot(drawdown_series.values * 100, color='darkred', linewidth=1.5)
-    ax2.set_ylabel('Drawdown (%)', fontsize=12)
-    ax2.set_xlabel('Trading Days', fontsize=12)
-    ax2.set_title(f'Drawdown Over Time (Max DD: {max_dd*100:.2f}%, Max Duration: {max_duration} days)', 
-                  fontsize=14, fontweight='bold')
-    ax2.grid(True, alpha=0.3)
-    ax2.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    # 6. Add grid and zero line
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
     
     plt.tight_layout()
     plt.show()
@@ -539,18 +539,7 @@ def plot_drawdown(portfolio_returns, dates=None):
 def calculate_risk_contribution(weights_df, combined_returns):
     """
     Calculate marginal and component risk contributions for each asset
-    
-    Parameters:
-    -----------
-    weights_df : pd.DataFrame
-        Monthly portfolio weights (from meanvar_portfolio)
-    combined_returns : pd.DataFrame
-        Asset returns
-    
-    Returns:
-    --------
-    risk_contrib_df : pd.DataFrame
-        Risk contribution metrics for each period
+
     """
     combined_returns.index = pd.to_datetime(combined_returns.index)
     asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
@@ -620,45 +609,45 @@ def plot_risk_contribution(risk_contrib_df, combined_returns):
     weight_data = risk_contrib_df[weight_cols]
     weight_data.columns = [col.replace('_weight', '') for col in weight_data.columns]
     
-    fig, axes = plt.subplots(3, 1, figsize=(14, 12))
-    
-    # Plot 1: Risk Contribution Over Time (Stacked Area)
-    # Handle potential negative values by using absolute values
-    risk_data_abs = risk_data.abs()
-    risk_data_abs.plot.area(ax=axes[0], alpha=0.7, linewidth=0)
-    axes[0].set_title('Risk Contribution by Asset Over Time (Absolute Values)', fontsize=14, fontweight='bold')
-    axes[0].set_ylabel('Risk Contribution (%)', fontsize=12)
-    axes[0].legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    axes[0].grid(True, alpha=0.3)
-    
-    # Plot 2: Average Risk Contribution vs Weight
+    # Calculate averages
     avg_risk = risk_data.mean()
     avg_weight = weight_data.mean()
     
-    axes[1].scatter(avg_weight, avg_risk, s=200, alpha=0.6)
-    for i, asset in enumerate(asset_names):
-        axes[1].annotate(asset, (avg_weight.iloc[i], avg_risk.iloc[i]), 
-                        fontsize=10, ha='center')
+    fig, axes = plt.subplots(2, 1, figsize=(14, 10))
     
-    # Add diagonal line (where weight = risk contribution)
-    max_val = max(avg_weight.max(), avg_risk.max())
-    axes[1].plot([0, max_val], [0, max_val], 'k--', alpha=0.5, label='Weight = Risk')
+    # Plot 1: Average Risk Contribution by Asset (Bar Plot)
+    x_pos = np.arange(len(asset_names))
+    bars = axes[0].bar(x_pos, avg_risk.values, alpha=0.7, edgecolor='black', linewidth=1.5)
     
-    axes[1].set_xlabel('Average Portfolio Weight (%)', fontsize=12)
-    axes[1].set_ylabel('Average Risk Contribution (%)', fontsize=12)
-    axes[1].set_title('Average Risk Contribution vs Portfolio Weight', fontsize=14, fontweight='bold')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
+    # Color bars based on contribution level
+    colors = plt.cm.RdYlGn_r(avg_risk.values / avg_risk.max())
+    for bar, color in zip(bars, colors):
+        bar.set_color(color)
     
-    # Plot 3: Portfolio Volatility Over Time
-    axes[2].plot(risk_contrib_df.index, risk_contrib_df['portfolio_vol'], 
+    axes[0].set_xticks(x_pos)
+    axes[0].set_xticklabels(asset_names, rotation=45, ha='right')
+    axes[0].set_ylabel('Average Risk Contribution (%)', fontsize=12)
+    axes[0].set_title('Average Risk Contribution by Asset', fontsize=14, fontweight='bold')
+    axes[0].grid(True, alpha=0.3, axis='y')
+    axes[0].axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    
+    # Add value labels on bars
+    for i, (bar, val) in enumerate(zip(bars, avg_risk.values)):
+        height = bar.get_height()
+        axes[0].text(bar.get_x() + bar.get_width()/2., height,
+                    f'{val:.2f}%',
+                    ha='center', va='bottom' if height >= 0 else 'top',
+                    fontsize=9, fontweight='bold')
+    
+    # Plot 2: Portfolio Volatility Over Time
+    axes[1].plot(risk_contrib_df.index, risk_contrib_df['portfolio_vol'], 
                 linewidth=2, color='darkblue')
-    axes[2].fill_between(risk_contrib_df.index, 0, risk_contrib_df['portfolio_vol'], 
+    axes[1].fill_between(risk_contrib_df.index, 0, risk_contrib_df['portfolio_vol'], 
                          alpha=0.3, color='blue')
-    axes[2].set_ylabel('Portfolio Volatility (%)', fontsize=12)
-    axes[2].set_xlabel('Date', fontsize=12)
-    axes[2].set_title('Portfolio Volatility Over Time', fontsize=14, fontweight='bold')
-    axes[2].grid(True, alpha=0.3)
+    axes[1].set_ylabel('Portfolio Volatility (%)', fontsize=12)
+    axes[1].set_xlabel('Date', fontsize=12)
+    axes[1].set_title('Portfolio Volatility Over Time', fontsize=14, fontweight='bold')
+    axes[1].grid(True, alpha=0.3)
     
     plt.tight_layout()
     plt.show()
