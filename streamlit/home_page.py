@@ -222,7 +222,7 @@ def home_page():
     st.markdown('<div class="section-header">Historic Performance</div>', unsafe_allow_html=True)
     st.write("Compare the historical performance of our best-selling portfolios.")
     
-    df = get_dummy_data()
+    df = get_portfolios_cumulative_returns()
     fig = create_chart(df)
     st.plotly_chart(fig, use_container_width=True)
 
