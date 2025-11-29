@@ -328,7 +328,7 @@ with col1:
     st.write("• Optimization: MVO finds weights that balance return vs risk (intuitively aligned with Σ⁻¹μ scaled by 1/γ) and then enforces practical constraints (sum-to-one, bounds, etc.).")
     st.write("• Robustness: we apply covariance shrinkage, regularization, box constraints and turnover penalties to produce implementable allocations across assets with very different risk profiles (e.g. bonds vs crypto).")
 with col2:
-    st.info("Risk Aversion (γ)\n\n1 — Aggressive\n\n3 — Balanced\n\n6 — Conservative")
+    st.info("Risk Aversion (γ)\n\n0 — Conservative\n\n5 — Balanced\n\n10 — Conservative")
 
 st.markdown("""
     <div class="feature-box">
