@@ -1,6 +1,20 @@
 import streamlit as st
 from streamlit import title
 
+# Force light theme via config
+st.markdown(
+    """
+    <style>
+    /* Force Streamlit light theme */
+    [data-testid="stAppViewContainer"] {
+        background-color: white;
+        color: black;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Define the pages
 home_page = st.Page("home_page.py", title="Home Page")
 ERC_portfolio_page = st.Page("ERC_portfolio.py", title="ERC portfolio")
