@@ -175,11 +175,13 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
         # from the average risk contribution.
         return np.sum((risk_contribs - np.mean(risk_contribs))**2) * 1000
     
-    def compute_erc_weights(returns, output_file='erc_weights.csv'):
+    def compute_erc_weights(returns, output_file='erc_weights.csv', risk_contrib_file='erc_risk_contributions.csv'):
         """
         Compute ERC weights for each year and export to CSV
+        Also saves risk contributions to a separate CSV file
         """
         weights_data = []
+        risk_contrib_data = []
         
         # Iterate through the years from 2016 to 2024
         for year in range(2016, 2025):
@@ -212,25 +214,43 @@ def importer_data(start='2016-01-01',end='2025-11-01'):
             
             erc_weights_year = result_year.x
             
+            # Check the risk contributions for the optimized ERC weights
+            erc_risk_contributions = risk_contribution(erc_weights_year, covariance_matrix_year)
+            
+            erc_risk_contributions_df = pd.DataFrame({'Risk Contribution': erc_risk_contributions}, index=covariance_matrix_year.columns)
+            
             # Store weights with asset names
             weight_dict = {'year': year}
             for asset, weight in zip(columns, erc_weights_year):
                 weight_dict[asset] = weight
             
             weights_data.append(weight_dict)
+            
+            # Store risk contributions with asset names
+            risk_contrib_dict = {'year': year}
+            for asset, risk_contrib in zip(columns, erc_risk_contributions):
+                risk_contrib_dict[asset] = risk_contrib
+            
+            risk_contrib_data.append(risk_contrib_dict)
         
-        # Create DataFrame
+        # Create DataFrames
         weights_df = pd.DataFrame(weights_data)
+        risk_contrib_df = pd.DataFrame(risk_contrib_data)
         
         # Export to CSV
         weights_df.to_csv(output_file, index=False)
         print(f"\nWeights exported to {output_file}")
         
-        return weights_df
+        risk_contrib_df.to_csv(risk_contrib_file, index=False)
+        print(f"Risk contributions exported to {risk_contrib_file}")
+        
+        return weights_df, risk_contrib_df
+    
+    
+    weights_eq, risk_contrib_eq = compute_erc_weights(equity_returns, output_file='erc_weights_equity.csv', risk_contrib_file='erc_risk_contributions_equity.csv')
+    weights_eqesg, risk_contrib_eqesg = compute_erc_weights(equity_esg_returns, output_file='erc_weights_equity_esg.csv', risk_contrib_file='erc_risk_contributions_equity_esg.csv')
+    weights_com, risk_contrib_com = compute_erc_weights(commodity_returns, output_file='erc_weights_commodity.csv', risk_contrib_file='erc_risk_contributions_commodity.csv')
+    weights_comseg, risk_contrib_comseg = compute_erc_weights(commodity_esg_returns, output_file='erc_weights_commodity_esg.csv', risk_contrib_file='erc_risk_contributions_commodity_esg.csv')
+    weights_crypto, risk_contrib_crypto = compute_erc_weights(crypto_returns, output_file='erc_weights_crypto.csv', risk_contrib_file='erc_risk_contributions_crypto.csv')
 
-    weights_eq = compute_erc_weights(equity_returns, output_file='erc_weights_equity.csv')
-    weights_eqesg = compute_erc_weights(equity_esg_returns, output_file='erc_weights_equity_esg.csv')
-    weights_com = compute_erc_weights(commodity_returns, output_file='erc_weights_commodity.csv')
-    weights_comseg = compute_erc_weights(commodity_esg_returns, output_file='erc_weights_commodity_esg.csv')
-    weights_crypto = compute_erc_weights(crypto_returns, output_file='erc_weights_crypto.csv')
 importer_data(start='2016-01-01',end='2025-11-01')
