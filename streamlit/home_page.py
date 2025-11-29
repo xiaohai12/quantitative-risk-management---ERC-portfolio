@@ -37,12 +37,6 @@ st.markdown("""
     font-weight: 700;
     margin-bottom: 8px;
 }
-            
-function goToContact() {
-    const url = new URL(window.location);
-    url.searchParams.set("page", "contact");
-    window.location.href = url.toString();
-}
 </style>
 """, unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
@@ -241,18 +235,36 @@ def home_page():
     with cta_col2:
         st.markdown(
             """
-            <div onclick="goToContact()" 
-                style="cursor: pointer; background-color: #f8f9fa; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #ddd;">
+            <style>
+            .cta-box {
+              background-color: #f8f9fa;
+              border-radius: 15px;
+              padding: 30px;
+              text-align: center;
+              border: 1px solid #ddd;
+            }
+            .cta-btn {
+              display: inline-block;
+              margin-top: 16px;
+              padding: 10px 20px;
+              background: #2E86C1;
+              color: white;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+            }
+            .cta-btn:hover { opacity: 0.9; }
+            </style>
+            <div class="cta-box">
                 <h3>Ready to optimize your wealth?</h3>
                 <p>Schedule a free consultation with our senior advisors today.</p>
+                <a class="cta-btn" href="?page=contact">Contact Us</a>
             </div>
             """,
             unsafe_allow_html=True
         )
-    params = st.query_params
-    if "page" in params:
-        if params["page"] == "contact":
-            st.switch_page("Contact.py")
+    if st.session_state.page == "contact":
+        st.switch_page("Contact.py")
 
 
 wu.render_navbar(IMG_DIR)
