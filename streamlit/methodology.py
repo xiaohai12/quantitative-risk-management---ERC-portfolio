@@ -279,20 +279,19 @@ col1, col2 = st.columns([3, 2])
 with col1:
     st.write("""
     We derive the investable universe from the constituents of multiple certified green funds. We take the intersection of the
-    selected green funds' constituent lists and exclude any firm that is not present
-    in all of them. This enforces a conservative green-screen: only firms consistently
+    selected green funds' constituent lists and exclude the firms that are absent
+    in most of them. This enforces a conservative green-screen: only firms consistently
     included across the chosen green funds remain investable.
     """)
 
     st.markdown("**Key features:**")
     st.write("• Source constituents from several certified green funds or ETFs.")
-    st.write("• Compute the intersection of constituents — firms absent from any selected fund are excluded.")
-    st.write("• Sector‑aware replacement logic ensures coverage if exclusions create gaps.")
+    st.write("• Analyze the intersection of constituents — firms absent from most selected fund are excluded.")
     st.write("• Transparent reporting: list of excluded firms and percentage of the universe removed.")
 with col2:
     st.success("♻️ Green‑Fund Filter")
-    st.write("Exclude firms not present in all selected green funds")
-    st.metric("Filter Method", "Intersection of selected funds")
+    st.write("Exclude firms absent in most selected green funds")
+    st.metric("Intersection of selected funds : ", "20% of firms were excluded")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- Portfolio construction explanation (multi-asset, risk-aversion, MVO) ---
