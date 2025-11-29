@@ -21,8 +21,7 @@ hide_sidebar_style = """
 """
 st.markdown(hide_sidebar_style, unsafe_allow_html=True)
 
-# Custom style
-wu.apply_custom_css()
+
 
 # Override the horizontal padding for this page only
 st.markdown("""
