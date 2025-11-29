@@ -262,11 +262,11 @@ if launch_button:
 
             
              # --- Results Section ---
-            st.subheader("Historic  Portfolio Performance")
+            st.subheader("Historic  Portfolio Performance :")
 
             st.markdown("<br><br><br>", unsafe_allow_html=True)
             # Display  graph
-            col1, col2,col3 = st.columns([4.5,0.8, 2.8])
+            col1, col2,col3 = st.columns([3,1, 3])
             with col1:
                 st.pyplot(cumu_graph_final)
 
@@ -286,7 +286,8 @@ if launch_button:
                 delta=None
             )
 
-             # Display  graph
+            st.markdown("<br>", unsafe_allow_html=True)
+            # Display  graph
             col1, col2,col3 = st.columns([4,1, 4])
             with col1:
                 st.pyplot(ut.plot_drawdown(all_portfolio_returns))
