@@ -291,20 +291,21 @@ st.markdown("""
 col1, col2 = st.columns([3, 2])
 with col1:
     st.write("""
-    We extend the ERC framework to incorporate **Environmental, Social, and Governance** metrics, 
-    allowing you to build portfolios that align with sustainability goals without sacrificing returns.
+    We extend the ERC framework to incorporate company‑level ESG scores. Rather than relying on raw carbon
+    emissions, we obtain standardized ESG ratings for each security and apply an exclusion filter:
+    any asset with an ESG score below a configurable threshold is removed from the investable universe.
     """)
 
     st.markdown("**Key ESG Features:**")
-    st.write("• Carbon intensity tracking per company")
-    st.write("• MSCI/Sustainalytics ESG scores")
-    st.write("• Sector-level sustainability constraints")
-    st.write("• Portfolio carbon reduction targets (e.g., –30%)")
+    st.write("• Company-level ESG scores from third‑party providers")
+    st.write("• Exclusion filter based on configurable ESG score thresholds")
+    st.write("• Sector-level constraints and replacement logic for excluded securities")
+    st.write("• Reporting of ESG coverage and list of excluded holdings")
 
 with col2:
-    st.success("🌍 **Sustainable Investing**")
-    st.write("Compare traditional vs ESG-optimized portfolios")
-    st.metric("Carbon Reduction Target", "-30%")
+    st.success("🌍 **ESG Screening**")
+    st.write("Securities below the ESG threshold are excluded before optimization")
+    st.metric("ESG Exclusion Threshold", "Score ≤ 40")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
