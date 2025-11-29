@@ -642,6 +642,139 @@ def plot_risk_contribution(risk_contrib_df: pd.DataFrame, combined_returns: pd.D
     plt.show()
 
 
-
+def cumu_graph_vol(flatportreturns: pd.DataFrame):
+    """
+    Create enhanced portfolio performance visualization with cumulative returns and rolling volatility.
+    
+    """
+    # Set modern style
+    sns.set_theme(style="white")
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
+    
+    # Calculate cumulative returns
+    cumulative_returns_series = (1 + flatportreturns['Daily Returns']).cumprod()
+    start_date = cumulative_returns_series.index[0] - pd.Timedelta(days=1)
+    start_value = pd.Series(1.0, index=[start_date])
+    cumulative_returns_plot = pd.concat([start_value, cumulative_returns_series])
+    
+    # Calculate rolling volatility (30-day annualized)
+    rolling_vol = flatportreturns['Daily Returns'].rolling(window=30).std() * np.sqrt(252) * 100
+    
+    # Create figure with two subplots
+    fig = plt.figure(figsize=(16, 10))
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.5, 1], hspace=0.25)
+    
+    # ===== SUBPLOT 1: Cumulative Returns =====
+    ax1 = fig.add_subplot(gs[0])
+    
+    # Create gradient effect using fill_between
+    ax1.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values >= 1.0),
+        alpha=0.15,
+        color='#2ecc71',
+        label='_nolegend_'
+    )
+    ax1.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values < 1.0),
+        alpha=0.15,
+        color='#e74c3c',
+        label='_nolegend_'
+    )
+    
+    # Main line plot with improved styling
+    ax1.plot(
+        cumulative_returns_plot.index,
+        cumulative_returns_plot.values,
+        label='Portfolio Value',
+        color='#3498db',
+        linewidth=2.5,
+        alpha=0.9
+    )
+    
+    # Baseline at 1.0
+    ax1.axhline(y=1.0, color='#95a5a6', linestyle='--', linewidth=1.5, alpha=0.7, label='Initial Investment')
+    
+    # Calculate and display key metrics
+    final_value = cumulative_returns_plot.values[-1]
+    total_return = (final_value - 1) * 100
+    
+    # Add text box with performance metrics
+    textstr = f'Total Return: {total_return:+.2f}%\nFinal Value: ${final_value:.2f}'
+    props = dict(boxstyle='round,pad=0.8', facecolor='white', alpha=0.9, edgecolor='#bdc3c7', linewidth=1.5)
+    ax1.text(0.02, 0.98, textstr, transform=ax1.transAxes, fontsize=11,
+             verticalalignment='top', bbox=props, family='monospace')
+    
+    # Styling
+    ax1.set_title('Cumulative Portfolio Performance', fontsize=20, fontweight='bold', pad=20, color='#2c3e50')
+    ax1.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
+    ax1.set_ylabel('Cumulative Growth (Growth of $1)', fontsize=13, fontweight='600', color='#34495e')
+    ax1.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
+    ax1.grid(True, alpha=0.25, linestyle='-', linewidth=0.8, color='#bdc3c7')
+    ax1.set_facecolor('#f8f9fa')
+    ax1.legend(loc='upper left', frameon=True, fontsize=11, shadow=True, fancybox=True)
+    
+    # Format y-axis as currency
+    from matplotlib.ticker import FuncFormatter
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f'${y:.2f}'))
+    
+    # ===== SUBPLOT 2: Rolling Volatility =====
+    ax2 = fig.add_subplot(gs[1])
+    
+    # Plot volatility with gradient fill
+    ax2.plot(
+        rolling_vol.index,
+        rolling_vol.values,
+        color='#e67e22',
+        linewidth=2.5,
+        alpha=0.9,
+        label='30-Day Rolling Volatility'
+    )
+    
+    ax2.fill_between(
+        rolling_vol.index,
+        0,
+        rolling_vol.values,
+        alpha=0.2,
+        color='#e67e22'
+    )
+    
+    # Add mean volatility line
+    mean_vol = rolling_vol.mean()
+    ax2.axhline(y=mean_vol, color='#c0392b', linestyle='--', linewidth=1.5, 
+                alpha=0.7, label=f'Mean Volatility: {mean_vol:.2f}%')
+    
+    # Calculate current volatility
+    current_vol = rolling_vol.iloc[-1]
+    textstr_vol = f'Current Vol: {current_vol:.2f}%\nMean Vol: {mean_vol:.2f}%'
+    ax2.text(0.02, 0.98, textstr_vol, transform=ax2.transAxes, fontsize=11,
+             verticalalignment='top', bbox=props, family='monospace')
+    
+    # Styling
+    ax2.set_title('Portfolio Volatility (Annualized)', fontsize=18, fontweight='bold', pad=15, color='#2c3e50')
+    ax2.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
+    ax2.set_ylabel('Volatility (%)', fontsize=13, fontweight='600', color='#34495e')
+    ax2.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
+    ax2.grid(True, alpha=0.25, linestyle='-', linewidth=0.8, color='#bdc3c7')
+    ax2.set_facecolor('#f8f9fa')
+    ax2.legend(loc='upper left', frameon=True, fontsize=11, shadow=True, fancybox=True)
+    
+    # Format y-axis with percentage
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f'{y:.1f}%'))
+    
+    # Add subtle border to entire figure
+    fig.patch.set_facecolor('white')
+    fig.patch.set_edgecolor('#bdc3c7')
+    fig.patch.set_linewidth(2)
+    
+    plt.tight_layout()
+    
+    return fig
 
         
