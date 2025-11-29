@@ -172,8 +172,9 @@ st.markdown("""
 # Hero Section
 st.markdown("""
     <div class="hero-section">
-        <h1 class="hero-title">Equal Risk Contribution Strategy</h1>
-        <p class="hero-subtitle">A sophisticated portfolio optimization approach that balances risk across assets, not capital</p>
+        <h1 class="hero-title">ERC-Optimized Multi-Asset Strategy</h1>
+        <p class="hero-subtitle">A two-stage approach that first constructs equal risk contribution portfolios 
+        within each asset class, then optimally combines these risk-balanced building blocks through mean-variance optimization tailored to specific risk tolerance levels</p>
     </div>
 """, unsafe_allow_html=True)
 
