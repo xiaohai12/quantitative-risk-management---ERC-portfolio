@@ -172,43 +172,85 @@ def bonds_performance(bonds_returns, startyear):
 
 # Graph of cumulative return
 def cumu_graph(flatportreturns: pd.DataFrame):
-    # Set the Seaborn style
-    sns.set_theme(style="whitegrid")
-
+    # Set the Seaborn style with a clean palette
+    sns.set_theme(style="whitegrid", palette="muted")
+    
     # 1. Calculate cumulative returns
     cumulative_returns_series = (1 + flatportreturns['Daily Returns']).cumprod()
-
     start_date = cumulative_returns_series.index[0] - pd.Timedelta(days=1)
-        
     start_value = pd.Series(1.0, index=[start_date])
-
-    # Combine the start value with the calculated returns
     cumulative_returns_plot = pd.concat([start_value, cumulative_returns_series])
-
-    # 2. Create the figure object
-    fig, ax = plt.subplots(figsize=(14, 7))
-
-    # 3. Plot the cumulative returns
+    
+    # 2. Create the figure with a slightly larger size
+    fig, ax = plt.subplots(figsize=(14, 7), facecolor='white')
+    ax.set_facecolor('#f8f9fa')
+    
+    # 3. Plot the cumulative returns with gradient fill
     ax.plot(
         cumulative_returns_plot.index, 
         cumulative_returns_plot.values, 
         label='Portfolio Return',
-        color='#1f77b4',
-        linewidth=1.8
+        color='#2E86AB',
+        linewidth=2.5,
+        zorder=3
     )
-
-    # 4. Set labels and title (rest of the code is unchanged and good)
-    ax.set_title('Cumulative Portfolio Performance', fontsize=18, fontweight='bold', pad=15)
-    ax.set_xlabel('Date', fontsize=14)
-    ax.set_ylabel('Cumulative Growth (Growth of $1)', fontsize=14)
     
-    ax.axhline(y=1.0, color='red', linestyle='--', linewidth=1)
-    ax.tick_params(axis='both', which='major', labelsize=12)
+    # Add fill between the line and baseline for visual impact
+    ax.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values >= 1.0),
+        alpha=0.15,
+        color='#06D6A0',
+        label='Gain',
+        zorder=2
+    )
+    
+    ax.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values < 1.0),
+        alpha=0.15,
+        color='#EF476F',
+        label='Loss',
+        zorder=2
+    )
+    
+    # 4. Enhanced styling
+    ax.set_title('Cumulative Portfolio Performance', 
+                 fontsize=20, fontweight='bold', pad=20, color='#2d3436')
+    ax.set_xlabel('Date', fontsize=14, fontweight='semibold', color='#2d3436')
+    ax.set_ylabel('Cumulative Growth (Growth of $1)', 
+                  fontsize=14, fontweight='semibold', color='#2d3436')
+    
+    # Baseline with better styling
+    ax.axhline(y=1.0, color='#636e72', linestyle='--', linewidth=1.5, alpha=0.7, zorder=1)
+    
+    # Improved tick styling
+    ax.tick_params(axis='both', which='major', labelsize=11, colors='#2d3436')
+    
+    # Grid styling
+    ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5, color='#b2bec3')
+    
+    # Clean spines
     sns.despine(ax=ax, top=True, right=True)
-    ax.legend(loc='upper left', frameon=True, fontsize=12)
-
+    ax.spines['left'].set_color('#636e72')
+    ax.spines['bottom'].set_color('#636e72')
+    ax.spines['left'].set_linewidth(1.5)
+    ax.spines['bottom'].set_linewidth(1.5)
+    
+    # Enhanced legend
+    ax.legend(loc='upper left', frameon=True, fontsize=11, 
+             shadow=True, fancybox=True, framealpha=0.95)
+    
+    # Tight layout for better spacing
+    plt.tight_layout()
+    
     # 5. Return the Matplotlib figure object
     return fig
+
 
     
 
