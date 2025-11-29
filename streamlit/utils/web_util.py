@@ -46,8 +46,8 @@ def apply_custom_css():
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
-       
-        
+
+
         .stButton > button:hover {
             color: #000;
             background-color: #FFCC99;
@@ -77,7 +77,7 @@ def apply_custom_css():
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 8px;
-            
+
         }
 
         .dropdown-button:hover {
@@ -175,44 +175,32 @@ def render_navbar(IMG_DIR):
             st.switch_page("methodology.py")
 
     with col5:
-        # Dropdown "Help"
-        st.markdown("""
-            <div class="dropdown">
-                <button class="dropdown-button">Help ▾</button>
-                <div class="dropdown-content">
-                    <a href="?page=risk_profile">Risk Profile</a>
-                    <a href="?page=ai_chat">AI Chat</a>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+        # Create a container for the Help dropdown
+        help_options = st.selectbox(
+            "Help",
+            ["Select...", "Risk Profile", "AI Chat"],
+            key="help_dropdown",
+            label_visibility="visible"
+        )
 
-        # Handle navigation via query params
-        query_params = st.query_params
-        if "page" in query_params:
-            if query_params["page"] == "risk_profile":
-                st.switch_page("risk_preference.py")
-            elif query_params["page"] == "ai_chat":
-                st.switch_page("LLM.py")
+        if help_options == "Risk Profile":
+            st.switch_page("risk_preference.py")
+        elif help_options == "AI Chat":
+            st.switch_page("LLM.py")
 
     with col6:
-        # Dropdown "About Us"
-        st.markdown("""
-            <div class="dropdown">
-                <button class="dropdown-button">About Us ▾</button>
-                <div class="dropdown-content">
-                    <a href="?page=team">Our Team</a>
-                    <a href="?page=contact">Contact Us</a>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+        # Create a container for the About Us dropdown
+        about_options = st.selectbox(
+            "About Us",
+            ["Select...", "Our Team", "Contact Us"],
+            key="about_dropdown",
+            label_visibility="visible"
+        )
 
-        # Handle navigation via query params
-        query_params = st.query_params
-        if "page" in query_params:
-            if query_params["page"] == "team":
-                st.switch_page("team.py")
-            elif query_params["page"] == "contact":
-                st.switch_page("Contact.py")
+        if about_options == "Our Team":
+            st.switch_page("team.py")
+        elif about_options == "Contact Us":
+            st.switch_page("Contact.py")
 
     st.markdown("""<hr style="margin-top:-2px; margin-bottom:15px;">""", unsafe_allow_html=True)
 
