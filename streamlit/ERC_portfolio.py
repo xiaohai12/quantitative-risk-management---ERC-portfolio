@@ -38,8 +38,6 @@ st.markdown("""
 # Nav bar
 wu.render_navbar(IMG_DIR)
 
-st.title("Design Your Investment Strategy ")
-
 # Hero section
 st.markdown("""
     <div class="hero-assessment">
@@ -49,8 +47,6 @@ st.markdown("""
 
 c1, c2 = st.columns([4, 1])
 
-with c1:
-    st.caption("Use the options below to configure your portfolio.")
 
 
 st.divider()
