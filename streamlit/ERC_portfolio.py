@@ -305,7 +305,7 @@ with col1:
 with col2:
     st.subheader("ESG Preference")
     # The global ESG switch
-    is_esg = st.toggle("Prioritize ESG",
+    is_esg = st.toggle("Prioritize ESG (Only for Equity & Commodity)",
                        help="If selected, this will use ESG-compliant versions of Equity and Commodities where available.")
 
 # ---
