@@ -21,7 +21,24 @@ st.set_page_config(
 # Custom style
 wu.apply_custom_css()
 
-
+st.markdown("""
+<style>
+.feature-card {
+    background-color: #eef5ff;
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 160px;    /* force same box height */
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+.feature-title {
+    font-size: 22px !important;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # STATE MANAGEMENT
 # -----------------------------------------------------------------------------
@@ -198,20 +215,19 @@ def home_page():
     # -- Value Props --
     st.markdown('<div class="section-header">Why Amber?</div>', unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns([1.2, 1.2, 1.2])
-    
+    c1, c2, c3 = st.columns([1, 1, 1])
+
     with c1:
-        st.markdown("### Adaptive Portfolio Management")
-        st.info("We continuously monitor changes in correlations and volatility regimes to maintain a stable and efficient portfolio structure.")
-    
+        st.markdown("<p class='feature-title'>Adaptive Portfolio Management</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>We continuously monitor changes in correlations and volatility regimes to maintain a stable and efficient portfolio structure.</div>", unsafe_allow_html=True)
+
     with c2:
-        st.markdown("### Full Transparency")
-        st.info("Every allocation is clear and explainable. You can see exactly how each asset contributes to total risk and performance — no black box.")
+        st.markdown("<p class='feature-title'>Full Transparency</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>Every allocation is clear and explainable. You can see exactly how each asset contributes to total risk and performance — no black box.</div>", unsafe_allow_html=True)
 
     with c3:
-        st.markdown("### Broad Multi-Asset Diversification")
-        st.info("Our portfolios allocate across five distinct asset classes, reducing concentration risks and enhancing long-term stability across different market environments.")
-
+        st.markdown("<p class='feature-title'>Broad Multi-Asset Diversification</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>Our portfolios allocate across five distinct asset classes, reducing concentration risks and enhancing long-term stability across different market environments.</div>", unsafe_allow_html=True)
     # -- CTA --
     st.write("")
     st.write("")
