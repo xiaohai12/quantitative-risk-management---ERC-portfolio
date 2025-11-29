@@ -55,28 +55,26 @@ def get_portfolios_cumulative_returns():
     """Calculates cumulative returns for two portfolios."""
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    # Load portfolio returns
+    # Load portfolio returns (already cumulative based on filenames)
     portfolio1 = pd.read_csv(BASE_DIR + "/dataImporter/tradi_cumu.csv", index_col=0, parse_dates=True)
     portfolio2 = pd.read_csv(BASE_DIR + "/dataImporter/crypto_cumu.csv", index_col=0, parse_dates=True)
 
-    # Calculate cumulative returns: (1 + r1) * (1 + r2) * ... - 1
-    # Or use: (1 + returns).cumprod() - 1
-    cumulative1 = (1 + portfolio1).cumprod() - 1
-    cumulative2 = (1 + portfolio2).cumprod() - 1
+    # Since files are named "cumu", they likely already contain cumulative returns
+    # So we DON'T need to calculate cumprod() again
 
     # Get dates from index
     dates = portfolio1.index
 
-    # Calculate portfolio-level cumulative returns (average across assets if multiple columns)
-    if cumulative1.shape[1] > 1:
-        cum_return_portfolio1 = cumulative1.mean(axis=1)
+    # Get portfolio-level cumulative returns (average across assets if multiple columns)
+    if portfolio1.shape[1] > 1:
+        cum_return_portfolio1 = portfolio1.mean(axis=1)
     else:
-        cum_return_portfolio1 = cumulative1.iloc[:, 0]
+        cum_return_portfolio1 = portfolio1.iloc[:, 0]
 
-    if cumulative2.shape[1] > 1:
-        cum_return_portfolio2 = cumulative2.mean(axis=1)
+    if portfolio2.shape[1] > 1:
+        cum_return_portfolio2 = portfolio2.mean(axis=1)
     else:
-        cum_return_portfolio2 = cumulative2.iloc[:, 0]
+        cum_return_portfolio2 = portfolio2.iloc[:, 0]
 
     return pd.DataFrame({
         'Date': dates,
