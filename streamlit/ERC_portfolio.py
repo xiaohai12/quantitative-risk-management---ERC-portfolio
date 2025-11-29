@@ -294,16 +294,6 @@ st.markdown("""
     </p>
 """, unsafe_allow_html=True)
 
-# Define the 6 asset classes based on your logic:
-# [ Equity(Std), Equity(ESG) ,Commodity(Std), Commodity(ESG), Crypto, Bonds]
-asset_labels = [
-    'Equity (Standard)',
-    'Equity (ESG)',
-    'Commodity (Standard)',
-    'Commodity (ESG)',
-    'Crypto',
-    'Bonds'
-]
 
 # Initialize the 6-element list
 selected_assets_list = [0, 0, 0, 0, 0, 0]
@@ -482,13 +472,6 @@ if launch_button:
         
             # Load data
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-            equity_data = pd.read_csv(BASE_DIR + "/dataImporter/equity_data.csv")
-            commodity_data = pd.read_csv(BASE_DIR + "/dataImporter/commodities_data.csv")
-            crypto_data = pd.read_csv(BASE_DIR + "/dataImporter/cryptos_data.csv")
-            bonds_data = pd.read_csv(BASE_DIR + "/dataImporter/bonds_data.csv")
-            equity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/equity_data_esg.csv")
-            commodity_data_esg = pd.read_csv(BASE_DIR + "/dataImporter/commodity_data_esg.csv")
 
             equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv")
             equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv")
