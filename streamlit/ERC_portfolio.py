@@ -282,6 +282,9 @@ st.markdown("""
         Not sure which assets to choose? <strong>Chat with Amber</strong>, our AI assistant, 
         to get personalized investment recommendations based on your goals and risk profile.
     </p>
+    <p style="color: #666; font-size: 14px; margin-top: -15px;">
+        We recommend selecting all the asset classes for maximum diversification. The composition will be tailored to your risk preferences.
+    </p>
 """, unsafe_allow_html=True)
 
 
