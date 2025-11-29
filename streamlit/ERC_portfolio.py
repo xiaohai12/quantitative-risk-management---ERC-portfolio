@@ -287,7 +287,7 @@ if launch_button:
                 delta=None
             )
             
-            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("<br><br>", unsafe_allow_html=True)
             # Display  graph
             col1, col2,col3 = st.columns([4,1, 4])
             with col1:
