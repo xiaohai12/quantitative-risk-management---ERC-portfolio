@@ -229,8 +229,34 @@ if st.session_state.submitted:
         st.write(f"\n**Total Raw Score:** {total_score:.1f}/{max_possible}")
         st.write(f"**Normalized Score:** {final_score}/10")
 
-    # Reset button
-    if st.button("🔄 Retake Assessment"):
-        st.session_state.answers = {}
-        st.session_state.submitted = False
-        st.rerun()
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Action buttons
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+            <a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/ERC_portfolio" 
+               target="_blank" 
+               style="display: block;
+                      padding: 12px 20px;
+                      background-color: #FFCC99;
+                      color: #000;
+                      text-decoration: none;
+                      border-radius: 8px;
+                      font-weight: 600;
+                      text-align: center;
+                      border: 2px solid #CC6600;
+                      transition: all 0.3s ease;">
+                🚀 Use My Risk Profile to Build Portfolio
+            </a>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col2:
+        if st.button("🔄 Retake Assessment", use_container_width=True):
+            st.session_state.answers = {}
+            st.session_state.submitted = False
+            st.rerun()
