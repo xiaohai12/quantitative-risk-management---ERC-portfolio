@@ -419,12 +419,344 @@ def plot_portfolio_composition(weights_df, title="Portfolio Composition Over Tim
 
 
 
+def calculate_drawdown(portfolio_returns):
+    """
+    Calculate drawdown series and key drawdown metrics
+   
+    """
+    # Flatten returns if nested list
+    if isinstance(portfolio_returns, list):
+        flat_returns = [ret for month in portfolio_returns for ret in month]
+        returns_series = pd.Series(flat_returns)
+    else:
+        returns_series = portfolio_returns
+    
+    # Calculate cumulative wealth
+    cumulative_wealth = (1 + returns_series).cumprod()
+    
+    # Calculate running maximum
+    running_max = cumulative_wealth.cummax()
+    
+    # Calculate drawdown
+    drawdown_series = (cumulative_wealth - running_max) / running_max
+    
+    # Maximum drawdown
+    max_drawdown = drawdown_series.min()
+    
+    # Find drawdown periods
+    in_drawdown = drawdown_series < 0
+    drawdown_periods = []
+    
+    if in_drawdown.any():
+        # Identify separate drawdown episodes
+        drawdown_start = None
+        for i, is_dd in enumerate(in_drawdown):
+            if is_dd and drawdown_start is None:
+                drawdown_start = i
+            elif not is_dd and drawdown_start is not None:
+                drawdown_end = i - 1
+                dd_period = drawdown_series.iloc[drawdown_start:drawdown_end+1]
+                drawdown_periods.append({
+                    'start_idx': drawdown_start,
+                    'end_idx': drawdown_end,
+                    'duration': drawdown_end - drawdown_start + 1,
+                    'depth': dd_period.min(),
+                    'recovery_idx': i if cumulative_wealth.iloc[i] >= running_max.iloc[drawdown_start] else None
+                })
+                drawdown_start = None
+        
+        # Handle if still in drawdown at end
+        if drawdown_start is not None:
+            dd_period = drawdown_series.iloc[drawdown_start:]
+            drawdown_periods.append({
+                'start_idx': drawdown_start,
+                'end_idx': len(drawdown_series) - 1,
+                'duration': len(drawdown_series) - drawdown_start,
+                'depth': dd_period.min(),
+                'recovery_idx': None  # Not recovered yet
+            })
+    
+    # Create DataFrame of drawdown periods
+    if drawdown_periods:
+        drawdown_info = pd.DataFrame(drawdown_periods)
+        drawdown_info = drawdown_info.sort_values('depth').head(5)
+    else:
+        drawdown_info = pd.DataFrame()
+    
+    # Maximum drawdown duration
+    max_dd_duration = max([dp['duration'] for dp in drawdown_periods]) if drawdown_periods else 0
+    
+    return drawdown_series, max_drawdown, max_dd_duration, drawdown_info
+
+
+def plot_drawdown(portfolio_returns, dates=None):
+    """
+    Plot only the drawdown visualization.
+    """
+    # 1. Calculate drawdown and associated metrics
+    drawdown_series, max_dd, max_duration, dd_info = calculate_drawdown(portfolio_returns)
+    
+    # 2. Flatten returns (Kept for robust handling of input format)
+    if isinstance(portfolio_returns, list):
+        # Flatten list of lists
+        flat_returns = [ret for month in portfolio_returns for ret in month]
+        returns_series = pd.Series(flat_returns)
+    else:
+        # Use the input directly if it's already a Series/DataFrame
+        returns_series = portfolio_returns
+    
+    # We use a figsize that is wider and shorter, suitable for a single plot.
+    fig, ax = plt.subplots(1, 1, figsize=(14, 6))
+    
+    # 4. Drawdown Series Plot (Adapted from the original ax2)
+    ax.fill_between(
+        range(len(drawdown_series)),
+        drawdown_series.values * 100, # Drawdown values as percentage
+        0,                             # Fill down to the zero line
+        alpha=0.5, 
+        color='red'
+    )
+    ax.plot(drawdown_series.values * 100, color='darkred', linewidth=1.5)
+    
+    # 5. Set labels and title
+    ax.set_ylabel('Drawdown (%)', fontsize=12)
+    ax.set_xlabel('Trading Days', fontsize=12)
+    ax.set_title(
+        f'Drawdown Over Time (Max DD: {max_dd*100:.2f}%, Max Duration: {max_duration} days)',
+        fontsize=19, 
+        fontweight='bold'
+    )
+    
+    # 6. Add grid and zero line
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    
+    plt.tight_layout()
+    plt.show()
 
 
 
+def calculate_risk_contribution(weights_df, combined_returns):
+    """
+    Calculate marginal and component risk contributions for each asset
+
+    """
+    combined_returns.index = pd.to_datetime(combined_returns.index)
+    asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
+    
+    risk_contributions = []
+    
+    for date in weights_df.index:
+        # Get weights for this period
+        weights = weights_df.loc[date].values
+        
+        # Get lookback data (same 63-day window as optimization)
+        lookback_data = combined_returns.loc[combined_returns.index < date].tail(63)
+        
+        if len(lookback_data) < 63:
+            continue
+        
+        # Calculate covariance matrix (annualized)
+        cov_matrix = lookback_data.cov().values * 252
+        
+        # Portfolio variance
+        portfolio_variance = np.dot(weights, np.dot(cov_matrix, weights))
+        portfolio_vol = np.sqrt(portfolio_variance)
+        
+        # Marginal contribution to risk (MCR)
+        # MCR_i = (Cov * w) / portfolio_vol
+        marginal_contrib = np.dot(cov_matrix, weights) / portfolio_vol
+        
+        # Component contribution to risk (CCR)
+        # CCR_i = w_i * MCR_i
+        component_contrib = weights * marginal_contrib
+        
+        # Percentage contribution to risk
+        pct_contrib = component_contrib / portfolio_vol * 100
+        
+        # Store results
+        contrib_dict = {
+            'date': date,
+            'portfolio_vol': portfolio_vol * 100  # Convert to percentage
+        }
+        
+        for i, asset in enumerate(asset_names):
+            contrib_dict[f'{asset}_weight'] = weights[i] * 100
+            contrib_dict[f'{asset}_risk_contrib'] = pct_contrib[i]
+            contrib_dict[f'{asset}_mcr'] = marginal_contrib[i] * 100
+        
+        risk_contributions.append(contrib_dict)
+    
+    risk_contrib_df = pd.DataFrame(risk_contributions)
+    risk_contrib_df.set_index('date', inplace=True)
+    
+    return risk_contrib_df
 
 
+def plot_risk_contribution(risk_contrib_df: pd.DataFrame, combined_returns: pd.DataFrame):
+    """
+    Visualize the AVERAGE risk contributions by asset (Bar Plot only).
+    """
+    
+    # 1. Data Preparation (Identical to original function)
+    asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
+    
+    # Extract risk contribution columns and rename
+    risk_cols = [col for col in risk_contrib_df.columns if col.endswith('_risk_contrib')]
+    risk_data = risk_contrib_df[risk_cols]
+    risk_data.columns = [col.replace('_risk_contrib', '') for col in risk_data.columns]
+    
+    # Calculate average risk contribution
+    avg_risk = risk_data.mean()
+    
+    # 2. Create the Figure (Single Subplot)
+    fig, ax = plt.subplots(figsize=(12, 6)) # Adjusted size for a cleaner single plot
+    
+    # 3. Plot 1: Average Risk Contribution by Asset (Bar Plot)
+    x_pos = np.arange(len(asset_names))
+    bars = ax.bar(x_pos, avg_risk.values, alpha=0.8, edgecolor='black', linewidth=1.0)
+    
+    # Sticking to original logic (normalized by max):
+    colors = plt.cm.RdYlGn_r(avg_risk.values / avg_risk.max()) 
+    
+    for bar, color in zip(bars, colors):
+        bar.set_color(color)
+        
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(asset_names, rotation=45, ha='right', fontsize=10)
+    ax.set_ylabel('Average Risk Contribution (%)', fontsize=12, fontweight='bold')
+    ax.set_title('Average Risk Contribution by Asset', fontsize=16, fontweight='bold', pad=15)
+    ax.grid(True, alpha=0.3, axis='y')
+    ax.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    
+    # Add value labels on bars
+    for i, (bar, val) in enumerate(zip(bars, avg_risk.values)):
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., height,
+                f'{val:.2f}%',
+                ha='center', va='bottom' if height >= 0 else 'top',
+                fontsize=9, fontweight='bold', color='black')
+    
+    # 4. Final Formatting
+    plt.tight_layout()
+    plt.show()
 
 
+def cumu_graph_vol(flatportreturns: pd.DataFrame):
+    """
+    Create enhanced portfolio performance visualization with cumulative returns and rolling volatility.
+    
+    """
+    # Set modern style
+    sns.set_theme(style="white")
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
+    
+    # Calculate cumulative returns
+    cumulative_returns_series = (1 + flatportreturns['Daily Returns']).cumprod()
+    start_date = cumulative_returns_series.index[0] - pd.Timedelta(days=1)
+    start_value = pd.Series(1.0, index=[start_date])
+    cumulative_returns_plot = pd.concat([start_value, cumulative_returns_series])
+    
+    # Calculate rolling volatility (30-day annualized)
+    rolling_vol = flatportreturns['Daily Returns'].rolling(window=30).std() * np.sqrt(252) * 100
+    
+    # Create figure with two subplots
+    fig = plt.figure(figsize=(16, 10))
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.5, 1], hspace=0.5)
+    
+    # ===== SUBPLOT 1: Cumulative Returns =====
+    ax1 = fig.add_subplot(gs[0])
+    
+    # Create gradient effect using fill_between
+    ax1.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values >= 1.0),
+        alpha=0.15,
+        color='#2ecc71',
+        label='_nolegend_'
+    )
+    ax1.fill_between(
+        cumulative_returns_plot.index,
+        1.0,
+        cumulative_returns_plot.values,
+        where=(cumulative_returns_plot.values < 1.0),
+        alpha=0.15,
+        color='#e74c3c',
+        label='_nolegend_'
+    )
+    
+    # Main line plot with improved styling
+    ax1.plot(
+        cumulative_returns_plot.index,
+        cumulative_returns_plot.values,
+        label='Portfolio Value',
+        color='#3498db',
+        linewidth=2.5,
+        alpha=0.9
+    )
+    
+    # Baseline at 1.0
+    ax1.axhline(y=1.0, color='#95a5a6', linestyle='--', linewidth=1.5, alpha=0.7, label='Initial Investment')
+    
+    
+    # Styling
+    ax1.set_title('Cumulative Portfolio Performance', fontsize=16, fontweight='bold', pad=20, color='#2c3e50')
+    ax1.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
+    ax1.set_ylabel('Cumulative Growth (Growth of $1)', fontsize=13, fontweight='600', color='#34495e')
+    ax1.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
+    ax1.grid(True, alpha=0.25, linestyle='-', linewidth=0.8, color='#bdc3c7')
+    ax1.set_facecolor('#f8f9fa')
+    ax1.legend(loc='upper left', frameon=True, fontsize=11, shadow=True, fancybox=True)
+    
+    # Format y-axis as currency
+    from matplotlib.ticker import FuncFormatter
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f'${y:.2f}'))
+    
+    # ===== SUBPLOT 2: Rolling Volatility =====
+    ax2 = fig.add_subplot(gs[1])
+    
+    # Plot volatility with gradient fill
+    ax2.plot(
+        rolling_vol.index,
+        rolling_vol.values,
+        color='#e67e22',
+        linewidth=2.5,
+        alpha=0.9,
+        label='30-Day Rolling Volatility'
+    )
+    
+    ax2.fill_between(
+        rolling_vol.index,
+        0,
+        rolling_vol.values,
+        alpha=0.2,
+        color='#e67e22'
+    )
+    
+    # Add mean volatility line
+    mean_vol = rolling_vol.mean()
+    ax2.axhline(y=mean_vol, color='#c0392b', linestyle='--', linewidth=1.5, 
+                alpha=0.7, label=f'Mean Volatility: {mean_vol:.2f}%')
+    
+    
+    # Styling
+    ax2.set_title('Portfolio Volatility (Annualized)', fontsize=16, fontweight='bold', pad=15, color='#2c3e50')
+    ax2.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
+    ax2.set_ylabel('Volatility (%)', fontsize=13, fontweight='600', color='#34495e')
+    ax2.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
+    ax2.grid(True, alpha=0.25, linestyle='-', linewidth=0.8, color='#bdc3c7')
+    ax2.set_facecolor('#f8f9fa')
+    ax2.legend(loc='upper left', frameon=True, fontsize=11, shadow=True, fancybox=True)
+    
+    # Format y-axis with percentage
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f'{y:.1f}%'))
+    
+    
+    plt.tight_layout()
+    
+    return fig
 
         

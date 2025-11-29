@@ -42,9 +42,12 @@ def apply_custom_css():
             background-color: transparent;
             color: #000;
             font-weight: 600;
+            font-size: 20px;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
+       
+        
         .stButton > button:hover {
             color: #000;
             background-color: #FFCC99;
@@ -60,6 +63,7 @@ def apply_custom_css():
         .dropdown {
             position: relative;
             display: inline-block;
+            padding-bottom: 20px;
             width: 100%;
         }
 
@@ -68,13 +72,12 @@ def apply_custom_css():
             padding: 8px 16px;
             background-color: transparent;
             color: #000;
-            font-weight: 600;
             border: none;
             border-bottom: 3px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            border-radius: 8px;
+            
         }
 
         .dropdown-button:hover {
@@ -87,7 +90,7 @@ def apply_custom_css():
             background-color: #ffffff;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
+            z-index: 1000 ;
             border-radius: 5px;
             margin-top: 5px;
         }
@@ -175,7 +178,7 @@ def render_navbar(IMG_DIR):
         # Dropdown "Help"
         st.markdown("""
             <div class="dropdown">
-                <button class="dropdown-button">Help ▼</button>
+                <button class="dropdown-button">Help ▾</button>
                 <div class="dropdown-content">
                     <a href="?page=risk_profile">Risk Profile</a>
                     <a href="?page=ai_chat">AI Chat</a>
@@ -195,7 +198,7 @@ def render_navbar(IMG_DIR):
         # Dropdown "About Us"
         st.markdown("""
             <div class="dropdown">
-                <button class="dropdown-button">About Us ▼</button>
+                <button class="dropdown-button">About Us ▾</button>
                 <div class="dropdown-content">
                     <a href="?page=team">Our Team</a>
                     <a href="?page=contact">Contact Us</a>
