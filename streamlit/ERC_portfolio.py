@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import utils.web_util as wu
 from statics import IMG_DIR
-
-
+import utils.utilities as ut
+import os
 
 # Define the pages
 
@@ -192,10 +192,7 @@ if launch_button:
         # This block runs only when the button is clicked
         with st.spinner("Constructing your optimal portfolio..."):
 
-            import utils.utilities as ut
-            import os
-            import utils.utilities as ut
-
+        
             # Load data
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -258,6 +255,9 @@ if launch_button:
                 all_portfolio_returns, combined_returns, 2018)
             cumu_graph_final = ut.cumu_graph(MeanVar_flat)
 
+            
+            
+            
             st.success("Portfolio construction complete!")
 
             
@@ -285,3 +285,12 @@ if launch_button:
                 f"{MeanVar_cumu * 100:.2f}%",
                 delta=None
             )
+
+             # Display  graph
+            col1, col2,col3 = st.columns([4,1, 4])
+            with col1:
+                st.pyplot(plot_drawdown(all_portfolio_returns))
+
+            with col3:
+                fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
+                st.pyplot(fig1)
