@@ -265,20 +265,6 @@ st.markdown("""
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Data collected
-with st.expander("View Detailed Data Collection"):
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Price Data**")
-        st.write("• Daily OHLC prices")
-        st.write("• Adjusted Close")
-        st.write("• Trading Volume")
-
-    with col2:
-        st.markdown("**Risk Metrics**")
-        st.write("• Percentage returns")
-        st.write("• Volatility patterns")
-        st.write("• Cross-asset correlations")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
