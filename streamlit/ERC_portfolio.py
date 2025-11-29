@@ -226,41 +226,36 @@ with col2:
     if st.session_state.risk_score <= 3:
         color = "🟢"
         profile = "Conservative"
-        delta_label = "Low Risk Tolerance"
     elif st.session_state.risk_score <= 6:
         color = "🟡"
         profile = "Moderate"
-        delta_label = "Medium Risk Tolerance"
     elif st.session_state.risk_score <= 8:
         color = "🟠"
         profile = "Growth-Oriented"
-        delta_label = "High Risk Tolerance"
     else:
         color = "🔴"
         profile = "Aggressive"
-        delta_label = "Very High Risk Tolerance"
 
     # Custom HTML for larger, centered metric
     st.markdown(f"""
         <div style="text-align: center; padding: 20px; background-color: "#F0F2F6"; border-radius: 10px;">
             <h1 style="margin: 0px 0; font-size: 30px; font-weight: bold;">Score: {st.session_state.risk_score}</h1>
             <h1 style="margin: 0px 0; font-size: 24px;">{color} {profile} Profile</h2> 
-            <p style="margin: 0px 0; font-size: 20px; color: #666;">{delta_label}</p>
         </div>
     """, unsafe_allow_html=True)
 
 # Info about the selection
 if st.session_state.risk_score <= 3:
-    st.info("💼 **Conservative**: You prefer stability and capital preservation. Low-risk investments suit you best.")
+    st.info("💼 **Low Risk Tolerance**: You prefer stability and capital preservation. Low-risk investments suit you best.")
 elif st.session_state.risk_score <= 6:
     st.info(
-        "⚖️ **Moderate**: You seek balance between risk and return. Diversified portfolios align with your preferences.")
+        "⚖️ **Medium Risk Tolerance**: You seek balance between risk and return. Diversified portfolios align with your preferences.")
 elif st.session_state.risk_score <= 8:
     st.warning(
-        "📊 **Growth-Oriented**: You're comfortable with volatility for higher returns. Stock-heavy portfolios fit your profile.")
+        "📊 **High Risk Tolerance**: You're comfortable with volatility for higher returns. Stock-heavy portfolios fit your profile.")
 else:
     st.error(
-        "🚀 **Aggressive**: You have high risk tolerance and seek maximum returns. You accept potential short-term losses.")
+        "🚀 **Very High Risk Tolerance**: You have high risk tolerance and seek maximum returns. You accept potential short-term losses.")
 
 st.divider()
 
