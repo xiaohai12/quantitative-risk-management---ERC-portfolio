@@ -14,7 +14,7 @@ st.markdown("""
     <style>
     /* Hero section */
     .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #CC6600 0%, #FF8C42 100%);
         padding: 60px 40px;
         border-radius: 15px;
         color: white;
@@ -42,7 +42,7 @@ st.markdown("""
         border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         margin-bottom: 30px;
-        border-left: 5px solid #667eea;
+        border-left: 5px solid #CC6600;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -52,13 +52,10 @@ st.markdown("""
     }
 
     .section-title {
-        color: #667eea;
+        color: #CC6600;
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
     }
 
     .section-icon {
@@ -74,15 +71,17 @@ st.markdown("""
     }
 
     .asset-card {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #FFE5B4 0%, #FFCC99 100%);
         padding: 25px;
         border-radius: 12px;
         text-align: center;
         transition: transform 0.3s ease;
+        border: 2px solid #CC6600;
     }
 
     .asset-card:hover {
         transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(204, 102, 0, 0.3);
     }
 
     .asset-icon {
@@ -93,7 +92,7 @@ st.markdown("""
     .asset-title {
         font-size: 1.4rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: #CC6600;
         margin-bottom: 10px;
     }
 
@@ -115,9 +114,27 @@ st.markdown("""
         color: #CC6600;
     }
 
+    /* Benefits section */
+    .benefit-card {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .benefit-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .benefit-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #CC6600;
+        margin-bottom: 10px;
+    }
+
     /* CTA section */
     .cta-section {
-        background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%);
+        background: linear-gradient(135deg, #CC6600 0%, #FFCC99 100%);
         padding: 50px;
         border-radius: 15px;
         text-align: center;
@@ -136,7 +153,7 @@ st.markdown("""
         display: inline-block;
         padding: 15px 40px;
         background: white;
-        color: #FF6B6B;
+        color: #CC6600;
         text-decoration: none;
         border-radius: 50px;
         font-weight: 700;
@@ -155,7 +172,7 @@ st.markdown("""
 # Hero Section
 st.markdown("""
     <div class="hero-section">
-        <h1 class="hero-title">📊 Equal Risk Contribution Strategy</h1>
+        <h1 class="hero-title">Equal Risk Contribution Strategy</h1>
         <p class="hero-subtitle">A sophisticated portfolio optimization approach that balances risk across assets, not capital</p>
     </div>
 """, unsafe_allow_html=True)
@@ -163,7 +180,7 @@ st.markdown("""
 # What is ERC Section
 st.markdown("""
     <div class="section-card">
-        <h2 class="section-title"><span class="section-icon">🎯</span> What Is Equal Risk Contribution?</h2>
+        <h2 class="section-title">What Is Equal Risk Contribution?</h2>
     </div>
 """, unsafe_allow_html=True)
 
@@ -179,13 +196,13 @@ with col2:
 
 st.markdown("""
     <div class="feature-box">
-        <strong>✓ Equal Marginal Risk:</strong> Each asset's risk contribution is balanced
+        <strong>Equal Marginal Risk:</strong> Each asset's risk contribution is balanced
     </div>
     <div class="feature-box">
-        <strong>✓ Volatility Protection:</strong> Avoids concentration in high-volatility assets
+        <strong>Volatility Protection:</strong> Avoids concentration in high-volatility assets
     </div>
     <div class="feature-box">
-        <strong>✓ Dynamic Adaptation:</strong> Naturally adjusts to changing market conditions
+        <strong>Dynamic Adaptation:</strong> Naturally adjusts to changing market conditions
     </div>
 """, unsafe_allow_html=True)
 
@@ -194,34 +211,26 @@ st.markdown("<br>", unsafe_allow_html=True)
 # Why ERC Section
 st.markdown("""
     <div class="section-card">
-        <h2 class="section-title"><span class="section-icon">⚡</span> Why We Use ERC</h2>
+        <h2 class="section-title">Why We Use ERC</h2>
     </div>
 """, unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.markdown("### 🛡️")
-    st.markdown("**Risk-Based**")
-    st.write("Diversification by risk, not capital")
+    st.markdown('<div class="benefit-card"><div class="benefit-icon">🛡️</div><div class="benefit-title">Risk-Based</div><p>Diversification by risk, not capital</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown("### 📈")
-    st.markdown("**Stable Returns**")
-    st.write("Consistent performance in volatility")
+    st.markdown('<div class="benefit-card"><div class="benefit-icon">📈</div><div class="benefit-title">Stable Returns</div><p>Consistent performance in volatility</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown("### 🎲")
-    st.markdown("**Tail-Risk**")
-    st.write("Reduced exposure to extreme losses")
+    st.markdown('<div class="benefit-card"><div class="benefit-icon">🎲</div><div class="benefit-title">Tail-Risk</div><p>Reduced exposure to extreme losses</p></div>', unsafe_allow_html=True)
 with col4:
-    st.markdown("### 🔍")
-    st.markdown("**Transparent**")
-    st.write("Clear and intuitive methodology")
+    st.markdown('<div class="benefit-card"><div class="benefit-icon">🔍</div><div class="benefit-title">Transparent</div><p>Clear and intuitive methodology</p></div>', unsafe_allow_html=True)
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 # Data Description Section
 st.markdown("""
     <div class="section-card">
-        <h2 class="section-title"><span class="section-icon">📦</span> Multi-Asset Data Universe</h2>
+        <h2 class="section-title">Multi-Asset Data Universe</h2>
     </div>
 """, unsafe_allow_html=True)
 
@@ -256,16 +265,16 @@ st.markdown("""
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Data collected
-with st.expander("📊 View Detailed Data Collection"):
+with st.expander("View Detailed Data Collection"):
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("**📈 Price Data**")
+        st.markdown("**Price Data**")
         st.write("• Daily OHLC prices")
         st.write("• Adjusted Close")
         st.write("• Trading Volume")
 
     with col2:
-        st.markdown("**📉 Risk Metrics**")
+        st.markdown("**Risk Metrics**")
         st.write("• Percentage returns")
         st.write("• Volatility patterns")
         st.write("• Cross-asset correlations")
@@ -275,7 +284,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ESG Section
 st.markdown("""
     <div class="section-card">
-        <h2 class="section-title"><span class="section-icon">🌱</span> ESG Integration</h2>
+        <h2 class="section-title">ESG Integration</h2>
     </div>
 """, unsafe_allow_html=True)
 
@@ -306,7 +315,7 @@ st.markdown("""
         </p>
         <a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/ERC_portfolio" 
            class="cta-button" target="_blank">
-            🚀 Launch ERC Portfolio Builder
+            Launch ERC Portfolio Builder
         </a>
     </div>
 """, unsafe_allow_html=True)
