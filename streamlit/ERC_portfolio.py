@@ -275,8 +275,6 @@ if launch_button:
                 st.pyplot(fig1)
             st.markdown("<br>", unsafe_allow_html=True)
 
-
-            st.divider()
             st.markdown("<br>", unsafe_allow_html=True)
             # Display  metrics
             col1, col2, col3, col4 = st.columns(4)
@@ -288,8 +286,6 @@ if launch_button:
                 f"{MeanVar_cumu * 100:.2f}%",
                 delta=None
             )
-
-            st.divider()
             
             st.markdown("<br>", unsafe_allow_html=True)
             # Display  graph
