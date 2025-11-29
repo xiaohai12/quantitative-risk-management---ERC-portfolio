@@ -350,9 +350,7 @@ with st.expander("How does ERC (Equal Risk Contribution) allocation work?"):
 
 with st.expander("How do you treat bonds, commodities, and crypto in the portfolio?"):
     st.write(
-        "All asset classes are integrated in a unified risk framework. Bonds, commodities, "
-        "and crypto assets are included through their historical return and volatility, "
-        "so that the ERC engine can allocate risk consistently across them."
+        "All asset classes are used to construct asset classes specific ERC portfolios. The different ERC portfolios are then combined according to your risk preferences. ."
     )
 
 with st.expander("Is this platform giving me investment advice?"):
