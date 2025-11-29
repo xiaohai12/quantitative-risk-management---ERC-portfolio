@@ -143,6 +143,7 @@ def apply_custom_css():
 # Navigation bar
 def render_navbar(IMG_DIR):
     amber_path = os.path.join(IMG_DIR, "amber.png")
+
     amber_base64 = image_to_base64(amber_path)
 
     st.markdown(""" <hr style="margin-top:15px; margin-bottom:15px;"> """, unsafe_allow_html=True)
@@ -173,61 +174,48 @@ def render_navbar(IMG_DIR):
         if st.button("Methodology"):
             st.switch_page("methodology.py")
 
-    # ---------- 修复 Help 的 dropdown ----------
     with col5:
+        # Dropdown "Help"
         st.markdown("""
             <div class="dropdown">
                 <button class="dropdown-button">Help ▾</button>
                 <div class="dropdown-content">
-                    <button onclick="window.parent.postMessage({type: 'nav', page: 'risk'}, '*')" style="width:100%;background:none;border:none;text-align:left;padding:12px 16px;">Risk Profile</button>
-                    <button onclick="window.parent.postMessage({type: 'nav', page: 'chat'}, '*')" style="width:100%;background:none;border:none;text-align:left;padding:12px 16px;">AI Chat</button>
+                    <a href="?page=risk_profile">Risk Profile</a>
+                    <a href="?page=ai_chat">AI Chat</a>
                 </div>
             </div>
         """, unsafe_allow_html=True)
 
-        # Streamlit 监听 JS 事件
-        nav_event = st.experimental_get_query_params().get("nav_event", None)
-
-        # 用 JS → Streamlit message hack
-        st.markdown("""
-            <script>
-            window.addEventListener("message", (event) => {
-                if (event.data.type === "nav") {
-                    const page = event.data.page;
-                    const query = new URLSearchParams(window.location.search);
-                    query.set("go", page);
-                    window.location.search = query.toString();
-                }
-            });
-            </script>
-        """, unsafe_allow_html=True)
-
-        params = st.query_params
-        if "go" in params:
-            if params["go"] == "risk":
+        # Handle navigation via query params
+        query_params = st.query_params
+        if "page" in query_params:
+            if query_params["page"] == "risk_profile":
                 st.switch_page("risk_preference.py")
-            elif params["go"] == "chat":
+            elif query_params["page"] == "ai_chat":
                 st.switch_page("LLM.py")
 
-    # ---------- About Us ----------
     with col6:
+        # Dropdown "About Us"
         st.markdown("""
             <div class="dropdown">
                 <button class="dropdown-button">About Us ▾</button>
                 <div class="dropdown-content">
-                    <button onclick="window.parent.postMessage({type: 'nav', page: 'team'}, '*')" style="width:100%;background:none;border:none;text-align:left;padding:12px 16px;">Our Team</button>
-                    <button onclick="window.parent.postMessage({type: 'nav', page: 'contact'}, '*')" style="width:100%;background:none;border:none;text-align:left;padding:12px 16px;">Contact Us</button>
+                    <a href="?page=team">Our Team</a>
+                    <a href="?page=contact">Contact Us</a>
                 </div>
             </div>
         """, unsafe_allow_html=True)
 
-        if "go" in params:
-            if params["go"] == "team":
+        # Handle navigation via query params
+        query_params = st.query_params
+        if "page" in query_params:
+            if query_params["page"] == "team":
                 st.switch_page("team.py")
-            elif params["go"] == "contact":
+            elif query_params["page"] == "contact":
                 st.switch_page("Contact.py")
 
     st.markdown("""<hr style="margin-top:-2px; margin-bottom:15px;">""", unsafe_allow_html=True)
+
 
 # Convert images
 def image_to_base64(image_path: str) -> str:
