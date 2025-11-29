@@ -523,7 +523,7 @@ def plot_drawdown(portfolio_returns, dates=None):
     ax.set_xlabel('Trading Days', fontsize=12)
     ax.set_title(
         f'Drawdown Over Time (Max DD: {max_dd*100:.2f}%, Max Duration: {max_duration} days)',
-        fontsize=14, 
+        fontsize=16, 
         fontweight='bold'
     )
     
@@ -712,7 +712,7 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
              verticalalignment='top', bbox=props, family='monospace')
     
     # Styling
-    ax1.set_title('Cumulative Portfolio Performance', fontsize=20, fontweight='bold', pad=20, color='#2c3e50')
+    ax1.set_title('Cumulative Portfolio Performance', fontsize=16, fontweight='bold', pad=20, color='#2c3e50')
     ax1.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
     ax1.set_ylabel('Cumulative Growth (Growth of $1)', fontsize=13, fontweight='600', color='#34495e')
     ax1.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
@@ -757,7 +757,7 @@ def cumu_graph_vol(flatportreturns: pd.DataFrame):
              verticalalignment='top', bbox=props, family='monospace')
     
     # Styling
-    ax2.set_title('Portfolio Volatility (Annualized)', fontsize=18, fontweight='bold', pad=15, color='#2c3e50')
+    ax2.set_title('Portfolio Volatility (Annualized)', fontsize=16, fontweight='bold', pad=15, color='#2c3e50')
     ax2.set_xlabel('Date', fontsize=13, fontweight='600', color='#34495e')
     ax2.set_ylabel('Volatility (%)', fontsize=13, fontweight='600', color='#34495e')
     ax2.tick_params(axis='both', which='major', labelsize=11, colors='#34495e')
