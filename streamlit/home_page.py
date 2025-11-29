@@ -51,44 +51,57 @@ def navigate_to(page):
 # -----------------------------------------------------------------------------
 # HELPER FUNCTIONS (Data & Charts)
 # -----------------------------------------------------------------------------
-def get_dummy_data():
-    """Generates random walk data to simulate portfolio performance."""
+def get_portfolios_cumulative_returns():
+    """Calculates cumulative returns for two portfolios."""
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    dates = pd.date_range(start=date.today() - timedelta(days=365*2), end=date.today())
-    
-    # Simulate returns
-    np.random.seed(42)
-    
-    # S&P 500 Simulation
-    sp500_returns = np.random.normal(loc=0.0003, scale=0.01, size=len(dates))
-    sp500_price = 100 * (1 + sp500_returns).cumprod()
-    
-    # amber Portfolio Simulation (Slightly better alpha, lower beta)
-    amber_returns = np.random.normal(loc=0.0004, scale=0.008, size=len(dates))
-    amber_price = 100 * (1 + amber_returns).cumprod()
 
-    return pd.DataFrame({'Date': dates, 'S&P 500': sp500_price, 'Amber Aggressive': amber_price})
+    # Load portfolio returns
+    portfolio1 = pd.read_csv(BASE_DIR + "/dataImporter/tradi_cumu.csv", index_col=0, parse_dates=True)
+    portfolio2 = pd.read_csv(BASE_DIR + "/dataImporter/crypto_cumu.csv", index_col=0, parse_dates=True)
+
+    # Calculate cumulative returns: (1 + r1) * (1 + r2) * ... - 1
+    # Or use: (1 + returns).cumprod() - 1
+    cumulative1 = (1 + portfolio1).cumprod() - 1
+    cumulative2 = (1 + portfolio2).cumprod() - 1
+
+    # Get dates from index
+    dates = portfolio1.index
+
+    # Calculate portfolio-level cumulative returns (average across assets if multiple columns)
+    if cumulative1.shape[1] > 1:
+        cum_return_portfolio1 = cumulative1.mean(axis=1)
+    else:
+        cum_return_portfolio1 = cumulative1.iloc[:, 0]
+
+    if cumulative2.shape[1] > 1:
+        cum_return_portfolio2 = cumulative2.mean(axis=1)
+    else:
+        cum_return_portfolio2 = cumulative2.iloc[:, 0]
+
+    return pd.DataFrame({
+        'Date': dates,
+        'Portfolio_1_Cumulative': cum_return_portfolio1.values,
+        'Portfolio_2_Cumulative': cum_return_portfolio2.values
+    })
 
 def create_chart(df):
     """Creates a fancy Plotly chart."""
     fig = go.Figure()
 
-    # Add amber Line (Filled Area)
+    # Add Portfolio1
     fig.add_trace(go.Scatter(
-        x=df['Date'], y=df['Amber Aggressive'],
+        x=df['Date'], y=df['Portfolio_1_Cumulative'],
         mode='lines',
-        name='Amber Aggressive',
-        line=dict(color='#2E86C1', width=3),
-        fill='tozeroy',
-        fillcolor='rgba(46, 134, 193, 0.1)'
+        name='Traditional Portfolio (Equities, Bonds, Commodities)',
+        line=dict(color='#1976D2', width=3),
     ))
 
-    # Add S&P 500 Line (Dashed)
+    # Add Portfolio2
     fig.add_trace(go.Scatter(
-        x=df['Date'], y=df['S&P 500'],
+        x=df['Date'], y=df['Portfolio_2_Cumulative'],
         mode='lines',
-        name='S&P 500 Benchmark',
-        line=dict(color='#95A5A6', width=2, dash='dot')
+        name='Traditional Portfolio with Cryptocurrencies',
+        line=dict(color='#F9A825', width=2)
     ))
 
     fig.update_layout(
