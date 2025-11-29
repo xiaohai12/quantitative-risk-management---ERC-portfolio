@@ -7,7 +7,6 @@ import utils.utilities as ut
 import os
 
 # Define the pages
-
 st.set_page_config(page_title="Portfolios", page_icon="🔶",  layout="wide", initial_sidebar_state="collapsed")
 
 # Custom style
