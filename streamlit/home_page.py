@@ -40,7 +40,7 @@ st.markdown("""
             
 function goToContact() {
     const url = new URL(window.location);
-    url.searchParams.set("page", "contact");
+    url.searchParams.set("page", "Contact");
     window.location.href = url.toString();
 }
 </style>
@@ -249,6 +249,10 @@ def home_page():
             """,
             unsafe_allow_html=True
         )
+    params = st.query_params
+    if "page" in params:
+        if params["page"] == "contact":
+            st.switch_page("Contact.py")
 
 
 wu.render_navbar(IMG_DIR)
