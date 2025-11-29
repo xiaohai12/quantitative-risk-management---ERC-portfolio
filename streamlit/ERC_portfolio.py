@@ -243,7 +243,7 @@ elif selected_asset == 'Bonds':
         st.pyplot(cumu_graph_bonds)
     with col3:
         st.write("**Risk Contribution**")
-        st.write("Bonds is a single index and hence has a single absolute risk contribution)
+        st.write("Bonds is a single index and hence has a single absolute risk contribution")
 
 st.divider()
 
