@@ -419,10 +419,247 @@ def plot_portfolio_composition(weights_df, title="Portfolio Composition Over Tim
 
 
 
+def calculate_drawdown(portfolio_returns):
+    """
+    Calculate drawdown series and key drawdown metrics
+   
+    """
+    # Flatten returns if nested list
+    if isinstance(portfolio_returns, list):
+        flat_returns = [ret for month in portfolio_returns for ret in month]
+        returns_series = pd.Series(flat_returns)
+    else:
+        returns_series = portfolio_returns
+    
+    # Calculate cumulative wealth
+    cumulative_wealth = (1 + returns_series).cumprod()
+    
+    # Calculate running maximum
+    running_max = cumulative_wealth.cummax()
+    
+    # Calculate drawdown
+    drawdown_series = (cumulative_wealth - running_max) / running_max
+    
+    # Maximum drawdown
+    max_drawdown = drawdown_series.min()
+    
+    # Find drawdown periods
+    in_drawdown = drawdown_series < 0
+    drawdown_periods = []
+    
+    if in_drawdown.any():
+        # Identify separate drawdown episodes
+        drawdown_start = None
+        for i, is_dd in enumerate(in_drawdown):
+            if is_dd and drawdown_start is None:
+                drawdown_start = i
+            elif not is_dd and drawdown_start is not None:
+                drawdown_end = i - 1
+                dd_period = drawdown_series.iloc[drawdown_start:drawdown_end+1]
+                drawdown_periods.append({
+                    'start_idx': drawdown_start,
+                    'end_idx': drawdown_end,
+                    'duration': drawdown_end - drawdown_start + 1,
+                    'depth': dd_period.min(),
+                    'recovery_idx': i if cumulative_wealth.iloc[i] >= running_max.iloc[drawdown_start] else None
+                })
+                drawdown_start = None
+        
+        # Handle if still in drawdown at end
+        if drawdown_start is not None:
+            dd_period = drawdown_series.iloc[drawdown_start:]
+            drawdown_periods.append({
+                'start_idx': drawdown_start,
+                'end_idx': len(drawdown_series) - 1,
+                'duration': len(drawdown_series) - drawdown_start,
+                'depth': dd_period.min(),
+                'recovery_idx': None  # Not recovered yet
+            })
+    
+    # Create DataFrame of drawdown periods
+    if drawdown_periods:
+        drawdown_info = pd.DataFrame(drawdown_periods)
+        drawdown_info = drawdown_info.sort_values('depth').head(5)
+    else:
+        drawdown_info = pd.DataFrame()
+    
+    # Maximum drawdown duration
+    max_dd_duration = max([dp['duration'] for dp in drawdown_periods]) if drawdown_periods else 0
+    
+    return drawdown_series, max_drawdown, max_dd_duration, drawdown_info
+
+
+def plot_drawdown(portfolio_returns, dates=None):
+    """
+    Plot cumulative returns with drawdown visualization
+    """
+    drawdown_series, max_dd, max_duration, dd_info = calculate_drawdown(portfolio_returns)
+    
+    # Flatten returns
+    if isinstance(portfolio_returns, list):
+        flat_returns = [ret for month in portfolio_returns for ret in month]
+        returns_series = pd.Series(flat_returns)
+    else:
+        returns_series = portfolio_returns
+    
+    cumulative_wealth = (1 + returns_series).cumprod()
+    
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
+    
+    # Plot 1: Cumulative Returns
+    ax1.plot(cumulative_wealth.values, label='Portfolio Value', linewidth=2)
+    ax1.plot(cumulative_wealth.cummax().values, label='Peak Value', 
+             linestyle='--', alpha=0.7, linewidth=1.5)
+    ax1.fill_between(range(len(cumulative_wealth)), 
+                      cumulative_wealth.values, 
+                      cumulative_wealth.cummax().values,
+                      alpha=0.3, color='red', label='Drawdown')
+    ax1.set_ylabel('Cumulative Wealth', fontsize=12)
+    ax1.set_title('Portfolio Cumulative Returns with Drawdown Periods', fontsize=14, fontweight='bold')
+    ax1.legend(loc='best')
+    ax1.grid(True, alpha=0.3)
+    
+    # Plot 2: Drawdown Series
+    ax2.fill_between(range(len(drawdown_series)), 
+                      drawdown_series.values * 100, 0,
+                      alpha=0.5, color='red')
+    ax2.plot(drawdown_series.values * 100, color='darkred', linewidth=1.5)
+    ax2.set_ylabel('Drawdown (%)', fontsize=12)
+    ax2.set_xlabel('Trading Days', fontsize=12)
+    ax2.set_title(f'Drawdown Over Time (Max DD: {max_dd*100:.2f}%, Max Duration: {max_duration} days)', 
+                  fontsize=14, fontweight='bold')
+    ax2.grid(True, alpha=0.3)
+    ax2.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
+    
+    plt.tight_layout()
+    plt.show()
 
 
 
+def calculate_risk_contribution(weights_df, combined_returns):
+    """
+    Calculate marginal and component risk contributions for each asset
+    
+    Parameters:
+    -----------
+    weights_df : pd.DataFrame
+        Monthly portfolio weights (from meanvar_portfolio)
+    combined_returns : pd.DataFrame
+        Asset returns
+    
+    Returns:
+    --------
+    risk_contrib_df : pd.DataFrame
+        Risk contribution metrics for each period
+    """
+    combined_returns.index = pd.to_datetime(combined_returns.index)
+    asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
+    
+    risk_contributions = []
+    
+    for date in weights_df.index:
+        # Get weights for this period
+        weights = weights_df.loc[date].values
+        
+        # Get lookback data (same 63-day window as optimization)
+        lookback_data = combined_returns.loc[combined_returns.index < date].tail(63)
+        
+        if len(lookback_data) < 63:
+            continue
+        
+        # Calculate covariance matrix (annualized)
+        cov_matrix = lookback_data.cov().values * 252
+        
+        # Portfolio variance
+        portfolio_variance = np.dot(weights, np.dot(cov_matrix, weights))
+        portfolio_vol = np.sqrt(portfolio_variance)
+        
+        # Marginal contribution to risk (MCR)
+        # MCR_i = (Cov * w) / portfolio_vol
+        marginal_contrib = np.dot(cov_matrix, weights) / portfolio_vol
+        
+        # Component contribution to risk (CCR)
+        # CCR_i = w_i * MCR_i
+        component_contrib = weights * marginal_contrib
+        
+        # Percentage contribution to risk
+        pct_contrib = component_contrib / portfolio_vol * 100
+        
+        # Store results
+        contrib_dict = {
+            'date': date,
+            'portfolio_vol': portfolio_vol * 100  # Convert to percentage
+        }
+        
+        for i, asset in enumerate(asset_names):
+            contrib_dict[f'{asset}_weight'] = weights[i] * 100
+            contrib_dict[f'{asset}_risk_contrib'] = pct_contrib[i]
+            contrib_dict[f'{asset}_mcr'] = marginal_contrib[i] * 100
+        
+        risk_contributions.append(contrib_dict)
+    
+    risk_contrib_df = pd.DataFrame(risk_contributions)
+    risk_contrib_df.set_index('date', inplace=True)
+    
+    return risk_contrib_df
 
+
+def plot_risk_contribution(risk_contrib_df, combined_returns):
+    """
+    Visualize risk contributions over time
+    """
+    asset_names = [col.replace(" Returns", "") for col in combined_returns.columns]
+    
+    # Extract risk contribution columns
+    risk_cols = [col for col in risk_contrib_df.columns if col.endswith('_risk_contrib')]
+    risk_data = risk_contrib_df[risk_cols]
+    risk_data.columns = [col.replace('_risk_contrib', '') for col in risk_data.columns]
+    
+    # Extract weight columns
+    weight_cols = [col for col in risk_contrib_df.columns if col.endswith('_weight')]
+    weight_data = risk_contrib_df[weight_cols]
+    weight_data.columns = [col.replace('_weight', '') for col in weight_data.columns]
+    
+    fig, axes = plt.subplots(3, 1, figsize=(14, 12))
+    
+    # Plot 1: Risk Contribution Over Time (Stacked Area)
+    risk_data.plot.area(ax=axes[0], alpha=0.7, linewidth=0)
+    axes[0].set_title('Risk Contribution by Asset Over Time', fontsize=14, fontweight='bold')
+    axes[0].set_ylabel('Risk Contribution (%)', fontsize=12)
+    axes[0].legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    axes[0].grid(True, alpha=0.3)
+    
+    # Plot 2: Average Risk Contribution vs Weight
+    avg_risk = risk_data.mean()
+    avg_weight = weight_data.mean()
+    
+    axes[1].scatter(avg_weight, avg_risk, s=200, alpha=0.6)
+    for i, asset in enumerate(asset_names):
+        axes[1].annotate(asset, (avg_weight.iloc[i], avg_risk.iloc[i]), 
+                        fontsize=10, ha='center')
+    
+    # Add diagonal line (where weight = risk contribution)
+    max_val = max(avg_weight.max(), avg_risk.max())
+    axes[1].plot([0, max_val], [0, max_val], 'k--', alpha=0.5, label='Weight = Risk')
+    
+    axes[1].set_xlabel('Average Portfolio Weight (%)', fontsize=12)
+    axes[1].set_ylabel('Average Risk Contribution (%)', fontsize=12)
+    axes[1].set_title('Average Risk Contribution vs Portfolio Weight', fontsize=14, fontweight='bold')
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+    
+    # Plot 3: Portfolio Volatility Over Time
+    axes[2].plot(risk_contrib_df.index, risk_contrib_df['portfolio_vol'], 
+                linewidth=2, color='darkblue')
+    axes[2].fill_between(risk_contrib_df.index, 0, risk_contrib_df['portfolio_vol'], 
+                         alpha=0.3, color='blue')
+    axes[2].set_ylabel('Portfolio Volatility (%)', fontsize=12)
+    axes[2].set_xlabel('Date', fontsize=12)
+    axes[2].set_title('Portfolio Volatility Over Time', fontsize=14, fontweight='bold')
+    axes[2].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.show()
 
 
 
