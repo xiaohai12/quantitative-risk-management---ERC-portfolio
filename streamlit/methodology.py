@@ -2,7 +2,7 @@ import streamlit as st
 import utils.web_util as wu
 from statics import IMG_DIR
 
-st.set_page_config(page_title="Strategy Overview", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Strategy Overview", page_icon="🔶", layout="wide", initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()

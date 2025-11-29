@@ -8,7 +8,7 @@ import os
 
 # Define the pages
 
-st.set_page_config(page_title="Portfolios", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Portfolios", page_icon="🔶",  layout="wide", initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()

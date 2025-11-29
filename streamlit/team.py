@@ -4,7 +4,7 @@ from statics import IMG_DIR
 from PIL import Image
 import os
 
-st.set_page_config(page_title="Our Team", layout="wide",initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Our Team", page_icon="🔶", layout="wide",initial_sidebar_state="collapsed")
 
 # Custom style
 wu.apply_custom_css()

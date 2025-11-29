@@ -5,6 +5,8 @@ from statics import IMG_DIR
 # Custom style
 wu.apply_custom_css()
 
+st.set_page_config(page_title="Risk Profile", page_icon="🔶",  layout="wide", initial_sidebar_state="collapsed")
+
 # Override the horizontal padding for this page only
 st.markdown("""
     <style>
