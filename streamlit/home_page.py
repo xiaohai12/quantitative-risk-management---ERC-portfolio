@@ -40,7 +40,7 @@ st.markdown("""
             
 function goToContact() {
     const url = new URL(window.location);
-    url.searchParams.set("page", "Contact");
+    url.searchParams.set("page", "contact");
     window.location.href = url.toString();
 }
 </style>
