@@ -12,10 +12,40 @@ st.set_page_config(page_title="Portfolios", layout="wide", initial_sidebar_state
 
 # Custom style
 wu.apply_custom_css()
+
+# Override the horizontal padding for this page only
+st.markdown("""
+    <style>
+    .block-container {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+        max-width: 1200px !important;
+    }
+
+    /* Hero section for title */
+    .hero-assessment {
+        background: linear-gradient(135deg, #CC6600 0%, #FF8C42 100%);
+        padding: 40px;
+        border-radius: 15px;
+        color: white;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+     </style>
+""", unsafe_allow_html=True)
+
 # Nav bar
 wu.render_navbar(IMG_DIR)
 
 st.title("Design Your Investment Strategy ")
+
+# Hero section
+st.markdown("""
+    <div class="hero-assessment">
+        <h1>Design Your Investment Strategy</h1>
+    </div>
+""", unsafe_allow_html=True)
 
 c1, c2 = st.columns([4, 1])
 
