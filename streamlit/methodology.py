@@ -105,4 +105,7 @@ We provide:
 
 st.markdown("---")
 st.subheader("Want to Explore?")
-st.write("Navigate to **ERC Portfolio** to interact with the optimization tool.")
+st.markdown(
+    'Navigate to **<a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/ERC_portfolio" target="_blank">ERC Portfolio</a>** to interact with the optimization tool.',
+    unsafe_allow_html=True
+)
