@@ -426,7 +426,6 @@ if risk_score != st.session_state.risk_score:
 # Display the selected score with visual feedback
 st.write(" ")
 
-st.write(" ")
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     # Determine profile based on score
