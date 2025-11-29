@@ -77,8 +77,6 @@ def apply_custom_css():
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 20px;
 
         }
 
@@ -97,22 +95,16 @@ def apply_custom_css():
             margin-top: 5px;
         }
 
-        .dropdown-content button {
+        .dropdown-content a {
             color: #000;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
             font-weight: 500;
             transition: all 0.2s ease;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
         }
 
-        .dropdown-content button:hover {
+        .dropdown-content a:hover {
             background-color: #FFCC99;
             border-radius: 5px;
         }
@@ -144,11 +136,6 @@ def apply_custom_css():
             border-left: 5px solid #1a2a6c;
             padding-left: 15px;
         }
-
-        /* Hide the dropdown items by default */
-        .dropdown-items {
-            display: none;
-        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -176,31 +163,55 @@ def render_navbar(IMG_DIR):
         )
 
     with col2:
-        if st.button("Home", key="nav_home"):
+        if st.button("Home"):
             st.switch_page("home_page.py")
 
     with col3:
-        if st.button("Portfolios", key="nav_portfolios"):
+        if st.button("Portfolios"):
             st.switch_page("ERC_portfolio.py")
 
     with col4:
-        if st.button("Methodology", key="nav_methodology"):
+        if st.button("Methodology"):
             st.switch_page("methodology.py")
 
     with col5:
-        # Help dropdown with popover
-        with st.popover("Help ▾"):
-            if st.button("Risk Profile", key="help_risk", use_container_width=True):
+        # Dropdown "Help"
+        st.markdown("""
+            <div class="dropdown">
+                <button class="dropdown-button">Help ▾</button>
+                <div class="dropdown-content">
+                    <a href="?page=risk_profile" target="_self">Risk Profile</a>
+                    <a href="?page=ai_chat" target="_self">AI Chat</a>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Handle navigation via query params
+        query_params = st.query_params
+        if "page" in query_params:
+            if query_params["page"] == "risk_profile":
                 st.switch_page("risk_preference.py")
-            if st.button("AI Chat", key="help_ai", use_container_width=True):
+            elif query_params["page"] == "ai_chat":
                 st.switch_page("LLM.py")
 
     with col6:
-        # About Us dropdown with popover
-        with st.popover("About Us ▾"):
-            if st.button("Our Team", key="about_team", use_container_width=True):
+        # Dropdown "About Us"
+        st.markdown("""
+            <div class="dropdown">
+                <button class="dropdown-button">About Us ▾</button>
+                <div class="dropdown-content">
+                    <a href="?page=team" target="_self">Our Team</a>
+                    <a href="?page=contact" target="_self">Contact Us</a>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Handle navigation via query params
+        query_params = st.query_params
+        if "page" in query_params:
+            if query_params["page"] == "team":
                 st.switch_page("team.py")
-            if st.button("Contact Us", key="about_contact", use_container_width=True):
+            elif query_params["page"] == "contact":
                 st.switch_page("Contact.py")
 
     st.markdown("""<hr style="margin-top:-2px; margin-bottom:15px;">""", unsafe_allow_html=True)
