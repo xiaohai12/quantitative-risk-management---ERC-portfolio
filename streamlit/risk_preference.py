@@ -231,7 +231,37 @@ if st.session_state.submitted:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Action buttons
+    # Action buttons - styled to match Streamlit buttons
+    st.markdown("""
+        <style>
+        .custom-button {
+            display: inline-block;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            background-color: rgb(255, 255, 255);
+            color: rgb(49, 51, 63);
+            border: 1px solid rgba(49, 51, 63, 0.2);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.6;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            border-color: rgb(255, 75, 75);
+            color: rgb(255, 75, 75);
+        }
+
+        .custom-button:active {
+            background-color: rgba(255, 75, 75, 0.05);
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     col1, col2 = st.columns(2)
 
     with col1:
@@ -239,16 +269,7 @@ if st.session_state.submitted:
             """
             <a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/ERC_portfolio" 
                target="_blank" 
-               style="display: block;
-                      padding: 12px 20px;
-                      background-color: #FFCC99;
-                      color: #000;
-                      text-decoration: none;
-                      border-radius: 8px;
-                      font-weight: 600;
-                      text-align: center;
-                      border: 2px solid #CC6600;
-                      transition: all 0.3s ease;">
+               class="custom-button">
                 🚀 Use My Risk Profile to Build Portfolio
             </a>
             """,
