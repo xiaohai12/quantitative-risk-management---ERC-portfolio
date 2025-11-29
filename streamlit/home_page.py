@@ -21,7 +21,30 @@ st.set_page_config(
 # Custom style
 wu.apply_custom_css()
 
-
+st.markdown("""
+<style>
+.feature-card {
+    background-color: #eef5ff;
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 120px;    /* force same box height */
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+.feature-title {
+    font-size: 22px !important;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+            
+function goToContact() {
+    const url = new URL(window.location);
+    url.searchParams.set("page", "contact");
+    window.location.href = url.toString();
+}
+</style>
+""", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # STATE MANAGEMENT
 # -----------------------------------------------------------------------------
@@ -198,20 +221,19 @@ def home_page():
     # -- Value Props --
     st.markdown('<div class="section-header">Why Amber?</div>', unsafe_allow_html=True)
     
-    c1, c2, c3 = st.columns(3)
-    
+    c1, c2, c3 = st.columns([1, 1, 1])
+
     with c1:
-        st.markdown("### Risk-First Approach")
-        st.info("We prioritize capital preservation. Our algorithms actively hedge against downside volatility before chasing upside.")
-    
+        st.markdown("<p class='feature-title'>Adaptive Portfolio Management</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>We continuously monitor changes in correlations and volatility regimes to maintain a stable and efficient portfolio structure.</div>", unsafe_allow_html=True)
+
     with c2:
-        st.markdown("### AI-Driven Rebalancing")
-        st.info("Your portfolio is monitored 24/7. We automatically rebalance based on macro-economic shifts, not just calendar dates.")
+        st.markdown("<p class='feature-title'>Full Transparency</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>Every allocation is clear and explainable. You can see exactly how each asset contributes to total risk and performance — no black box.</div>", unsafe_allow_html=True)
 
     with c3:
-        st.markdown("### Transparent Fee Structure")
-        st.info("No hidden trading fees. No front-loading. Just a simple, flat advisory fee based on assets under management.")
-
+        st.markdown("<p class='feature-title'>Broad Multi-Asset Diversification</p>", unsafe_allow_html=True)
+        st.markdown("<div class='feature-card'>Our portfolios allocate across five distinct asset classes, reducing concentration risks and enhancing long-term stability across different market environments.</div>", unsafe_allow_html=True)
     # -- CTA --
     st.write("")
     st.write("")
@@ -219,13 +241,18 @@ def home_page():
     with cta_col2:
         st.markdown(
             """
-            <div style="background-color: #f8f9fa; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #ddd;">
+            <div onclick="goToContact()" 
+                style="cursor: pointer; background-color: #f8f9fa; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #ddd;">
                 <h3>Ready to optimize your wealth?</h3>
                 <p>Schedule a free consultation with our senior advisors today.</p>
             </div>
-            """, 
+            """,
             unsafe_allow_html=True
         )
+    params = st.query_params
+    if "page" in params:
+        if params["page"] == "contact":
+            st.switch_page("Contact.py")
 
 
 wu.render_navbar(IMG_DIR)

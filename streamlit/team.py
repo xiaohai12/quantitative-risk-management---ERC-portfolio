@@ -1,6 +1,8 @@
 import streamlit as st
 import utils.web_util as wu
 from statics import IMG_DIR
+from PIL import Image
+import os
 
 st.set_page_config(page_title="Our Team", layout="wide",initial_sidebar_state="collapsed")
 
@@ -68,9 +70,20 @@ for i, member in enumerate(team_members):
     col1, col2 = st.columns([1, 3])
 
     with col1:
-        # Placeholder for profile image (using emoji as placeholder)
-        st.markdown(f"<div style='text-align: center; font-size: 80px;'>👤</div>", unsafe_allow_html=True)
+        # Construct file path: e.g., "images/team/Yann Suttor.png"
+        image_path = None
+        
+        tentative_path = os.path.join(IMG_DIR, f"{member['name']}.jpeg")
+        if os.path.exists(tentative_path):
+            image_path = tentative_path
 
+        if image_path:
+            img = Image.open(image_path)
+            st.image(img, width=120)
+        else:
+            # fallback if image missing
+            st.markdown("<div style='text-align: center; font-size: 80px;'>👤</div>",
+                        unsafe_allow_html=True)
     with col2:
         st.markdown(f"### {member['name']}")
         st.markdown(f"**{member['role']}**")
