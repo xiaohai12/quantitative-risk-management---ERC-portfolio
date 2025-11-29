@@ -4,6 +4,18 @@ from statics import IMG_DIR
 
 # Custom style
 wu.apply_custom_css()
+
+# Override the horizontal padding for this page only
+st.markdown("""
+    <style>
+    .block-container {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+        max-width: 1200px !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Nav bar
 wu.render_navbar(IMG_DIR)
 
