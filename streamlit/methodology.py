@@ -318,9 +318,6 @@ with col2:
 
 st.markdown("""
     <div class="feature-box">
-        <strong>Practical Adjustments:</strong> Regularization, covariance shrinkage, and convex solvers ensure stable allocations and control turnover.
-    </div>
-    <div class="feature-box">
         <strong>Why this helps:</strong> Centralizing risk control through γ enables consistent behaviour across asset classes while letting the optimizer exploit expected return signals and cross‑asset diversification.
     </div>
 """, unsafe_allow_html=True)
