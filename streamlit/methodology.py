@@ -304,7 +304,7 @@ with col1:
 with col2:
     st.success("🌍 **Sustainable Investing**")
     st.write("Compare traditional vs ESG-optimized portfolios")
-    st.metric("Carbon Reduction Target", "30%", delta="-30%")
+    st.metric("Carbon Reduction Target",  delta="-30%")
 
 # CTA Section
 st.markdown("""
