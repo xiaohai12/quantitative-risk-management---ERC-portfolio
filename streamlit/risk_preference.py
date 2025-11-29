@@ -13,6 +13,120 @@ st.markdown("""
         padding-right: 3rem !important;
         max-width: 1200px !important;
     }
+
+    /* Hero section for title */
+    .hero-assessment {
+        background: linear-gradient(135deg, #CC6600 0%, #FF8C42 100%);
+        padding: 40px;
+        border-radius: 15px;
+        color: white;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .hero-assessment h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .hero-assessment p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+    }
+
+    /* Question cards */
+    .question-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+        border-left: 5px solid #CC6600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 6px 20px rgba(204, 102, 0, 0.15);
+    }
+
+    .question-number {
+        display: inline-block;
+        background: linear-gradient(135deg, #FFCC99 0%, #FFE5B4 100%);
+        color: #CC6600;
+        font-weight: 700;
+        padding: 5px 15px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Radio button styling */
+    div[data-testid="stRadio"] > label {
+        font-weight: 500;
+        color: #555;
+    }
+
+    div[data-testid="stRadio"] > div {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    div[data-testid="stRadio"] > div:hover {
+        background: #FFF8E7;
+        border-color: #FFCC99;
+    }
+
+    /* Slider styling */
+    div[data-testid="stSlider"] {
+        padding: 20px 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    div[data-testid="stSlider"] > div > div > div {
+        background: #FFCC99 !important;
+    }
+
+    /* Submit button area */
+    .submit-section {
+        background: linear-gradient(135deg, #FFF8E7 0%, #FFE5B4 100%);
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        margin-top: 30px;
+        border: 2px solid #FFCC99;
+    }
+
+    /* Progress indicator */
+    .progress-indicator {
+        background: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        text-align: center;
+        border-left: 4px solid #CC6600;
+    }
+
+    .progress-text {
+        color: #CC6600;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -29,13 +143,13 @@ hide_sidebar_style = """
 """
 st.markdown(hide_sidebar_style, unsafe_allow_html=True)
 
-
-
-# Page configuration
-st.title("Risk Preference Assessment")
-st.markdown("Answer the following questions to evaluate your risk tolerance profile.")
-st.markdown("---")
-
+# Hero section
+st.markdown("""
+    <div class="hero-assessment">
+        <h1>Risk Preference Assessment</h1>
+        <p>Answer the following questions to evaluate your risk tolerance profile</p>
+    </div>
+""", unsafe_allow_html=True)
 
 # Initialize session state for storing answers
 if 'answers' not in st.session_state:
@@ -129,9 +243,23 @@ questions = [
     }
 ]
 
+# Progress indicator
+answered = len([k for k in st.session_state.answers if k in [q['id'] for q in questions]])
+total = len(questions)
+st.markdown(f"""
+    <div class="progress-indicator">
+        <span class="progress-text">Progress: {answered}/{total} questions answered</span>
+    </div>
+""", unsafe_allow_html=True)
+
 # Display questions
-for q in questions:
-    st.markdown(f"### {q['question']}")
+for idx, q in enumerate(questions, 1):
+    st.markdown(f"""
+        <div class="question-card">
+            <span class="question-number">Question {idx} of {len(questions)}</span>
+            <div class="question-text">{q['question']}</div>
+        </div>
+    """, unsafe_allow_html=True)
 
     if q['type'] == 'radio':
         answer = st.radio(
@@ -164,7 +292,17 @@ for q in questions:
             )
             st.session_state.answers[q['id']] = answer
 
-    st.markdown("---")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+# Submit section
+st.markdown("""
+    <div class="submit-section">
+        <h3 style="color: #CC6600; margin-bottom: 15px;">Ready to see your results?</h3>
+        <p style="color: #666; margin-bottom: 20px;">Click below to calculate your personalized risk profile</p>
+    </div>
+""", unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 # Submit button
 if st.button("Calculate My Risk Score", type="primary", use_container_width=True):
@@ -245,4 +383,3 @@ if st.session_state.submitted:
             st.session_state.answers = {}
             st.session_state.submitted = False
             st.rerun()
-
