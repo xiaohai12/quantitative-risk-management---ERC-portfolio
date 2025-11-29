@@ -16,12 +16,6 @@ wu.apply_custom_css()
 # Override the horizontal padding for this page only
 st.markdown("""
     <style>
-    .block-container {
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
-        max-width: 1200px !important;
-    }
-
     /* Hero section for title */
     .hero-assessment {
         background: linear-gradient(135deg, #CC6600 0%, #FF8C42 100%);

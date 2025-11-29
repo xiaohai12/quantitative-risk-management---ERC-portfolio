@@ -21,12 +21,35 @@ hide_sidebar_style = """
 """
 st.markdown(hide_sidebar_style, unsafe_allow_html=True)
 
-
 # Custom style
 wu.apply_custom_css()
+
+# Override the horizontal padding for this page only
+st.markdown("""
+    <style>
+    /* Hero section for title */
+    .hero-assessment {
+        background: linear-gradient(135deg, #CC6600 0%, #FF8C42 100%);
+        padding: 40px;
+        border-radius: 15px;
+        color: white;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+     </style>
+""", unsafe_allow_html=True)
+
 # Nav bar
 wu.render_navbar(IMG_DIR)
-# Custom CSS for ChatGPT-like styling
+
+# Hero section
+st.markdown("""
+    <div class="hero-assessment">
+        <h1>AI Chat Assistant</h1>
+    </div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <style>
     .stChatMessage {
@@ -113,8 +136,6 @@ Example of correct reply:
         st.session_state.messages = []
         st.rerun()
 
-# Main chat interface
-st.title("💬 AI Chat Assistant")
 
 # Display chat messages
 for message in st.session_state.messages:
