@@ -593,7 +593,7 @@ def calculate_risk_contribution(weights_df, combined_returns):
     return risk_contrib_df
 
 
-def plot_average_risk_contribution(risk_contrib_df: pd.DataFrame, combined_returns: pd.DataFrame):
+def plot_risk_contribution(risk_contrib_df: pd.DataFrame, combined_returns: pd.DataFrame):
     """
     Visualize the AVERAGE risk contributions by asset (Bar Plot only).
     """
