@@ -231,53 +231,17 @@ if st.session_state.submitted:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Action buttons - styled to match Streamlit buttons
-    st.markdown("""
-        <style>
-        .custom-button {
-            display: inline-block;
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            background-color: rgb(255, 255, 255);
-            color: rgb(49, 51, 63);
-            border: 1px solid rgba(49, 51, 63, 0.2);
-            border-radius: 0.5rem;
-            text-decoration: none;
-            text-align: center;
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.6;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
+    st.markdown("<br>", unsafe_allow_html=True)
 
-        .custom-button:hover {
-            border-color: rgb(255, 75, 75);
-            color: rgb(255, 75, 75);
-        }
-
-        .custom-button:active {
-            background-color: rgba(255, 75, 75, 0.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
+    # Action buttons
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown(
-            """
-            <a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/ERC_portfolio" 
-               target="_blank" 
-               class="custom-button">
-                🚀 Use My Risk Profile to Build Portfolio
-            </a>
-            """,
-            unsafe_allow_html=True
-        )
+        if st.button("🚀 Use My Risk Profile to Build Portfolio", use_container_width=True, type="secondary"):
+            st.switch_page("ERC_portfolio.py")
 
     with col2:
-        if st.button("🔄 Retake Assessment", use_container_width=True):
+        if st.button("🔄 Retake Assessment", use_container_width=True, type="secondary"):
             st.session_state.answers = {}
             st.session_state.submitted = False
             st.rerun()
