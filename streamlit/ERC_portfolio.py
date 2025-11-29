@@ -133,10 +133,42 @@ else:
 
 st.divider()
 
-st.header("2. Set Your Risk level")
-st.markdown("Use the slider below to set your risk tolerance level.")
-st.write(" ")
-st.write(" ")
+# ---
+# 2. Risk Level Selection
+# ---
+col_header, col_link = st.columns([4, 1])
+
+with col_header:
+    st.header("2. Set Your Risk level")
+
+with col_link:
+    st.markdown(
+        """
+        <a href="https://xiaohai12-quantitative-risk-manag-streamlitstreamlit-app-w9wlfm.streamlit.app/~/+/risk_preference" 
+           target="_blank" 
+           style="display: inline-block; 
+                  padding: 8px 16px; 
+                  background-color: #FFCC99; 
+                  color: #000; 
+                  text-decoration: none; 
+                  border-radius: 5px; 
+                  font-weight: 600;
+                  border: 2px solid #CC6600;
+                  transition: all 0.3s ease;
+                  text-align: center;
+                  margin-top: 5px;">
+            📊 Take Risk Assessment
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.markdown("""
+    <p style="color: #666; font-size: 14px; margin-top: -10px;">
+        Unsure about your risk tolerance? <strong>Take our risk assessment quiz</strong> 
+        to discover your ideal risk profile through a series of personalized questions.
+    </p>
+""", unsafe_allow_html=True)
 
 # Initialize session state for risk_score if it doesn't exist
 if 'risk_score' not in st.session_state:
