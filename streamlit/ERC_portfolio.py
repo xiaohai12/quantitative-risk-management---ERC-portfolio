@@ -255,7 +255,7 @@ if launch_button:
                 all_portfolio_returns, combined_returns, 2018)
             cumu_graph_final = ut.cumu_graph(MeanVar_flat)
 
-            
+            risk_contrib_df = ut.calculate_risk_contribution(weights_df, combined_returns)
             
             
             st.success("Portfolio construction complete!")
@@ -293,4 +293,4 @@ if launch_button:
 
             with col3:
                 fig1 = ut.plot_portfolio_composition(weights_df, "Average Portfolio Composition")
-                st.pyplot(fig1)
+                st.pyplot(ut.plot_risk_contribution(risk_contrib_df, combined_returns))
