@@ -291,21 +291,21 @@ st.markdown("""
 col1, col2 = st.columns([3, 2])
 with col1:
     st.write("""
-    We extend the ERC framework to incorporate **Environmental, Social, and Governance** metrics, 
-    allowing you to build portfolios that align with sustainability goals without sacrificing returns.
+    We extend the ERC framework by applying an ESG index at the firm level. Instead of filtering
+    on raw emissions or individual score components, we rank firms by their ESG index performance
+    and exclude those with the worst index performance from the investable universe.
     """)
 
-    st.markdown("**Key ESG Features:**")
-    st.write("• Carbon intensity tracking per company")
-    st.write("• MSCI/Sustainalytics ESG scores")
-    st.write("• Sector-level sustainability constraints")
-    st.write("• Portfolio carbon reduction targets (e.g., –30%)")
+    st.markdown("**Key ESG Index Features:**")
+    st.write("• A composite ESG index is computed per firm using third‑party data and standardized methodology.")
+    st.write("• Firms in the bottom segment of the ESG index (poorest ESG performance) are removed prior to optimization.")
+    st.write("• Sector‑aware replacement logic ensures investable coverage when exclusions occur.")
+    st.write("• We report ESG index coverage and the list/percentage of excluded holdings for transparency.")
 
 with col2:
-    st.success("🌍 **Sustainable Investing**")
-    st.write("Compare traditional vs ESG-optimized portfolios")
-    st.metric("Carbon Reduction Target", "-30%")
-
+    st.success("🌍 **ESG Index Screening**")
+    st.write("Firms with the worst ESG index performance are excluded before optimization")
+    st.metric("ESG Index Exclusion", "Bottom 20% excluded")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- Portfolio construction explanation (multi-asset, risk-aversion, MVO) ---
@@ -320,15 +320,15 @@ with col1:
     st.write("""
     We combine bonds, commodities, equities and crypto into a single, transparent
     mean–variance optimization (MVO) framework. The process is driven by a client‑specific
-    risk‑aversion score which controls the trade‑off between expected return and portfolio risk.
+    risk level score which controls the trade‑off between expected return and portfolio risk.
     """)
     st.write("Key ideas:")
     st.write("• Inputs: expected returns per asset class and a covariance matrix capturing volatilities and correlations.")
-    st.write("• Risk aversion (γ): a single scalar—lower γ is more aggressive, higher γ is more conservative.")
-    st.write("• Optimization: MVO finds weights that balance return vs risk (intuitively aligned with Σ⁻¹μ scaled by 1/γ) and then enforces practical constraints (sum-to-one, bounds, etc.).")
+    st.write("• Risk level score (γ): a single scalar—lower γ is more conservative, higher γ is more aggressive, it will convert into risk aversion score for MVO framework.")
+    st.write("• Optimization: MVO finds weights that balance return vs risk and then enforces practical constraints (sum-to-one, bounds, etc.).")
     st.write("• Robustness: we apply covariance shrinkage, regularization, box constraints and turnover penalties to produce implementable allocations across assets with very different risk profiles (e.g. bonds vs crypto).")
 with col2:
-    st.info("Risk Aversion (γ)\n\n1 — Aggressive\n\n3 — Balanced\n\n6 — Conservative")
+    st.info("Risk Level Score (γ)\n\n0 — Conservative\n\n5 — Balanced\n\n10 — Aggressive")
 
 st.markdown("""
     <div class="feature-box">

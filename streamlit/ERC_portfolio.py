@@ -39,9 +39,224 @@ st.markdown("""
 
 c1, c2 = st.columns([4, 1])
 
+st.divider()
 
+# Define the 6 asset classes based on your logic:
+# [ Equity(Std), Equity(ESG) ,Commodity(Std), Commodity(ESG), Crypto, Bonds]
+asset_labels = [
+    'Equity (Standard)',
+    'Equity (ESG)',
+    'Commodity (Standard)',
+    'Commodity (ESG)',
+    'Crypto',
+    'Bonds'
+]
+
+st.markdown(
+    "<p style='font-size: 20px; font-weight: 500; margin-bottom: -25px'>Choose an asset class to learn more:</p>",
+    unsafe_allow_html=True
+)
+
+selected_asset = st.selectbox(
+    "",
+    options=asset_labels,
+    index=0
+)
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Display different content based on selection
+if selected_asset == 'Equity (Standard)':
+    st.write("""
+    **Standard equity investments** include stocks and shares of publicly traded companies.
+    These offer potential for capital appreciation and dividend income.
+    """)
+    
+    equity_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_returns.csv")
+    equity_erc_returns = ut.erc_portfolio(equity_returns, weights_file= BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+    equity_flat, equity_mean, equity_vol, equity_sharpe, equity_cumu = ut.erc_performance(
+    equity_erc_returns, equity_returns, 2017)
+    
+    cumu_grap_equity = ut.cumu_graph(equity_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{equity_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{equity_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{equity_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{equity_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_grap_equity)
+    with col3:
+        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity.csv")
+        #risk_contrib = ut.compute_last_year_risk_contribution(weights, equity_returns)
+        #fig1 = ut.plot_risk_contribution_many(risk_contrib, equity_flat)
+        #st.pyplot(fig1)
+        pass
+
+elif selected_asset == 'Equity (ESG)':
+    st.write("""
+    **ESG Equity** excludes brown companies with bad Environmental, Social, and Governance practices.
+    Invest in sustainable and socially responsible companies.
+    """)
+    
+    equity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/equity_esg_returns.csv")
+    equity_esg_erc_returns = ut.erc_portfolio(equity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+    equity_esg_flat, equity_esg_mean, equity_esg_vol, equity_esg_sharpe, equity_esg_cumu = ut.erc_performance(
+    equity_esg_erc_returns, equity_esg_returns, 2017)
+    cumu_graph_equity_esg = ut.cumu_graph(equity_esg_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{equity_esg_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{equity_esg_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{equity_esg_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{equity_esg_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_graph_equity_esg)
+    with col3:
+        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_equity_esg.csv")
+        #risk_contrib = ut.compute_last_year_risk_contribution(weights, equity_esg_returns)
+        #fig1 = ut.plot_risk_contribution_many(risk_contrib, equity_esg_flat)
+        #st.pyplot(fig1)
+        pass
+
+elif selected_asset == 'Commodity (Standard)':
+    st.write("""
+    **Standard commodities** include investments in raw materials like oil, gold, agricultural products, etc.
+    Good for portfolio diversification and inflation hedging.
+    """)
+    
+    commodity_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_returns.csv")
+    commodity_erc_returns = ut.erc_portfolio(commodity_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+    commodity_flat, commodity_mean, commodity_vol, commodity_sharpe, commodity_cumu = ut.erc_performance(
+    commodity_erc_returns, commodity_returns, 2017)
+    cumu_graph_commodity = ut.cumu_graph(commodity_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{commodity_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{commodity_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{commodity_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{commodity_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_graph_commodity)
+    with col3:
+        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity.csv")
+        #risk_contrib = ut.compute_last_year_risk_contribution(weights, commodity_returns)
+        #fig1 = ut.plot_risk_contribution_many(risk_contrib, commodity_flat)
+        #st.pyplot(fig1)
+        pass
+    
+elif selected_asset == 'Commodity (ESG)':
+    st.write("""
+    **ESG Commodities** excludes environmentally harmful commodities, including fossil fuels and natural gas
+    """)
+    
+    commodity_esg_returns = pd.read_csv(BASE_DIR + "/dataImporter/commodity_esg_returns.csv")
+    commodity_esg_erc_returns = ut.erc_portfolio(commodity_esg_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+    commodity_esg_flat, commodity_esg_mean, commodity_esg_vol, commodity_esg_sharpe, commodity_esg_cumu = ut.erc_performance(
+    commodity_esg_erc_returns, commodity_esg_returns, 2017)
+    cumu_graph_commodity_esg = ut.cumu_graph(commodity_esg_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{commodity_esg_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{commodity_esg_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{commodity_esg_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{commodity_esg_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_graph_commodity_esg)
+    with col3:
+        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_commodity_esg.csv")
+        #risk_contrib = ut.compute_last_year_risk_contribution(weights, commodity_esg_returns)
+        #fig1 = ut.plot_risk_contribution_many(risk_contrib, commodity_esg_flat)
+        #st.pyplot(fig1)
+        pass
+    
+elif selected_asset == 'Crypto':
+    st.write("""
+    **Cryptocurrency** investments include Bitcoin, Ethereum, and other digital assets.
+    High volatility with potential for significant gains or losses.
+    """)
+    
+    crypto_returns = pd.read_csv(BASE_DIR + "/dataImporter/crypto_returns.csv")
+    crypto_erc_returns = ut.erc_portfolio(crypto_returns, weights_file=BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
+    crypto_flat, crypto_mean, crypto_vol, crypto_sharpe, crypto_cumu = ut.erc_performance(
+    crypto_erc_returns, crypto_returns, 2017)
+    cumu_graph_crypto = ut.cumu_graph(crypto_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{crypto_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{crypto_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{crypto_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{crypto_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_graph_crypto)
+    with col3:
+        weights = pd.read_csv(BASE_DIR + "/dataImporter/erc_weights_crypto.csv")
+        #risk_contrib = ut.compute_last_year_risk_contribution(weights, crypto_returns)
+        #fig1 = ut.plot_risk_contribution_many(risk_contrib, crypto_flat)
+        #st.pyplot(fig1)
+        pass
+    
+elif selected_asset == 'Bonds':
+    st.write("""
+    **Bonds** are fixed-income securities that provide regular interest payments.
+    Lower risk compared to equities, ideal for conservative investors.
+    """)
+    
+    bonds_returns = pd.read_csv(BASE_DIR + "/dataImporter/bonds_returns.csv")
+    bonds_flat, bonds_mean, bonds_vol, bonds_sharpe, bonds_cumu = ut.bonds_performance(
+    bonds_returns, 2017)
+    cumu_graph_bonds = ut.cumu_graph(bonds_flat)
+    
+    # Display metrics
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Expected Annual Return", f"{bonds_mean * 100:.2f}%")
+    col2.metric("Annual Volatility", f"{bonds_vol * 100:.2f}%")
+    col3.metric("Sharpe Ratio", f"{bonds_sharpe:.2f}")
+    col4.metric(
+        "Cumulative Return",
+        f"{bonds_cumu * 100:.2f}%",
+        delta=None)
+    
+    col1, col2, col3 = st.columns([3, 1, 3])
+    with col1:
+        st.pyplot(cumu_graph_bonds)
+    with col3:
+        # Bonds don't have ERC weights, so just show empty space or alternative viz
+        st.write("") # Placeholder since bonds don't have risk contribution plot
 
 st.divider()
+
 # ---
 # 1. Asset & ESG Selection
 # ---
