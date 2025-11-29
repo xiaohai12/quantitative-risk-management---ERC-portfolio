@@ -489,7 +489,7 @@ def calculate_drawdown(portfolio_returns):
     return drawdown_series, max_drawdown, max_dd_duration, drawdown_info
 
 
-def plot_drawdown_only(portfolio_returns, dates=None):
+def plot_drawdown(portfolio_returns, dates=None):
     """
     Plot only the drawdown visualization.
     """
