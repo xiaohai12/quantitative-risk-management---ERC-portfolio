@@ -11,6 +11,14 @@ def apply_custom_css():
 
     st.markdown("""
         <style>
+        /* App background */
+        [data-testid="stAppViewContainer"] {
+            background-color: white !important;
+            color: black !important;
+        }
+        
+        
+        
         /* Import nice font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
